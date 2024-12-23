@@ -1,0 +1,24 @@
+{
+  "Header": {
+    "home": "Home",
+    "order": "Order",
+    "openOrder": "Order",
+    "menu": "Menu"
+  },
+  "Home": {
+    "title": "Best printing in the world",
+    "text": "See for yourself."
+  },
+  "Order": {
+    "title": "Order",
+    "empty": "Start your order by adding an item.",
+    "add": "Add item"
+  },
+  "OrderItemSelection": {
+    "title": "Product selection",
+    "back": "Back"
+  },
+  "OrderItem": {
+    "title": "Photo"
+  }
+}

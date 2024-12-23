@@ -1,0 +1,25 @@
+{
+  "Header": {
+    "home": "Domov",
+    "order": "Objednať",
+    "openOrder": "Objednávka",
+    "menu": "Menu"
+  },
+  "Home": {
+    "title": "Najlepšia tlač na svete",
+    "text": "Ak o nej neviete, teraz sa to dozviete."
+  },
+  "Order": {
+    "title": "Objednávka",
+    "empty": "Začnite objednávku pridaním položky.",
+    "add": "Pridať položku"
+  },
+  "OrderItemSelection": {
+    "title": "Výber produktu",
+    "back": "Späť"
+  },
+  "OrderItem": {
+    "title": "Fotografia",
+    "files": "Súbory"
+  }
+}
