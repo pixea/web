@@ -18,8 +18,8 @@ export default function Home() {
           <Button variant="soft">{t("button2")}</Button>
         </Flex>
       </Flex>
-      <video className="w-full" autoPlay muted>
-        <source src="/money.mp4" type="video/mp4" />
+      <video className="mt-8 w-full rounded-6" autoPlay muted loop playsInline>
+        <source src="/xmas.mp4" type="video/mp4" />
         {t("video")}
       </video>
     </>

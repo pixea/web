@@ -21,7 +21,20 @@ const Header = () => {
     >
       <header>
         <Link href="/" aria-label={t("home")}>
-          <Image src="/brand/icon.svg" alt="" width={32} height={40} />
+          <Image
+            src="/brand/icon-light.svg"
+            alt=""
+            width={32}
+            height={40}
+            className="block dark:hidden"
+          />
+          <Image
+            src="/brand/icon-dark.svg"
+            alt=""
+            width={32}
+            height={40}
+            className="hidden dark:block"
+          />
         </Link>
 
         <Flex gap="3">

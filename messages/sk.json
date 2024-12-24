@@ -26,7 +26,10 @@
     "back": "Späť",
     "files": "Súbory",
     "add": "Pridať",
-    "configuration": "Konfigurácia"
+    "configuration": "Konfigurácia",
+    "total": "Celkom",
+    "cancel": "Zrušiť",
+    "confirm": "Potvrdiť"
   },
   "Footer": {
     "home": "Domov",

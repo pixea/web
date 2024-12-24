@@ -26,7 +26,10 @@
     "back": "Back",
     "files": "Files",
     "add": "Add",
-    "configuration": "Configuration"
+    "configuration": "Configuration",
+    "total": "Total",
+    "cancel": "Cancel",
+    "confirm": "Confirm"
   },
   "Footer": {
     "home": "Home",

@@ -19,7 +19,20 @@ const Footer = () => {
       <footer>
         <Flex mb="4">
           <Link href="/" aria-label={t("home")}>
-            <Image src="/brand/logo.svg" alt="" width={80} height={30} />
+            <Image
+              src="/brand/logo-light.svg"
+              alt=""
+              width={80}
+              height={30}
+              className="block dark:hidden"
+            />
+            <Image
+              src="/brand/logo-dark.svg"
+              alt=""
+              width={80}
+              height={30}
+              className="hidden dark:block"
+            />
           </Link>
         </Flex>
         <Flex direction="row" align="center" gap="2">
