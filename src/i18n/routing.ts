@@ -24,6 +24,10 @@ export const routing = defineRouting({
       en: "/order/selection",
       sk: "/objednavka/vyber",
     },
+    "/order/item": {
+      en: "/order/item",
+      sk: "/objednavka/polozka",
+    },
   },
 });
 

@@ -8,22 +8,33 @@ const Header = () => {
   const t = useTranslations("Header");
 
   return (
-    <Flex direction="row" justify="between" align="center" gap="3" p="4">
-      <Link href="/" aria-label={t("home")}>
-        <Image src="/brand/icon.svg" alt="" width={32} height={32} />
-      </Link>
+    <Flex
+      position="sticky"
+      top="0"
+      direction="row"
+      justify="between"
+      align="center"
+      gap="3"
+      p="4"
+      className="bg-panel-solid z-10"
+      asChild
+    >
+      <header>
+        <Link href="/" aria-label={t("home")}>
+          <Image src="/brand/icon.svg" alt="" width={32} height={40} />
+        </Link>
 
-      <Flex gap="3">
-        <Button
-          variant="soft"
-          size="3"
-          className="relative font-semibold"
-          asChild
-        >
-          <Link href="/order">
-            {t("order")}
+        <Flex gap="3">
+          <Button
+            variant="soft"
+            size="3"
+            className="relative font-semibold"
+            asChild
+          >
+            <Link href="/order">
+              {t("order")}
 
-            {/* <Box
+              {/* <Box
       position="absolute"
       top="0"
       right="0"
@@ -31,19 +42,20 @@ const Header = () => {
     >
       1
     </Box> */}
-          </Link>
-        </Button>
+            </Link>
+          </Button>
 
-        <Button
-          variant="outline"
-          color="gray"
-          size="3"
-          aria-label={t("menu")}
-          className="p-3"
-        >
-          <Bars3Icon className="size-6" />
-        </Button>
-      </Flex>
+          <Button
+            variant="outline"
+            color="gray"
+            size="3"
+            aria-label={t("menu")}
+            className="p-3 text-gray-10"
+          >
+            <Bars3Icon className="size-6" />
+          </Button>
+        </Flex>
+      </header>
     </Flex>
   );
 };

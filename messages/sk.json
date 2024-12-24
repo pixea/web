@@ -6,8 +6,10 @@
     "menu": "Menu"
   },
   "Home": {
-    "title": "Najlepšia tlač na svete",
-    "text": "Ak o nej neviete, teraz sa to dozviete."
+    "title": "Dotknite sa spomienok",
+    "button1": "Objednať",
+    "button2": "Chcem vedieť viac",
+    "video": "Váš prehliadač nepodporuje video tag."
   },
   "Order": {
     "title": "Objednávka",
@@ -16,10 +18,20 @@
   },
   "OrderItemSelection": {
     "title": "Výber produktu",
-    "back": "Späť"
+    "back": "Späť",
+    "select": "Vybrať"
   },
   "OrderItem": {
     "title": "Fotografia",
-    "files": "Súbory"
+    "back": "Späť",
+    "files": "Súbory",
+    "add": "Pridať",
+    "configuration": "Konfigurácia"
+  },
+  "Footer": {
+    "home": "Domov",
+    "privacy": "Ochrana osobných údajov",
+    "conditions": "Obchodné podmienky",
+    "rights": "Všetky práva vyhradené."
   }
 }

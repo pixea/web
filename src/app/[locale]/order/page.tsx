@@ -8,9 +8,9 @@ export default function OrderPage() {
 
   return (
     <Flex direction="column" gap="2" mt="4">
-      <Heading>{t("title")}</Heading>
+      <Heading size="7">{t("title")}</Heading>
 
-      <Flex direction="column" gap="9" align="center" width="full" mt="8">
+      <Flex direction="column" gap="6" align="center" width="full" mt="6">
         <Flex direction="column" gap="2" align="center">
           <Image
             src="/illustrations/empty-cart.svg"

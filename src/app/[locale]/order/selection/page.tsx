@@ -1,11 +1,11 @@
 import { Link } from "@/i18n/routing";
-import { Button, Flex, Box, Heading, Text } from "@radix-ui/themes";
-import Image from "next/image";
-import { useLocale, useTranslations } from "next-intl";
+import { Button, Flex, Heading, Grid } from "@radix-ui/themes";
+import { ArrowUturnLeftIcon } from "@heroicons/react/24/solid";
+import { useTranslations } from "next-intl";
+import ProductPreview, { Product } from "./product";
 
 const OrderItemSelectionPage = () => {
   const t = useTranslations("OrderItemSelection");
-  const locale = useLocale();
 
   const options = [
     {
@@ -13,6 +13,10 @@ const OrderItemSelectionPage = () => {
       name: {
         en: "Photo",
         sk: "Fotografia",
+      },
+      desc: {
+        en: "from 9x13cm, $500",
+        sk: "od 9x13cm, 500€",
       },
       image: "photo.jpg",
     },
@@ -22,6 +26,10 @@ const OrderItemSelectionPage = () => {
         en: "Panel",
         sk: "Panel",
       },
+      desc: {
+        en: "from 15x20cm, $1000",
+        sk: "od 15x20cm, 1000€",
+      },
       image: "panel.jpg",
     },
     {
@@ -29,6 +37,10 @@ const OrderItemSelectionPage = () => {
       name: {
         en: "Canvas",
         sk: "Plátno",
+      },
+      desc: {
+        en: "from 15x20cm, $2000",
+        sk: "od 15x20cm, 2000€",
       },
       image: "canvas.jpg",
     },
@@ -38,46 +50,44 @@ const OrderItemSelectionPage = () => {
         en: "Custom",
         sk: "Na požiadanie",
       },
+      desc: {
+        en: "pricing will be specified",
+        sk: "cena bude upresnená",
+      },
       image: "custom.jpg",
     },
-  ] as { id: string; name: Record<string, string>; image: string }[];
+  ] as Product[];
 
   return (
     <Flex direction="column" gap="2" mt="4">
       <Flex direction="row" justify="between" align="center">
-        <Heading>{t("title")}</Heading>
+        <Heading size="7">{t("title")}</Heading>
 
         <Button asChild color="gray" variant="ghost">
-          <Link href="/order">{t("back")}</Link>
+          <Link href="/order" className="flex items-center">
+            <ArrowUturnLeftIcon className="size-4" />
+            {t("back")}
+          </Link>
         </Button>
       </Flex>
 
-      <Flex direction="column" gap="2" width="full" mt="4">
+      <Grid
+        columns={{
+          initial: "1",
+          sm: "2",
+          md: "3",
+          lg: "4",
+        }}
+        gap="4"
+        width="full"
+        mt="4"
+      >
         {options.map((option) => (
-          <Button
-            key={option.id}
-            variant="outline"
-            color="gray"
-            className="h-auto text-left justify-start p-5"
-          >
-            <Flex direction="column" width="full">
-              <Text weight="bold" className="z-10">
-                {option.name[locale]}
-              </Text>
-
-              <Box className="absolute w-full h-full bg-gradient-to-b from-[#000/0] to-[#000/75]" />
-              <Image
-                src={`/products/${option.image}`}
-                alt=""
-                width={300}
-                height={100}
-                className="absolute object-cover -z-10"
-              />
-            </Flex>
-          </Button>
+          <ProductPreview key={option.id} product={option} />
         ))}
-      </Flex>
+      </Grid>
     </Flex>
   );
 };
+
 export default OrderItemSelectionPage;

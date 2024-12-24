@@ -41,7 +41,7 @@ export default async function RootLayout({
 
   return (
     <html lang={locale} suppressHydrationWarning>
-      <body className={`${raleway.variable} antialiased`}>
+      <body className={`${raleway.variable} antialiased bg-panel-solid`}>
         <ThemeProvider attribute="class">
           <Theme
             accentColor="blue"

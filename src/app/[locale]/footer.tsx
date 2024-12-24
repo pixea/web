@@ -1,16 +1,43 @@
 import { Link } from "@/i18n/routing";
-import { Flex } from "@radix-ui/themes";
+import { Flex, Text, Link as RadixLink } from "@radix-ui/themes";
 import { useTranslations } from "next-intl";
 import Image from "next/image";
 
 const Footer = () => {
-  const t = useTranslations("Header");
+  const t = useTranslations("Footer");
 
   return (
-    <Flex direction="row" justify="center" align="center" gap="3" m="8">
-      <Link href="/" aria-label={t("home")}>
-        <Image src="/brand/logo.svg" alt="" width={128} height={32} />
-      </Link>
+    <Flex
+      direction="column"
+      justify="center"
+      align="center"
+      gap="1"
+      mx="2"
+      my="8"
+      asChild
+    >
+      <footer>
+        <Flex mb="4">
+          <Link href="/" aria-label={t("home")}>
+            <Image src="/brand/logo.svg" alt="" width={80} height={30} />
+          </Link>
+        </Flex>
+        <Flex direction="row" align="center" gap="2">
+          <RadixLink href="#" color="gray" size="1">
+            {t("privacy")}
+          </RadixLink>
+          <RadixLink href="#" color="gray" size="1">
+            {t("conditions")}
+          </RadixLink>
+        </Flex>
+        <Text color="gray" size="1">
+          &copy; 2025{" "}
+          <RadixLink href="https://dmedia.sk/" target="_blank" color="gray">
+            D.MEDIA, s.r.o.
+          </RadixLink>{" "}
+          {t("rights")}
+        </Text>
+      </footer>
     </Flex>
   );
 };
