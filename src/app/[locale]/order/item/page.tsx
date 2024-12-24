@@ -143,7 +143,7 @@ const OrderItem = () => {
           </Button>
           <Button className="bg-gray-2 rounded-3 h-[8rem] relative text-left p-0 overflow-hidden">
             <Image
-              src={`/products/canvas.jpg`}
+              src={`/family.jpg`}
               alt=""
               width={256}
               height={256}
