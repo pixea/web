@@ -3,7 +3,16 @@
     "home": "Home",
     "order": "Order",
     "openOrder": "Order",
-    "menu": "Menu"
+    "menu": "Menu",
+    "items": {
+      "photo": "Photo Print",
+      "panel": "Photo Panels",
+      "canvas": "Canvas Print",
+      "other": "Other",
+      "magnets": "Photo Magnets",
+      "about": "About",
+      "contact": "Contact"
+    }
   },
   "Home": {
     "title": "Touch your memories",
@@ -30,6 +39,12 @@
     "total": "Total",
     "cancel": "Cancel",
     "confirm": "Confirm"
+  },
+  "Product": {
+    "title": "Products"
+  },
+  "Photo": {
+    "title": "Photo Print"
   },
   "Footer": {
     "home": "Home",

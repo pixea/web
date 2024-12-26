@@ -11,6 +11,7 @@ import { notFound } from "next/navigation";
 import { getMessages } from "next-intl/server";
 import Header from "./header";
 import Footer from "./footer";
+import themeConfig from "@/app/_themes/config";
 
 const raleway = Raleway({
   variable: "--font-releway",
@@ -48,14 +49,7 @@ export default async function RootLayout({
 
       <body className={`${raleway.variable} antialiased bg-panel-solid`}>
         <ThemeProvider attribute="class">
-          <Theme
-            accentColor="blue"
-            grayColor="gray"
-            panelBackground="solid"
-            scaling="110%"
-            radius="large"
-            className="flex flex-col"
-          >
+          <Theme {...themeConfig} className="flex flex-col">
             <NextIntlClientProvider messages={messages}>
               <Header />
 

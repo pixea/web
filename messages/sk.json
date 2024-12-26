@@ -3,7 +3,16 @@
     "home": "Domov",
     "order": "Objednať",
     "openOrder": "Objednávka",
-    "menu": "Menu"
+    "menu": "Menu",
+    "items": {
+      "photo": "Tlač fotografií",
+      "panel": "Fotopanely",
+      "canvas": "Fotoplátna",
+      "other": "Iné",
+      "magnets": "Fotomagnetky",
+      "about": "O nás",
+      "contact": "Kontakt"
+    }
   },
   "Home": {
     "title": "Dotknite sa spomienok",
@@ -30,6 +39,12 @@
     "total": "Celkom",
     "cancel": "Zrušiť",
     "confirm": "Potvrdiť"
+  },
+  "Product": {
+    "title": "Produkty"
+  },
+  "Photo": {
+    "title": "Tlač fotografií"
   },
   "Footer": {
     "home": "Domov",

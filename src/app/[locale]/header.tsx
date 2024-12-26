@@ -1,12 +1,29 @@
-import { Link } from "@/i18n/routing";
-import { Bars3Icon } from "@heroicons/react/24/solid";
-import { Button, Flex } from "@radix-ui/themes";
-import { useTranslations } from "next-intl";
-import Image from "next/image";
+import { Flex } from "@radix-ui/themes";
+
+// Mobile and desktop navigation
+import MobileNavigation from "@/components/mobileNav";
+import DesktopNavigation from "@/components/desktopNav";
+
+// Navigation menu items
+const menu = [
+  { name: "items.photo", href: "/product/photo-print" },
+  { name: "items.panel", href: "/product/photo-panels" },
+  { name: "items.canvas", href: "/product/canvas-print" },
+  {
+    name: "items.other",
+    items: [
+      { name: "items.magnets", href: "/product/photo-magnets" },
+      { name: "items.magnets", href: "/product/photo-magnets" },
+      { name: "items.magnets", href: "/product/photo-magnets" },
+    ],
+  },
+  { name: "items.about", href: "/about" },
+  { name: "items.contact", href: "/contact" },
+] as const;
+
+export type MenuItem = (typeof menu)[number];
 
 const Header = () => {
-  const t = useTranslations("Header");
-
   return (
     <Flex
       position="sticky"
@@ -20,54 +37,9 @@ const Header = () => {
       asChild
     >
       <header>
-        <Link href="/" aria-label={t("home")}>
-          <Image
-            src="/brand/icon-light.svg"
-            alt=""
-            width={32}
-            height={40}
-            className="block dark:hidden"
-          />
-          <Image
-            src="/brand/icon-dark.svg"
-            alt=""
-            width={32}
-            height={40}
-            className="hidden dark:block"
-          />
-        </Link>
+        <MobileNavigation items={menu} />
 
-        <Flex gap="3">
-          <Button
-            variant="soft"
-            size="3"
-            className="relative font-semibold"
-            asChild
-          >
-            <Link href="/order">
-              {t("order")}
-
-              {/* <Box
-      position="absolute"
-      top="0"
-      right="0"
-      className="bg-blue-solid"
-    >
-      1
-    </Box> */}
-            </Link>
-          </Button>
-
-          <Button
-            variant="outline"
-            color="gray"
-            size="3"
-            aria-label={t("menu")}
-            className="p-3 text-gray-10"
-          >
-            <Bars3Icon className="size-6" />
-          </Button>
-        </Flex>
+        <DesktopNavigation items={menu} />
       </header>
     </Flex>
   );

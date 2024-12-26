@@ -28,6 +28,34 @@ export const routing = defineRouting({
       en: "/order/item",
       sk: "/objednavka/polozka",
     },
+    "/product": {
+      en: "/products",
+      sk: "/produkty",
+    },
+    "/product/photo-print": {
+      en: "/product/photo-print",
+      sk: "/produkt/tlac-fotografii",
+    },
+    "product/photo-panels": {
+      en: "/product/photo-panels",
+      sk: "/produkt/fotopanely",
+    },
+    "product/canvas-print": {
+      en: "/product/canvas-print",
+      sk: "/produkt/fotoplatna",
+    },
+    "product/photo-magnets": {
+      en: "/product/photo-magnets",
+      sk: "/produkt/fotomagnetky",
+    },
+    "/about": {
+      en: "/about",
+      sk: "/o-nas",
+    },
+    "/contact": {
+      en: "/contact",
+      sk: "/kontakt",
+    },
   },
 });
 
