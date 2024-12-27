@@ -11,11 +11,7 @@ const menu = [
   { name: "items.canvas", href: "/product/canvas-print" },
   {
     name: "items.other",
-    items: [
-      { name: "items.magnets", href: "/product/photo-magnets" },
-      { name: "items.magnets", href: "/product/photo-magnets" },
-      { name: "items.magnets", href: "/product/photo-magnets" },
-    ],
+    items: [{ name: "items.magnets", href: "/product/photo-magnets" }],
   },
   { name: "items.about", href: "/about" },
   { name: "items.contact", href: "/contact" },

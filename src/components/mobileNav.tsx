@@ -38,7 +38,7 @@ const MobileNavigation = ({ items }: { items: MenuItem[] }) => {
       direction="row"
       justify="between"
       align="center"
-      className="w-full sm:hidden"
+      className="w-full md:hidden"
     >
       <Link href="/" aria-label={t("home")}>
         <Image
@@ -126,7 +126,7 @@ const MobileNavigation = ({ items }: { items: MenuItem[] }) => {
                               color="blue"
                               className="py-2 gap-1.5 w-full justify-start"
                             >
-                              <Text size="5" className="font-semibold">
+                              <Text size="4" className="font-semibold">
                                 {t(item.name)}
                               </Text>
                               {open ? (
@@ -149,7 +149,7 @@ const MobileNavigation = ({ items }: { items: MenuItem[] }) => {
                                       asChild
                                     >
                                       <Link href={subItem.href}>
-                                        <Text size="5">{t(subItem.name)}</Text>
+                                        <Text size="4">{t(subItem.name)}</Text>
                                       </Link>
                                     </Button>
                                   </li>
@@ -168,7 +168,7 @@ const MobileNavigation = ({ items }: { items: MenuItem[] }) => {
                           asChild
                         >
                           <Link href={item.href} className="rounded-3">
-                            <Text size="5" className="font-semibold">
+                            <Text size="4" className="font-semibold">
                               {t(item.name)}
                             </Text>
                           </Link>
@@ -176,6 +176,16 @@ const MobileNavigation = ({ items }: { items: MenuItem[] }) => {
                       </li>
                     )
                   )}
+
+                  <li>
+                    <Button variant="soft" color="blue" className="py-6 w-full">
+                      <Link href="/order" className="rounded-3">
+                        <Text size="4" className="font-semibold">
+                          {t("order")}
+                        </Text>
+                      </Link>
+                    </Button>
+                  </li>
                 </ul>
               </Flex>
             </Theme>
