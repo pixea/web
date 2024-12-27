@@ -4,6 +4,7 @@ import { Raleway } from "next/font/google";
 import "../globals.css";
 import { Flex, Theme } from "@radix-ui/themes";
 import { ThemeProvider } from "next-themes";
+import { Analytics } from "@vercel/analytics/react";
 
 import { NextIntlClientProvider } from "next-intl";
 import { routing } from "@/i18n/routing";
@@ -61,6 +62,8 @@ export default async function RootLayout({
             </NextIntlClientProvider>
           </Theme>
         </ThemeProvider>
+
+        <Analytics />
       </body>
     </html>
   );

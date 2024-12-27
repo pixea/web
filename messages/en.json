@@ -46,6 +46,17 @@
   "Photo": {
     "title": "Photo Print"
   },
+  "Auth": {
+    "title": "Login",
+    "description": "Sign in to simplify the process and the ability to return later.",
+    "email": "Email",
+    "enterEmail": "Enter your email",
+    "continue": "Continue",
+    "or": "or",
+    "google": "Sign in with Google",
+    "facebook": "Sign in with Facebook",
+    "apple": "Sign in with Apple"
+  },
   "Footer": {
     "home": "Home",
     "privacy": "Privacy Policy",

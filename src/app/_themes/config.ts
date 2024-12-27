@@ -4,7 +4,7 @@ const themeConfig = {
   accentColor: "blue",
   grayColor: "gray",
   panelBackground: "solid",
-  scaling: "110%",
+  scaling: "100%",
   radius: "large",
 } satisfies ThemeProps;
 

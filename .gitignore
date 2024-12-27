@@ -39,3 +39,8 @@ jspm_packages
 
 # Other
 .DS_Store
+.vercel
+
+# Ignore the .env file
+.env
+.env.local

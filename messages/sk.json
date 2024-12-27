@@ -46,6 +46,17 @@
   "Photo": {
     "title": "Tlač fotografií"
   },
+  "Auth": {
+    "title": "Prihlásenie",
+    "description": "Prihláste sa pre zjednodusenie a moznost vratit sa neskor.",
+    "email": "Email",
+    "enterEmail": "Zadajte email",
+    "continue": "Pokračovať",
+    "or": "alebo",
+    "google": "Prihlásiť sa cez Google",
+    "facebook": "Prihlásiť sa cez Facebook",
+    "apple": "Prihlásiť sa cez Apple"
+  },
   "Footer": {
     "home": "Domov",
     "privacy": "Ochrana osobných údajov",

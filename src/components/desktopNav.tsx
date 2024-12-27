@@ -6,7 +6,7 @@ import Image from "next/image";
 
 import { cn } from "@/lib/utils";
 
-import { Flex, Button } from "@radix-ui/themes";
+import { Flex, Button, Theme } from "@radix-ui/themes";
 import * as NavigationMenu from "@radix-ui/react-navigation-menu";
 
 import { ChevronDownIcon } from "@heroicons/react/24/solid";
@@ -14,6 +14,7 @@ import { ChevronDownIcon } from "@heroicons/react/24/solid";
 import { MenuItem } from "@/app/[locale]/header";
 
 import { useTranslations } from "next-intl";
+import themeConfig from "@/app/_themes/config";
 
 const DesktopNavigation = ({ items }: { items: MenuItem[] }) => {
   const t = useTranslations("Header");
@@ -42,7 +43,7 @@ const DesktopNavigation = ({ items }: { items: MenuItem[] }) => {
         />
       </Link>
 
-      <Link href="/" aria-label={t("home")} className="hidden lg:flex">
+      <Link href="/" aria-label={t("home")} className="hidden lg:block">
         <Image
           src="/brand/logo-light.svg"
           alt=""
@@ -81,44 +82,49 @@ const DesktopNavigation = ({ items }: { items: MenuItem[] }) => {
                 </Button>
 
                 <NavigationMenu.Content className="absolute left-0 top-0 w-full data-[motion=from-end]:animate-enterFromRight data-[motion=from-start]:animate-enterFromLeft data-[motion=to-end]:animate-exitToRight data-[motion=to-start]:animate-exitToLeft sm:w-auto">
-                  <ul className="one m-0 grid list-none gap-x-2.5 p-[22px] sm:w-[500px] sm:grid-cols-[0.75fr_1fr]">
-                    <li className="row-span-3 grid">
-                      <NavigationMenu.Link asChild>
-                        <Link
-                          className="flex h-full w-full select-none flex-col justify-end rounded-md bg-gray-5 p-[25px] no-underline outline-none"
-                          href="/"
-                        >
-                          <svg
-                            aria-hidden
-                            width="38"
-                            height="38"
-                            viewBox="0 0 25 25"
-                            fill="black"
+                  <Theme {...themeConfig}>
+                    <ul className="one m-0 grid list-none gap-x-2.5 p-[22px] sm:w-[500px] sm:grid-cols-[0.75fr_1fr]">
+                      <li className="row-span-3 grid">
+                        <NavigationMenu.Link asChild>
+                          <Link
+                            className="flex h-full w-full select-none flex-col justify-end rounded-md bg-gray-5 p-[25px] no-underline outline-none"
+                            href="/"
                           >
-                            <path d="M12 25C7.58173 25 4 21.4183 4 17C4 12.5817 7.58173 9 12 9V25Z"></path>
-                            <path d="M12 0H4V8H12V0Z"></path>
-                            <path d="M17 8C19.2091 8 21 6.20914 21 4C21 1.79086 19.2091 0 17 0C14.7909 0 13 1.79086 13 4C13 6.20914 14.7909 8 17 8Z"></path>
-                          </svg>
-                          <div className="mb-[7px] mt-4 text-[18px] font-medium leading-[1.2] text-gray-12">
-                            Radix Primitives
-                          </div>
-                          <p className="text-[14px] leading-[1.3] text-gray-10">
-                            Unstyled, accessible components for React.
-                          </p>
-                        </Link>
-                      </NavigationMenu.Link>
-                    </li>
+                            <svg
+                              aria-hidden
+                              width="38"
+                              height="38"
+                              viewBox="0 0 25 25"
+                              fill="black"
+                            >
+                              <path d="M12 25C7.58173 25 4 21.4183 4 17C4 12.5817 7.58173 9 12 9V25Z"></path>
+                              <path d="M12 0H4V8H12V0Z"></path>
+                              <path d="M17 8C19.2091 8 21 6.20914 21 4C21 1.79086 19.2091 0 17 0C14.7909 0 13 1.79086 13 4C13 6.20914 14.7909 8 17 8Z"></path>
+                            </svg>
+                            <div className="mb-[7px] mt-4 text-[18px] font-medium leading-[1.2] text-gray-12">
+                              Radix Primitives
+                            </div>
+                            <p className="text-[14px] leading-[1.3] text-gray-10">
+                              Unstyled, accessible components for React.
+                            </p>
+                          </Link>
+                        </NavigationMenu.Link>
+                      </li>
 
-                    <ListItem href="https://stitches.dev/" title="Stitches">
-                      CSS-in-JS with best-in-class developer experience.
-                    </ListItem>
-                    <ListItem href="/colors" title="Colors">
-                      Beautiful, thought-out palettes with auto dark mode.
-                    </ListItem>
-                    <ListItem href="https://icons.radix-ui.com/" title="Icons">
-                      A crisp set of 15x15 icons, balanced and consistent.
-                    </ListItem>
-                  </ul>
+                      <ListItem href="https://stitches.dev/" title="Stitches">
+                        CSS-in-JS with best-in-class developer experience.
+                      </ListItem>
+                      <ListItem href="/colors" title="Colors">
+                        Beautiful, thought-out palettes with auto dark mode.
+                      </ListItem>
+                      <ListItem
+                        href="https://icons.radix-ui.com/"
+                        title="Icons"
+                      >
+                        A crisp set of 15x15 icons, balanced and consistent.
+                      </ListItem>
+                    </ul>
+                  </Theme>
                 </NavigationMenu.Content>
               </NavigationMenu.Item>
             ) : (

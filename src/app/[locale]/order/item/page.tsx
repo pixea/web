@@ -16,6 +16,7 @@ import { useFormatter, useLocale, useTranslations } from "next-intl";
 import Image from "next/image";
 import RadioCardRenderer, { RadioCardConfiguration } from "./radio-card";
 import TextAreaRenderer from "./textarea";
+import SizeRenderer from "./size";
 
 export type BaseProductConfiguration = {
   id: string;
@@ -26,35 +27,29 @@ export type ProductConfiguration = RadioCardConfiguration;
 
 const configuration = [
   {
-    id: "abc123",
-    type: "radio-card",
+    id: "size",
+    type: "size",
     name: {
       en: "Size",
       sk: "Veľkosť",
     },
     options: [
       {
-        id: "size1",
-        name: {
-          en: "9x13cm",
-          sk: "9x13cm",
-        },
+        dimensions: [9, 13],
+        other: true,
         price: 3.6,
       },
       {
-        id: "size2",
-        name: {
-          en: "15x20cm",
-          sk: "15x20cm",
-        },
+        dimensions: [10, 15],
         price: 4.8,
       },
       {
-        id: "size3",
-        name: {
-          en: "20x30cm",
-          sk: "20x30cm",
-        },
+        dimensions: [13, 18],
+        other: true,
+        price: 4.8,
+      },
+      {
+        dimensions: [15, 20],
         price: 5.6,
       },
     ],
@@ -97,6 +92,7 @@ const configuration = [
 
 const renderers = {
   "radio-card": RadioCardRenderer,
+  size: SizeRenderer,
   textarea: TextAreaRenderer,
 };
 
