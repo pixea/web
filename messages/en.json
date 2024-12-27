@@ -48,7 +48,7 @@
   },
   "Auth": {
     "title": "Login",
-    "description": "Sign in to simplify the process and the ability to return later.",
+    "description": "Sign in for order tracking and management, data prefilling and an overall better experience.",
     "email": "Email",
     "enterEmail": "Enter your email",
     "continue": "Continue",

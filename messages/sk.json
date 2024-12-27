@@ -48,7 +48,7 @@
   },
   "Auth": {
     "title": "Prihlásenie",
-    "description": "Prihláste sa pre zjednodusenie a moznost vratit sa neskor.",
+    "description": "Prihláste sa pre správu a sledovanie objednávok, predvypĺňanie údajov a príjemnejší zážitok.",
     "email": "Email",
     "enterEmail": "Zadajte email",
     "continue": "Pokračovať",
