@@ -26,7 +26,7 @@ const DesktopNavigation = ({ items }: { items: readonly MenuItem[] }) => {
       justify="between"
       className="hidden md:flex w-full"
     >
-      <Link href="/" aria-label={t("home")} className="lg:hidden">
+      <Link href="/" title={t("home")} className="lg:hidden">
         <Image
           src="/brand/icon-light.svg"
           alt=""
@@ -43,7 +43,7 @@ const DesktopNavigation = ({ items }: { items: readonly MenuItem[] }) => {
         />
       </Link>
 
-      <Link href="/" aria-label={t("home")} className="hidden lg:block">
+      <Link href="/" title={t("home")} className="hidden lg:block">
         <Image
           src="/brand/logo-light.svg"
           alt=""

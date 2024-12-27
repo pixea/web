@@ -58,6 +58,12 @@
     "facebook": "Prihlásiť sa cez Facebook",
     "apple": "Prihlásiť sa cez Apple"
   },
+  "AuthVerify": {
+    "title": "Overenie",
+    "description": "Na email {email} sme zaslali overovaci kod. Skopirujte ho alebo opiste nižšie.",
+    "enterCode": "Zadajte kód",
+    "continue": "Pokračovať"
+  },
   "Footer": {
     "home": "Domov",
     "privacy": "Ochrana osobných údajov",

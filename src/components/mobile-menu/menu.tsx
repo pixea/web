@@ -34,7 +34,7 @@ const MobileMenu = ({ items }: { items: readonly MenuItem[] }) => {
           variant="outline"
           color="gray"
           size="3"
-          aria-label={t("menu")}
+          title={t("menu")}
           className="p-3 text-gray-10"
         >
           <Bars3Icon className="size-6" />
@@ -43,7 +43,7 @@ const MobileMenu = ({ items }: { items: readonly MenuItem[] }) => {
       <SheetContent className="w-full">
         <SheetHeader className="text-left">
           <Box className="mb-7">
-            <Link href="/" onClick={onInteraction}>
+            <Link href="/" title={"home"} onClick={onInteraction}>
               <Image
                 src="/brand/logo-light.svg"
                 alt=""

@@ -20,7 +20,7 @@ const MobileNavigation = ({ items }: { items: readonly MenuItem[] }) => {
       align="center"
       className="w-full md:hidden"
     >
-      <Link href="/" aria-label={t("home")}>
+      <Link href="/" title={t("home")}>
         <Image
           src="/brand/icon-light.svg"
           alt=""

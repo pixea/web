@@ -18,7 +18,7 @@ const Footer = () => {
     >
       <footer>
         <Flex mb="4">
-          <Link href="/" aria-label={t("home")}>
+          <Link href="/" title={t("home")}>
             <Image
               src="/brand/logo-light.svg"
               alt=""

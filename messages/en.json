@@ -58,6 +58,15 @@
     "facebook": "Sign in with Facebook",
     "apple": "Sign in with Apple"
   },
+  "AuthVerify": {
+    "title": "Verification",
+    "description": "We have sent an email with verification code to {email}. Please copy and paste the code or type it below.",
+    "enterCode": "Enter code",
+    "continue": "Continue"
+  },
+  "VerificationEmail": {
+    "preview": "Confirm your email address"
+  },
   "Footer": {
     "home": "Home",
     "privacy": "Privacy Policy",
