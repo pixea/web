@@ -56,6 +56,10 @@ export const routing = defineRouting({
       en: "/contact",
       sk: "/kontakt",
     },
+    "/auth": {
+      en: "/auth",
+      sk: "/auth",
+    },
   },
 });
 
