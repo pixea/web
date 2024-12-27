@@ -65,42 +65,47 @@ const DesktopNavigation = ({ items }: { items: readonly MenuItem[] }) => {
           {items.map((item) =>
             "items" in item ? (
               <NavigationMenu.Item key={item.name}>
-                <NavigationMenu.Trigger className="group flex select-none items-center gap-1 px-3 py-2 leading-none outline-none">
-                  {t(item.name)}
-                  <ChevronDownIcon
-                    className="size-3 relative top-px transition-transform duration-[250] ease-in group-data-[state=open]:-rotate-180"
-                    aria-hidden
-                  />
-                </NavigationMenu.Trigger>
+                <Button variant="ghost" color="gray" size="3" asChild>
+                  <NavigationMenu.Trigger className="group flex select-none items-center gap-1 py-2.5 leading-none outline-none">
+                    {t(item.name)}
+                    <ChevronDownIcon
+                      className="size-3 relative top-px transition-transform duration-250 ease-in group-data-[state=open]:-rotate-180"
+                      aria-hidden
+                    />
+                  </NavigationMenu.Trigger>
+                </Button>
 
-                <NavigationMenu.Content className="absolute left-0 top-0 w-full data-[motion=from-end]:animate-enterFromRight data-[motion=from-start]:animate-enterFromLeft data-[motion=to-end]:animate-exitToRight data-[motion=to-start]:animate-exitToLeft sm:w-auto">
-                  <ul className="one flex flex-col m-0 list-none gap-x-2.5 p-[22px] sm:w-[500px] sm:grid-cols-[0.75fr_1fr]">
-                    <ListItem href="https://stitches.dev/" title="Stitches">
-                      CSS-in-JS with best-in-class developer experience.
-                    </ListItem>
-                    <ListItem href="/colors" title="Colors">
-                      Beautiful, thought-out palettes with auto dark mode.
-                    </ListItem>
-                    <ListItem href="https://icons.radix-ui.com/" title="Icons">
-                      A crisp set of 15x15 icons, balanced and consistent.
-                    </ListItem>
+                <NavigationMenu.Content className="bg-gray-4 absolute left-0 top-0 w-full data-[motion=from-end]:animate-enterFromRight data-[motion=from-start]:animate-enterFromLeft data-[motion=to-end]:animate-exitToRight data-[motion=to-start]:animate-exitToLeft sm:w-auto">
+                  <ul className="one flex flex-col m-0 list-none gap-2 p-1.5 w-96">
+                    {item.items.map((subItem) => (
+                      <ListItem
+                        key={subItem.name}
+                        href={subItem.href}
+                        title={t(subItem.name)}
+                        className="hover:bg-gray-6"
+                      >
+                        Desc
+                      </ListItem>
+                    ))}
                   </ul>
                 </NavigationMenu.Content>
               </NavigationMenu.Item>
             ) : (
               <NavigationMenu.Item key={item.name}>
-                <DesktopLink href={item.href}>{t(item.name)}</DesktopLink>
+                <Button variant="ghost" color="gray" size="3" asChild>
+                  <DesktopLink href={item.href}>{t(item.name)}</DesktopLink>
+                </Button>
               </NavigationMenu.Item>
             )
           )}
 
           <NavigationMenu.Indicator className="top-full z-10 flex h-2.5 items-end justify-center overflow-hidden transition-[width,transform_250ms_ease] data-[state=hidden]:animate-fadeOut data-[state=visible]:animate-fadeIn">
-            <div className="relative top-[70%] size-2.5 rotate-45 rounded-tl-sm bg-white" />
+            <div className="relative top-3/4 size-2.5 rotate-45 rounded-tl-sm bg-gray-4" />
           </NavigationMenu.Indicator>
         </NavigationMenu.List>
 
         <div className="perspective-[2000px] absolute left-0 top-full flex w-full justify-center">
-          <NavigationMenu.Viewport className="relative mt-2.5 h-[var(--radix-navigation-menu-viewport-height)] w-full origin-[top_center] overflow-hidden rounded-md bg-white transition-[width,_height] duration-300 data-[state=closed]:animate-scaleOut data-[state=open]:animate-scaleIn sm:w-[var(--radix-navigation-menu-viewport-width)]" />
+          <NavigationMenu.Viewport className="relative mt-2.5 h-[var(--radix-navigation-menu-viewport-height)] w-full origin-[top_center] overflow-hidden rounded-md bg-gray-4 transition-[width,_height] duration-300 data-[state=closed]:animate-scaleOut data-[state=open]:animate-scaleIn sm:w-[var(--radix-navigation-menu-viewport-width)]" />
         </div>
       </NavigationMenu.Root>
 

@@ -33,7 +33,7 @@ const Header = () => {
       asChild
     >
       <header>
-        <Container>
+        <Container className="w-full">
           <MobileNavigation items={menu} />
 
           <DesktopNavigation items={menu} />
