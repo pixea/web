@@ -64,6 +64,20 @@
     "enterCode": "Zadajte kód",
     "continue": "Pokračovať"
   },
+  "VerificationEmail": {
+    "subject": "Overovací kód na prihlásenie",
+    "preview": "Použi kód {CODE} na overenie svojej e-mailovej adresy a prihlásenie.",
+    "title": "Overovací kód na prihlásenie",
+    "description": "Váš overovací kód je nižšie - skopírujte a prilepte alebo napíšte ho na obrazovke \"Overenie\", aby ste sa prihlásili.",
+    "warning": "Ak ste si tento e-mail nevyžiadali - o nič nejde a môžete ho pokojne ignorovať.",
+    "links": {
+      "home": "Domov",
+      "privacy": "Ochrana osobných údajov",
+      "terms": "Obchodné podmienky",
+      "contact": "Kontakt"
+    },
+    "rights": "Všetky práva vyhradené."
+  },
   "Footer": {
     "home": "Domov",
     "privacy": "Ochrana osobných údajov",

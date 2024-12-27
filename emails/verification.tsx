@@ -27,51 +27,78 @@ const baseUrl = process.env.VERCEL_URL
   : "";
 
 export const VerificationEmail = ({ code }: VerificationEmailProps) => {
-  const locale = "en";
+  const locale = "sk";
 
-  const intl = createTranslator({ messages: messages[locale], locale });
+  const intl = createTranslator({
+    messages: messages[locale].VerificationEmail,
+    locale,
+  });
 
   return (
     <Tailwind config={_tailwindConfig}>
       <Html lang={locale} dir="ltr">
         <Head />
-        <Preview>{intl("VerificationEmail.preview")}</Preview>
-        <Body style={main}>
-          <Container style={container}>
-            <Section style={logoContainer}>
-              <Img
-                src={`${baseUrl}/static/slack-logo.png`}
-                width="120"
-                height="36"
-                alt="Slack"
-              />
+        <Preview>{intl("preview")}</Preview>
+        <Body style={main} className="mx-auto bg-white dark:bg-black">
+          <Container className="mx-auto px-5">
+            <Section className="mt-8">
+              <Link href="https://pixea.sk" target="_blank">
+                <Img
+                  src={`${baseUrl}/brand/logo-light.png`}
+                  width="120"
+                  height="47"
+                  alt="Pixea logo"
+                  className="block dark:hidden"
+                />
+                <Img
+                  src={`${baseUrl}/brand/logo-dark.png`}
+                  width="120"
+                  height="47"
+                  alt="Pixea logo"
+                  className="hidden dark:block"
+                />
+              </Link>
             </Section>
-            <Heading style={h1}>Confirm your email address</Heading>
-            <Text style={heroText}>
-              Your confirmation code is below - enter it in your open browser
-              window and we&apos;ll help you get signed in.
+
+            <Heading className="text-gray-900 dark:text-gray-50 font-semibold my-8 p-0 text-4xl">
+              {intl("title")}
+            </Heading>
+
+            <Text className="text-xl text-gray-700 dark:text-gray-200 mb-8">
+              {intl("description")}
             </Text>
 
-            <Section style={codeBox}>
-              <Text style={confirmationCodeText}>{code}</Text>
+            <Section className="bg-black/5 dark:bg-white/10 rounded-lg mb-8 px-2.5 py-9 text-center">
+              <Text className="font-mono text-black dark:text-white tracking-[7px] text-3xl align-middle">
+                {code}
+              </Text>
             </Section>
 
-            <Text style={text}>
-              If you did not request this email, there&apos;s nothing to worry
-              about, you can safely ignore it.
+            <Text className="text-black text-gray-500 dark:text-gray-400 text-sm leading-6">
+              {intl("warning")}
             </Text>
 
             <Section>
-              <Row style={footerLogos}>
-                <Column style={{ width: "66%" }}>
-                  <Img
-                    src={`${baseUrl}/static/slack-logo.png`}
-                    width="120"
-                    height="36"
-                    alt="Slack"
-                  />
+              <Row className="mb-8 px-2 w-full">
+                <Column className="w-[66%]">
+                  <Link href="https://pixea.sk" target="_blank">
+                    <Img
+                      src={`${baseUrl}/brand/logo-light.png`}
+                      width="120"
+                      height="47"
+                      alt="Pixea logo"
+                      className="block dark:hidden"
+                    />
+                    <Img
+                      src={`${baseUrl}/brand/logo-dark.png`}
+                      width="120"
+                      height="47"
+                      alt="Pixea logo"
+                      className="hidden dark:block"
+                    />
+                  </Link>
                 </Column>
-                <Column>
+                {/* <Column>
                   <Section>
                     <Row>
                       <Column>
@@ -109,53 +136,58 @@ export const VerificationEmail = ({ code }: VerificationEmailProps) => {
                       </Column>
                     </Row>
                   </Section>
-                </Column>
+                </Column> */}
               </Row>
             </Section>
 
-            <Section>
+            <Section className="text-gray-400 dark:text-gray-500">
               <Link
-                style={footerLink}
-                href="https://slackhq.com"
+                className="text-gray-400 dark:text-gray-500 underline"
+                href="https://pixea.sk"
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                Our blog
+                {intl("links.home")}
               </Link>
               &nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
               <Link
-                style={footerLink}
-                href="https://slack.com/legal"
+                className="text-gray-400 dark:text-gray-500 underline"
+                href="https://pixea.sk/privacy"
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                Policies
+                {intl("links.privacy")}
               </Link>
               &nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
               <Link
-                style={footerLink}
-                href="https://slack.com/help"
+                className="text-gray-400 dark:text-gray-500 underline"
+                href="https://pixea.sk/terms"
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                Help center
+                {intl("links.terms")}
               </Link>
               &nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
               <Link
-                style={footerLink}
-                href="https://slack.com/community"
+                className="text-gray-400 dark:text-gray-500 underline"
+                href="https://pixea.sk/contact"
                 target="_blank"
                 rel="noopener noreferrer"
                 data-auth="NotApplicable"
                 data-linkindex="6"
               >
-                Slack Community
+                {intl("links.contact")}
               </Link>
-              <Text style={footerText}>
-                ©2022 Slack Technologies, LLC, a Salesforce company. <br />
-                500 Howard Street, San Francisco, CA 94105, USA <br />
-                <br />
-                All rights reserved.
+              <Text className="text-xs text-gray-400 dark:text-gray-500 mb-10 text-left">
+                &copy; 2025{" "}
+                <Link
+                  className="text-gray-400 dark:text-gray-500 underline"
+                  href="https://dmedia.sk"
+                  target="_blank"
+                >
+                  D.MEDIA, s.r.o.
+                </Link>{" "}
+                {intl("rights")}
               </Text>
             </Section>
           </Container>
@@ -166,82 +198,17 @@ export const VerificationEmail = ({ code }: VerificationEmailProps) => {
 };
 
 VerificationEmail.PreviewProps = {
-  code: "DJZ-TLX",
+  code: "3FDXT2A8",
 } as VerificationEmailProps;
 
 export default VerificationEmail;
 
-const footerText = {
-  fontSize: "12px",
-  color: "#b7b7b7",
-  lineHeight: "15px",
-  textAlign: "left" as const,
-  marginBottom: "50px",
-};
-
-const footerLink = {
-  color: "#b7b7b7",
-  textDecoration: "underline",
-};
-
-const footerLogos = {
-  marginBottom: "32px",
-  paddingLeft: "8px",
-  paddingRight: "8px",
-  width: "100%",
-};
-
-const socialMediaIcon = {
-  display: "inline",
-  marginLeft: "32px",
-};
-
 const main = {
-  backgroundColor: "#ffffff",
-  margin: "0 auto",
   fontFamily:
     "-apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif",
 };
 
-const container = {
-  margin: "0 auto",
-  padding: "0px 20px",
-};
-
-const logoContainer = {
-  marginTop: "32px",
-};
-
-const h1 = {
-  color: "#1d1c1d",
-  fontSize: "36px",
-  fontWeight: "700",
-  margin: "30px 0",
-  padding: "0",
-  lineHeight: "42px",
-};
-
-const heroText = {
-  fontSize: "20px",
-  lineHeight: "28px",
-  marginBottom: "30px",
-};
-
-const codeBox = {
-  background: "rgb(245, 244, 245)",
-  borderRadius: "4px",
-  marginBottom: "30px",
-  padding: "40px 10px",
-};
-
-const confirmationCodeText = {
-  fontSize: "30px",
-  textAlign: "center" as const,
-  verticalAlign: "middle",
-};
-
-const text = {
-  color: "#000",
-  fontSize: "14px",
-  lineHeight: "24px",
-};
+// const socialMediaIcon = {
+//   display: "inline",
+//   marginLeft: "32px",
+// };
