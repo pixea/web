@@ -1,4 +1,4 @@
-import { Flex } from "@radix-ui/themes";
+import { Container, Flex } from "@radix-ui/themes";
 
 // Mobile and desktop navigation
 import MobileNavigation from "@/components/mobile-menu/nav";
@@ -29,13 +29,15 @@ const Header = () => {
       align="center"
       gap="3"
       p="4"
-      className="bg-panel-solid z-10"
+      className="rounded-b-3 bg-panel-solid z-10"
       asChild
     >
       <header>
-        <MobileNavigation items={menu} />
+        <Container>
+          <MobileNavigation items={menu} />
 
-        <DesktopNavigation items={menu} />
+          <DesktopNavigation items={menu} />
+        </Container>
       </header>
     </Flex>
   );

@@ -54,7 +54,14 @@ export default async function RootLayout({
             <NextIntlClientProvider messages={messages}>
               <Header />
 
-              <Flex direction="column" gap="4" m="4" className="flex-1" asChild>
+              <Flex
+                direction="column"
+                align="center"
+                gap="4"
+                m="4"
+                className="flex-1"
+                asChild
+              >
                 <main>{children}</main>
               </Flex>
 
