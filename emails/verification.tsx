@@ -11,10 +11,12 @@ import {
   Row,
   Section,
   Text,
+  Tailwind,
 } from "@react-email/components";
 import { createTranslator } from "next-intl";
 import * as React from "react";
 import messages from "../messages";
+import _tailwindConfig from "./_tailwind.config";
 
 interface VerificationEmailProps {
   code?: string;
@@ -30,134 +32,136 @@ export const VerificationEmail = ({ code }: VerificationEmailProps) => {
   const intl = createTranslator({ messages: messages[locale], locale });
 
   return (
-    <Html lang={locale} dir="ltr">
-      <Head />
-      <Preview>{intl("VerificationEmail.preview")}</Preview>
-      <Body style={main}>
-        <Container style={container}>
-          <Section style={logoContainer}>
-            <Img
-              src={`${baseUrl}/static/slack-logo.png`}
-              width="120"
-              height="36"
-              alt="Slack"
-            />
-          </Section>
-          <Heading style={h1}>Confirm your email address</Heading>
-          <Text style={heroText}>
-            Your confirmation code is below - enter it in your open browser
-            window and we&apos;ll help you get signed in.
-          </Text>
-
-          <Section style={codeBox}>
-            <Text style={confirmationCodeText}>{code}</Text>
-          </Section>
-
-          <Text style={text}>
-            If you did not request this email, there&apos;s nothing to worry
-            about, you can safely ignore it.
-          </Text>
-
-          <Section>
-            <Row style={footerLogos}>
-              <Column style={{ width: "66%" }}>
-                <Img
-                  src={`${baseUrl}/static/slack-logo.png`}
-                  width="120"
-                  height="36"
-                  alt="Slack"
-                />
-              </Column>
-              <Column>
-                <Section>
-                  <Row>
-                    <Column>
-                      <Link href="/">
-                        <Img
-                          src={`${baseUrl}/static/slack-twitter.png`}
-                          width="32"
-                          height="32"
-                          alt="Slack"
-                          style={socialMediaIcon}
-                        />
-                      </Link>
-                    </Column>
-                    <Column>
-                      <Link href="/">
-                        <Img
-                          src={`${baseUrl}/static/slack-facebook.png`}
-                          width="32"
-                          height="32"
-                          alt="Slack"
-                          style={socialMediaIcon}
-                        />
-                      </Link>
-                    </Column>
-                    <Column>
-                      <Link href="/">
-                        <Img
-                          src={`${baseUrl}/static/slack-linkedin.png`}
-                          width="32"
-                          height="32"
-                          alt="Slack"
-                          style={socialMediaIcon}
-                        />
-                      </Link>
-                    </Column>
-                  </Row>
-                </Section>
-              </Column>
-            </Row>
-          </Section>
-
-          <Section>
-            <Link
-              style={footerLink}
-              href="https://slackhq.com"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Our blog
-            </Link>
-            &nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
-            <Link
-              style={footerLink}
-              href="https://slack.com/legal"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Policies
-            </Link>
-            &nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
-            <Link
-              style={footerLink}
-              href="https://slack.com/help"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Help center
-            </Link>
-            &nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
-            <Link
-              style={footerLink}
-              href="https://slack.com/community"
-              target="_blank"
-              rel="noopener noreferrer"
-              data-auth="NotApplicable"
-              data-linkindex="6"
-            >
-              Slack Community
-            </Link>
-            <Text style={footerText}>
-              ©2022 Slack Technologies, LLC, a Salesforce company. <br />
-              500 Howard Street, San Francisco, CA 94105, USA <br />
-              <br />
-              All rights reserved.
+    <Tailwind config={_tailwindConfig}>
+      <Html lang={locale} dir="ltr">
+        <Head />
+        <Preview>{intl("VerificationEmail.preview")}</Preview>
+        <Body style={main}>
+          <Container style={container}>
+            <Section style={logoContainer}>
+              <Img
+                src={`${baseUrl}/static/slack-logo.png`}
+                width="120"
+                height="36"
+                alt="Slack"
+              />
+            </Section>
+            <Heading style={h1}>Confirm your email address</Heading>
+            <Text style={heroText}>
+              Your confirmation code is below - enter it in your open browser
+              window and we&apos;ll help you get signed in.
             </Text>
-          </Section>
-        </Container>
-      </Body>
-    </Html>
+
+            <Section style={codeBox}>
+              <Text style={confirmationCodeText}>{code}</Text>
+            </Section>
+
+            <Text style={text}>
+              If you did not request this email, there&apos;s nothing to worry
+              about, you can safely ignore it.
+            </Text>
+
+            <Section>
+              <Row style={footerLogos}>
+                <Column style={{ width: "66%" }}>
+                  <Img
+                    src={`${baseUrl}/static/slack-logo.png`}
+                    width="120"
+                    height="36"
+                    alt="Slack"
+                  />
+                </Column>
+                <Column>
+                  <Section>
+                    <Row>
+                      <Column>
+                        <Link href="/">
+                          <Img
+                            src={`${baseUrl}/static/slack-twitter.png`}
+                            width="32"
+                            height="32"
+                            alt="Slack"
+                            style={socialMediaIcon}
+                          />
+                        </Link>
+                      </Column>
+                      <Column>
+                        <Link href="/">
+                          <Img
+                            src={`${baseUrl}/static/slack-facebook.png`}
+                            width="32"
+                            height="32"
+                            alt="Slack"
+                            style={socialMediaIcon}
+                          />
+                        </Link>
+                      </Column>
+                      <Column>
+                        <Link href="/">
+                          <Img
+                            src={`${baseUrl}/static/slack-linkedin.png`}
+                            width="32"
+                            height="32"
+                            alt="Slack"
+                            style={socialMediaIcon}
+                          />
+                        </Link>
+                      </Column>
+                    </Row>
+                  </Section>
+                </Column>
+              </Row>
+            </Section>
+
+            <Section>
+              <Link
+                style={footerLink}
+                href="https://slackhq.com"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Our blog
+              </Link>
+              &nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
+              <Link
+                style={footerLink}
+                href="https://slack.com/legal"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Policies
+              </Link>
+              &nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
+              <Link
+                style={footerLink}
+                href="https://slack.com/help"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Help center
+              </Link>
+              &nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
+              <Link
+                style={footerLink}
+                href="https://slack.com/community"
+                target="_blank"
+                rel="noopener noreferrer"
+                data-auth="NotApplicable"
+                data-linkindex="6"
+              >
+                Slack Community
+              </Link>
+              <Text style={footerText}>
+                ©2022 Slack Technologies, LLC, a Salesforce company. <br />
+                500 Howard Street, San Francisco, CA 94105, USA <br />
+                <br />
+                All rights reserved.
+              </Text>
+            </Section>
+          </Container>
+        </Body>
+      </Html>
+    </Tailwind>
   );
 };
 
