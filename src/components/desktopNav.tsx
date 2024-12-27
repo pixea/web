@@ -16,7 +16,7 @@ import { MenuItem } from "@/app/[locale]/header";
 import { useTranslations } from "next-intl";
 import DesktopLink from "./desktopLink";
 
-const DesktopNavigation = ({ items }: { items: MenuItem[] }) => {
+const DesktopNavigation = ({ items }: { items: readonly MenuItem[] }) => {
   const t = useTranslations("Header");
 
   return (

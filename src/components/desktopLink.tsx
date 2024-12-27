@@ -8,7 +8,7 @@ import { cn } from "@/lib/utils";
 
 const DesktopLink = forwardRef<
   HTMLAnchorElement,
-  { href: AppPathnames; className: string; children: ReactNode }
+  { href: AppPathnames; className?: string; children: ReactNode }
 >(({ href, className, children, ...props }, forwardedRef) => {
   const pathname = usePathname();
   const isActive = href === pathname;

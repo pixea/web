@@ -1,7 +1,7 @@
 import { Flex } from "@radix-ui/themes";
 
 // Mobile and desktop navigation
-import MobileNavigation from "@/components/mobileNav";
+import MobileNavigation from "@/components/mobile-menu/nav";
 import DesktopNavigation from "@/components/desktopNav";
 
 // Navigation menu items
