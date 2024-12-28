@@ -96,5 +96,11 @@
     "privacy": "Ochrana osobných údajov",
     "conditions": "Obchodné podmienky",
     "rights": "Všetky práva vyhradené."
+  },
+  "404": {
+    "code": "404",
+    "title": "Stránka nebola nájdená",
+    "description": "Buď zle zadali zlú URL alebo daná stránka neexistuje.",
+    "action": "Naspäť domov"
   }
 }
