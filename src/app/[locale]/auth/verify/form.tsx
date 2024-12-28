@@ -13,7 +13,7 @@ const VerifyForm = ({ email }: { email?: string }) => {
 
         const formData = new FormData(event.target as HTMLFormElement);
 
-        const lastUrl = "/en/order";
+        const lastUrl = "/order";
 
         const token = formData.get("token") as string;
         const email = formData.get("email") as string;

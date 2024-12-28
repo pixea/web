@@ -13,7 +13,7 @@ const AuthPage = async () => {
   return (
     <Container size="1" className="w-full justify-center">
       <Card className="w-full">
-        <Flex direction="column" gap="4" p="6">
+        <Flex direction="column" gap="4" className="p-6 px-2.5 xs:px-4 sm:px-6">
           {session ? (
             <Profile session={session} />
           ) : (
