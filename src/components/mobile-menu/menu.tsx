@@ -115,7 +115,7 @@ const MobileMenu = ({ items }: { items: readonly MenuItem[] }) => {
                 </Button>
               </li>
 
-              <Separator className="w-full" />
+              <Separator orientation="horizontal" className="w-full" />
 
               <li>
                 <Button

@@ -8,7 +8,10 @@ import { useTranslations } from "next-intl";
 
 import { Link } from "@/i18n/routing";
 import { AccountMenuItem } from "@/components/accountItems";
-import { ArrowLeftEndOnRectangleIcon } from "@heroicons/react/24/outline";
+import {
+  ArrowLeftEndOnRectangleIcon,
+  UserCircleIcon,
+} from "@heroicons/react/24/outline";
 
 const MobileAccountMenu = ({
   items,
@@ -28,6 +31,7 @@ const MobileAccountMenu = ({
     <Collapsible.Root open={open} onOpenChange={setOpen}>
       <Collapsible.Trigger asChild>
         <Button variant="soft" color="gray" className="py-6 gap-1.5 w-full">
+          <UserCircleIcon className="size-6" />
           <Text size="4" className="font-semibold">
             {t("accountItems.account")}
           </Text>
@@ -63,6 +67,8 @@ const MobileAccountMenu = ({
                 </Button>
               </li>
             ))}
+
+            <Separator orientation="horizontal" className="w-full" />
 
             <li>
               <Button
