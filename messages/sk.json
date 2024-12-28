@@ -69,7 +69,7 @@
       "Default": "Narazili sme na chybu. Ak problém pretrváva, kontaktujte nás, prosím."
     },
     "welcome": "Vitajte!",
-    "profile": "Profil: {name}",
+    "account": "Účet: {name}",
     "name": "Meno",
     "enterName": "Zadajte meno",
     "logout": "Odhlásiť sa",
