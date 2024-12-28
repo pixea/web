@@ -8,10 +8,10 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
   adapter: DrizzleAdapter(db),
   providers: [Resend(resendConfig)],
   pages: {
-    signIn: "/en/auth",
-    signOut: "/en/auth",
-    error: "/en/auth",
-    verifyRequest: "/en/auth/verify",
-    newUser: "/en/auth",
+    signIn: "/auth",
+    signOut: "/auth",
+    error: "/auth",
+    verifyRequest: "/auth/verify",
+    newUser: "/auth",
   },
 });

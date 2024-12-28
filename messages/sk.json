@@ -56,20 +56,33 @@
     "or": "alebo",
     "google": "Prihlásiť sa cez Google",
     "facebook": "Prihlásiť sa cez Facebook",
-    "apple": "Prihlásiť sa cez Apple"
+    "apple": "Prihlásiť sa cez Apple",
+    "error": {
+      "Configuration": "Narazili sme na problém s konfiguráciou. Ak problém pretrváva, kontaktujte nás, prosím.",
+      "AccessDenied": "Narazili sme na problém s prístupom. Ak problém pretrváva, kontaktujte nás, prosím.",
+      "Verification": "Poskytnutý overovací kód je neplatný. Skúste to prosím znova.",
+      "Default": "Narazili sme na chybu. Ak problém pretrváva, kontaktujte nás, prosím."
+    },
+    "welcome": "Vitajte!",
+    "profile": "Profil: {name}",
+    "name": "Meno",
+    "enterName": "Zadajte meno",
+    "logout": "Odhlásiť sa",
+    "save": "Uložiť"
   },
   "AuthVerify": {
     "title": "Overenie",
     "description": "Na email {email} sme zaslali overovaci kod. Skopirujte ho alebo opiste nižšie.",
     "enterCode": "Zadajte kód",
-    "continue": "Pokračovať"
+    "continue": "Pokračovať",
+    "back": "Späť"
   },
   "VerificationEmail": {
-    "subject": "Overovací kód na prihlásenie",
-    "preview": "Použi kód {CODE} na overenie svojej e-mailovej adresy a prihlásenie.",
+    "subject": "Prihlásenie do systému Pixea",
+    "preview": "Použi kód {code} na overenie svojej e-mailovej adresy a prihlásenie.",
     "title": "Overovací kód na prihlásenie",
     "description": "Váš overovací kód je nižšie - skopírujte a prilepte alebo napíšte ho na obrazovke \"Overenie\", aby ste sa prihlásili.",
-    "warning": "Ak ste si tento e-mail nevyžiadali - o nič nejde a môžete ho pokojne ignorovať.",
+    "warning": "Ak ste si tento e-mail nevyžiadali, môžete ho pokojne ignorovať.",
     "links": {
       "home": "Domov",
       "privacy": "Ochrana osobných údajov",

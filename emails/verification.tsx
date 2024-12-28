@@ -17,18 +17,18 @@ import { createTranslator } from "next-intl";
 import * as React from "react";
 import messages from "../messages";
 import _tailwindConfig from "./_tailwind.config";
+import { Locales } from "@/i18n/locales";
 
 interface VerificationEmailProps {
   code?: string;
+  locale: Locales;
 }
 
 const baseUrl = process.env.VERCEL_URL
   ? `https://${process.env.VERCEL_URL}`
   : "";
 
-export const VerificationEmail = ({ code }: VerificationEmailProps) => {
-  const locale = "sk";
-
+export const VerificationEmail = ({ code, locale }: VerificationEmailProps) => {
   const intl = createTranslator({
     messages: messages[locale].VerificationEmail,
     locale,
@@ -38,7 +38,7 @@ export const VerificationEmail = ({ code }: VerificationEmailProps) => {
     <Tailwind config={_tailwindConfig}>
       <Html lang={locale} dir="ltr">
         <Head />
-        <Preview>{intl("preview")}</Preview>
+        <Preview>{intl("preview", { code })}</Preview>
         <Body style={main} className="mx-auto bg-white dark:bg-black">
           <Container className="mx-auto px-5">
             <Section className="mt-8">

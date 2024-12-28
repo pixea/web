@@ -1,15 +1,9 @@
-import { signIn } from "@/auth";
 import { cookies } from "next/headers";
-import {
-  Button,
-  Card,
-  Container,
-  Flex,
-  Heading,
-  Text,
-  TextField,
-} from "@radix-ui/themes";
+import { Button, Card, Container, Flex, Heading, Text } from "@radix-ui/themes";
 import { getTranslations } from "next-intl/server";
+import { Link } from "@/i18n/routing";
+import { ArrowLeftIcon } from "@heroicons/react/24/solid";
+import VerifyForm from "./form";
 
 const AuthVerifyPage = async () => {
   const t = await getTranslations("AuthVerify");
@@ -22,38 +16,27 @@ const AuthVerifyPage = async () => {
           <Flex direction="column" gap="4">
             <Heading size="7">{t("title")}</Heading>
 
-            <Text>{t("description")}</Text>
+            <Text>
+              {t("description", { email: cookieStore.get("email")?.value })}
+            </Text>
 
-            <form
-              action={async (formData) => {
-                "use server";
-
-                const cookieStore = await cookies();
-                cookieStore.set("email", formData.get("email") as string);
-
-                await signIn("resend", formData);
-              }}
-            >
-              <TextField.Root
-                size="3"
-                type="email"
-                name="email"
-                defaultValue={cookieStore.get("email")?.value}
-                required
-                placeholder={t("enterEmail")}
-              />
-
-              <Button
-                size="3"
-                type="submit"
-                variant="solid"
-                className="w-full mt-4"
-              >
-                {t("continue")}
-              </Button>
-            </form>
+            <VerifyForm email={cookieStore.get("email")?.value} />
           </Flex>
         </Card>
+
+        <Flex justify="center">
+          <Button
+            size="3"
+            color="gray"
+            variant="ghost"
+            className="mt-4 w-20"
+            asChild
+          >
+            <Link href="/auth">
+              <ArrowLeftIcon className="size-4" /> {t("back")}
+            </Link>
+          </Button>
+        </Flex>
       </Container>
     </Flex>
   );

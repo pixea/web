@@ -2,6 +2,8 @@ import createMiddleware from "next-intl/middleware";
 // import { NextMiddleware, NextResponse } from "next/server";
 
 import { routing } from "@/i18n/routing";
+import { NextRequest } from "next/server";
+import { locales } from "./i18n/locales";
 
 // export function stackMiddlewares(
 //   // eslint-disable-next-line @typescript-eslint/no-unsafe-function-type
@@ -16,11 +18,21 @@ import { routing } from "@/i18n/routing";
 //   return () => NextResponse.next();
 // }
 
-const routingMiddleware = createMiddleware(routing);
+const handleI18nRouting = createMiddleware(routing);
 
-export const middleware = routingMiddleware;
+export default function middleware(request: NextRequest) {
+  const { pathname } = request.nextUrl;
 
-export const config = {
-  // Match only internationalized pathnames
-  matcher: ["/", "/(sk|en)/:path*"],
-};
+  const localizedPathnames = new Set(Object.keys(routing.pathnames));
+
+  // Matches paths that start with a locale like '/en' or one of localized paths
+  const shouldHandle =
+    localizedPathnames.has(pathname) ||
+    new RegExp(`^/(${locales.join("|")})(/.*)?$`).test(
+      request.nextUrl.pathname
+    );
+
+  if (!shouldHandle) return;
+
+  return handleI18nRouting(request);
+}

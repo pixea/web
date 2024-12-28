@@ -56,20 +56,33 @@
     "or": "or",
     "google": "Sign in with Google",
     "facebook": "Sign in with Facebook",
-    "apple": "Sign in with Apple"
+    "apple": "Sign in with Apple",
+    "error": {
+      "Configuration": "We have encountered a configuration problem on our side. Please contact us if the problem persists.",
+      "AccessDenied": "We have encountered an access problem on our side. Please contact us if the problem persists.",
+      "Verification": "The provided verification code is invalid. Please try again.",
+      "Default": "We have encountered an error. Please contact us if the problem persists."
+    },
+    "welcome": "Welcome!",
+    "profile": "Profile: {name}",
+    "name": "Name",
+    "enterName": "Enter your name",
+    "logout": "Log out",
+    "save": "Save"
   },
   "AuthVerify": {
     "title": "Verification",
     "description": "We have sent an email with verification code to {email}. Please copy and paste the code or type it below.",
     "enterCode": "Enter code",
-    "continue": "Continue"
+    "continue": "Continue",
+    "back": "Back"
   },
   "VerificationEmail": {
-    "subject": "Login verification code",
-    "preview": "Use code {CODE} to verify your email address and log in.",
+    "subject": "Sign in to Pixea",
+    "preview": "Use code {code} to verify your email address and log in.",
     "title": "Login verification code",
     "description": "Your verification code is below - copy and paste or type it on the \"Verification\" screen to log in.",
-    "warning": "If you did not request this email, there's nothing to worry about, you can safely ignore it.",
+    "warning": "If you did not request this email, you can safely ignore it.",
     "links": {
       "home": "Home",
       "privacy": "Privacy Policy",

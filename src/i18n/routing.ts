@@ -60,6 +60,10 @@ export const routing = defineRouting({
       en: "/auth",
       sk: "/auth",
     },
+    "/auth/verify": {
+      en: "/auth/verify",
+      sk: "/auth/verify",
+    },
   },
 });
 
