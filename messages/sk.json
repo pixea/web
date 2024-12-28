@@ -55,8 +55,8 @@
   "Auth": {
     "title": "Prihlásenie",
     "description": "Prihláste sa pre správu a sledovanie objednávok, predvypĺňanie údajov a príjemnejší zážitok.",
-    "email": "Email",
-    "enterEmail": "Zadajte email",
+    "email": "E-mail",
+    "enterEmail": "Zadajte váš e-mail",
     "continue": "Pokračovať",
     "or": "alebo",
     "google": "Prihlásiť sa cez Google",
@@ -65,7 +65,7 @@
     "error": {
       "Configuration": "Narazili sme na problém s konfiguráciou. Ak problém pretrváva, kontaktujte nás, prosím.",
       "AccessDenied": "Narazili sme na problém s prístupom. Ak problém pretrváva, kontaktujte nás, prosím.",
-      "Verification": "Poskytnutý overovací kód je neplatný. Skúste to prosím znova.",
+      "Verification": "Poskytnutý overovací kód je neplatný. Skúste to, prosím, znova.",
       "Default": "Narazili sme na chybu. Ak problém pretrváva, kontaktujte nás, prosím."
     },
     "welcome": "Vitajte!",
@@ -77,14 +77,14 @@
   },
   "AuthVerify": {
     "title": "Overenie",
-    "description": "Na email {email} sme zaslali overovaci kod. Skopirujte ho alebo opiste nižšie.",
+    "description": "Na e-mail {email} sme zaslali overovací kod. Skopírujte a prilepte ho alebo opíšte nižšie.",
     "enterCode": "Zadajte kód",
     "continue": "Pokračovať",
     "back": "Späť"
   },
   "VerificationEmail": {
     "subject": "Prihlásenie do systému Pixea",
-    "preview": "Použi kód {code} na overenie svojej e-mailovej adresy a prihlásenie.",
+    "preview": "Použite kód {code} na overenie svojej e-mailovej adresy a prihlásenie.",
     "title": "Overovací kód na prihlásenie",
     "description": "Váš overovací kód je nižšie - skopírujte a prilepte alebo napíšte ho na obrazovke \"Overenie\", aby ste sa prihlásili.",
     "warning": "Ak ste si tento e-mail nevyžiadali, môžete ho pokojne ignorovať.",
