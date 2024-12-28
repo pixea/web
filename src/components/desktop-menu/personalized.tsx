@@ -4,6 +4,10 @@ import { Link } from "@/i18n/routing";
 import {
   UserIcon,
   ArrowLeftEndOnRectangleIcon,
+  UserCircleIcon,
+  ShoppingBagIcon,
+  UserGroupIcon,
+  Squares2X2Icon,
 } from "@heroicons/react/24/outline";
 import { Button, DropdownMenu } from "@radix-ui/themes";
 import { useTranslations } from "next-intl";
@@ -22,18 +26,28 @@ const Personalized = () => {
             className="py-2.5"
             title={t("account")}
           >
-            <UserIcon className="size-5" />
+            <UserCircleIcon className="size-5" />
           </Button>
         </DropdownMenu.Trigger>
         <DropdownMenu.Content>
-          <DropdownMenu.Item>{t("account")}</DropdownMenu.Item>
-          <DropdownMenu.Item>{t("orders")}</DropdownMenu.Item>
+          <DropdownMenu.Item>
+            <UserIcon className="size-4" /> {t("account")}
+          </DropdownMenu.Item>
+          <DropdownMenu.Item>
+            <ShoppingBagIcon className="size-4" /> {t("orders")}
+          </DropdownMenu.Item>
           <DropdownMenu.Separator />
-          <DropdownMenu.Item>{t("products")}</DropdownMenu.Item>
-          <DropdownMenu.Item>{t("users")}</DropdownMenu.Item>
+          <DropdownMenu.Item color="yellow">
+            <Squares2X2Icon className="size-4" /> {t("products")}
+          </DropdownMenu.Item>
+          <DropdownMenu.Item color="yellow">
+            <UserGroupIcon className="size-4" /> {t("users")}
+          </DropdownMenu.Item>
           <DropdownMenu.Separator />
-          <ArrowLeftEndOnRectangleIcon className="size-4" />{" "}
-          <DropdownMenu.Item color="red">{t("logout")}</DropdownMenu.Item>
+
+          <DropdownMenu.Item color="red">
+            <ArrowLeftEndOnRectangleIcon className="size-4" /> {t("logout")}
+          </DropdownMenu.Item>
         </DropdownMenu.Content>
       </DropdownMenu.Root>
 
