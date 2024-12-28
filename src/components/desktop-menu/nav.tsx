@@ -13,12 +13,14 @@ import { ChevronDownIcon } from "@heroicons/react/24/solid";
 
 import { MenuItem } from "@/app/[locale]/header";
 
-import { useTranslations } from "next-intl";
 import DesktopLink from "./desktopLink";
 import Personalized from "./personalized";
+import { getTranslations } from "next-intl/server";
+import { auth } from "@/auth";
 
-const DesktopNavigation = ({ items }: { items: readonly MenuItem[] }) => {
-  const t = useTranslations("Header");
+const DesktopNavigation = async ({ items }: { items: readonly MenuItem[] }) => {
+  const t = await getTranslations("Header");
+  const session = await auth();
 
   return (
     <Flex
@@ -111,7 +113,7 @@ const DesktopNavigation = ({ items }: { items: readonly MenuItem[] }) => {
       </NavigationMenu.Root>
 
       <Flex direction="row" align="center" gap="4">
-        <Personalized />
+        <Personalized session={session} />
       </Flex>
     </Flex>
   );
