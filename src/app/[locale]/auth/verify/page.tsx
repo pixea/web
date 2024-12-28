@@ -12,7 +12,7 @@ const AuthVerifyPage = async () => {
   return (
     <Container size="1" className="w-full justify-center">
       <Card>
-        <Flex direction="column" gap="4" p="6">
+        <Flex direction="column" gap="4" className="p-6 px-2.5 xs:px-4 sm:px-6">
           <Heading size="7">{t("title")}</Heading>
 
           <Text>
