@@ -25,7 +25,7 @@ const DesktopNavigation = ({ items }: { items: readonly MenuItem[] }) => {
       direction="row"
       align="center"
       justify="between"
-      className="hidden md:flex w-full"
+      className="hidden sm:flex w-full"
     >
       <Link href="/" title={t("home")} className="lg:hidden">
         <Image

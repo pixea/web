@@ -18,7 +18,7 @@ const MobileNavigation = ({ items }: { items: readonly MenuItem[] }) => {
       direction="row"
       justify="between"
       align="center"
-      className="w-full md:hidden"
+      className="w-full sm:hidden"
     >
       <Link href="/" title={t("home")}>
         <Image
