@@ -12,35 +12,35 @@ const OrderItems = () => {
       id: "099",
       name: "Fotografia",
       dimensions: [10, 15],
-      pieces: 4,
+      quantity: 4,
       price: 42,
     },
     {
       id: "66",
       name: "Panel",
       dimensions: [10, 15],
-      pieces: 4,
+      quantity: 4,
       price: 12,
     },
     {
       id: "54",
       name: "Panel",
       dimensions: [10, 15],
-      pieces: 4,
+      quantity: 4,
       price: 34,
     },
     {
       id: "34",
       name: "Platno",
       dimensions: [10, 15],
-      pieces: 4,
+      quantity: 4,
       price: 22,
     },
     {
       id: "23",
       name: "Custom",
       dimensions: [10, 15],
-      pieces: 4,
+      quantity: 4,
       price: 18,
     },
   ];
@@ -72,24 +72,41 @@ const OrderItems = () => {
                   <Box>
                     <Text size="5">#{index + 1}</Text>
                   </Box>
-                  <Box>
+                  <Flex direction="column" gap="1">
                     <Text size="3" weight="bold" highContrast>
                       {item.name}
                     </Text>
-                    <Text as="div" size="2">
-                      Rozmer: {item.dimensions.join(" × ")} cm
-                    </Text>
-                    <Text as="div" size="2">
-                      Pocet: {item.pieces} ks
-                    </Text>
-                  </Box>
+                    <Flex
+                      direction="row"
+                      align="start"
+                      gapX="5"
+                      gapY="2"
+                      wrap="wrap"
+                      pr="5"
+                    >
+                      <Text as="div" size="2" className="flex flex-col">
+                        <Text className="text-gray-11">{t("dimensions")}:</Text>{" "}
+                        {item.dimensions.join(" × ")} cm
+                      </Text>
+                      <Text as="div" size="2" className="flex flex-col">
+                        <Text className="text-gray-11">{t("quantity")}:</Text>{" "}
+                        {item.quantity} {t("quantityUnit")}
+                      </Text>
+                    </Flex>
+                  </Flex>
                 </Flex>
 
-                <Flex align="center" justify="end" gap="5" flexGrow="1">
-                  <Separator orientation="vertical" size="3" />
+                <Flex
+                  align="center"
+                  justify="end"
+                  flexGrow="1"
+                  gap="4"
+                  className="xs:gap-5"
+                >
+                  <Separator orientation="vertical" size="4" />
                   <Box minWidth="70px">
                     <Text as="div" size="2" color="gray">
-                      Cena
+                      {t("price")}
                     </Text>
                     <Text as="div" size="4" weight="bold">
                       {format.number(item.price, {

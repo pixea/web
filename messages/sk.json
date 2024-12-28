@@ -29,7 +29,12 @@
   "Order": {
     "title": "Objednávka",
     "empty": "Začnite objednávku pridaním položky.",
-    "add": "Pridať položku"
+    "add": "Pridať",
+    "item": "položku",
+    "dimensions": "Rozmer",
+    "quantity": "Počet",
+    "quantityUnit": "ks",
+    "price": "Cena"
   },
   "OrderItemSelection": {
     "title": "Výber produktu",

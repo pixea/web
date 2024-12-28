@@ -29,7 +29,12 @@
   "Order": {
     "title": "Order",
     "empty": "Start your order by adding an item.",
-    "add": "Add item"
+    "add": "Add",
+    "item": "item",
+    "dimensions": "Dimensions",
+    "quantity": "Quantity",
+    "quantityUnit": "pcs",
+    "price": "Price"
   },
   "OrderItemSelection": {
     "title": "Product selection",
