@@ -83,5 +83,11 @@
     "privacy": "Privacy Policy",
     "conditions": "Terms and Conditions",
     "rights": "All rights reserved."
+  },
+  "404": {
+    "code": "404",
+    "title": "Page not found",
+    "description": "You either entered in a wrong URL or the page does not exist.",
+    "action": "Return home"
   }
 }
