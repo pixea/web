@@ -1,22 +1,18 @@
 import { forwardRef, ReactNode } from "react";
-
-import { AppPathnames, Link } from "@/i18n/routing";
-
-import Image from "next/image";
-
-import { cn } from "@/lib/utils";
-
 import { Flex, Button } from "@radix-ui/themes";
 import * as NavigationMenu from "@radix-ui/react-navigation-menu";
-
+import Image from "next/image";
+import { getTranslations } from "next-intl/server";
 import { ChevronDownIcon } from "@heroicons/react/24/solid";
 
 import { MenuItem } from "@/app/[locale]/header";
+import { AppPathnames, Link } from "@/i18n/routing";
+import { cn } from "@/lib/utils";
+import { auth } from "@/auth";
+import { accountItems } from "@/components/accountItems";
 
 import DesktopLink from "./desktopLink";
 import Personalized from "./personalized";
-import { getTranslations } from "next-intl/server";
-import { auth } from "@/auth";
 
 const DesktopNavigation = async ({ items }: { items: readonly MenuItem[] }) => {
   const t = await getTranslations("Header");
@@ -113,7 +109,7 @@ const DesktopNavigation = async ({ items }: { items: readonly MenuItem[] }) => {
       </NavigationMenu.Root>
 
       <Flex direction="row" align="center" gap="4">
-        <Personalized session={session} />
+        <Personalized session={session} items={accountItems} />
       </Flex>
     </Flex>
   );

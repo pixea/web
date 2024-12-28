@@ -1,13 +1,11 @@
 import React from "react";
-
-import { Link } from "@/i18n/routing";
 import Image from "next/image";
-
+import { useTranslations } from "next-intl";
 import { Flex, Button } from "@radix-ui/themes";
 
 import { MenuItem } from "@/app/[locale]/header";
+import { Link } from "@/i18n/routing";
 
-import { useTranslations } from "next-intl";
 import MobileMenu from "./menu";
 
 const MobileNavigation = ({ items }: { items: readonly MenuItem[] }) => {

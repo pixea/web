@@ -14,10 +14,12 @@
       "contact": "Kontakt"
     },
     "login": "Prihlásiť sa",
-    "account": "Účet",
-    "orders": "Objednávky",
-    "products": "Produkty",
-    "users": "Používatelia",
+    "accountItems": {
+      "account": "Účet",
+      "orders": "Objednávky",
+      "products": "Produkty",
+      "users": "Používatelia"
+    },
     "logout": "Odhlásiť sa"
   },
   "Home": {

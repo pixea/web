@@ -5,8 +5,8 @@ import { ChevronDownIcon, ChevronUpIcon } from "@heroicons/react/24/solid";
 import { Button, Flex, Text } from "@radix-ui/themes";
 import { useState } from "react";
 import { useTranslations } from "next-intl";
-import { MenuItem } from "@/app/[locale]/header";
 import { Link } from "@/i18n/routing";
+import { MenuItem } from "@/app/[locale]/header";
 
 const MobileSubMenu = ({
   item,

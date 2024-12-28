@@ -2,19 +2,22 @@ import { Link } from "@/i18n/routing";
 // TODO: Use i18n Link once DropdownItem is fixed
 import NextLink from "next/link";
 import {
-  UserIcon,
   ArrowLeftEndOnRectangleIcon,
   UserCircleIcon,
-  ShoppingBagIcon,
-  UserGroupIcon,
-  Squares2X2Icon,
 } from "@heroicons/react/24/outline";
 import { Button, DropdownMenu } from "@radix-ui/themes";
 import { Session } from "next-auth";
 import { useTranslations } from "next-intl";
 import { signOut } from "@/auth";
+import { AccountMenuItem } from "@/app/[locale]/header";
 
-const Personalized = ({ session }: { session?: Session | null }) => {
+const Personalized = ({
+  session,
+  items,
+}: {
+  session?: Session | null;
+  items: readonly AccountMenuItem[];
+}) => {
   const t = useTranslations("Header");
 
   const accountButton = (
@@ -23,7 +26,7 @@ const Personalized = ({ session }: { session?: Session | null }) => {
       color="gray"
       size="3"
       className="py-2.5"
-      title={t("account")}
+      title={t("accountItems.account")}
       asChild
     >
       <Link href="/auth">
@@ -31,6 +34,8 @@ const Personalized = ({ session }: { session?: Session | null }) => {
       </Link>
     </Button>
   );
+
+  const accountMenuIconSize = 4;
 
   const accountDropdown = (
     <DropdownMenu.Root>
@@ -40,33 +45,32 @@ const Personalized = ({ session }: { session?: Session | null }) => {
           color="gray"
           size="3"
           className="py-2.5"
-          title={t("account")}
+          title={t("accountItems.account")}
         >
           <UserCircleIcon className="size-5" />
         </Button>
       </DropdownMenu.Trigger>
       <DropdownMenu.Content>
-        <DropdownMenu.Item asChild>
-          <NextLink href="/auth">
-            <UserIcon className="size-4" /> {t("account")}
-          </NextLink>
-        </DropdownMenu.Item>
-        <DropdownMenu.Item asChild>
-          <NextLink href="/orders">
-            <ShoppingBagIcon className="size-4" /> {t("orders")}
-          </NextLink>
-        </DropdownMenu.Item>
-        <DropdownMenu.Separator />
-        <DropdownMenu.Item color="yellow" asChild>
-          <NextLink href="/products">
-            <Squares2X2Icon className="size-4" /> {t("products")}
-          </NextLink>
-        </DropdownMenu.Item>
-        <DropdownMenu.Item color="yellow" asChild>
-          <NextLink href="/users">
-            <UserGroupIcon className="size-4" /> {t("users")}
-          </NextLink>
-        </DropdownMenu.Item>
+        {items.map((item, index) =>
+          item === "SEPARATOR" ? (
+            <DropdownMenu.Separator key={"Separator" + index} />
+          ) : "color" in item ? (
+            <DropdownMenu.Item key={item.name} color={item.color} asChild>
+              <NextLink href={item.href}>
+                <item.icon className={`size-${accountMenuIconSize}`} />{" "}
+                {t(item.name)}
+              </NextLink>
+            </DropdownMenu.Item>
+          ) : (
+            <DropdownMenu.Item key={item.name} asChild>
+              <NextLink href={item.href}>
+                <item.icon className={`size-${accountMenuIconSize}`} />{" "}
+                {t(item.name)}
+              </NextLink>
+            </DropdownMenu.Item>
+          )
+        )}
+
         <DropdownMenu.Separator />
 
         <form

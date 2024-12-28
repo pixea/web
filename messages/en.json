@@ -14,10 +14,12 @@
       "contact": "Contact"
     },
     "login": "Log in",
-    "account": "Account",
-    "orders": "Orders",
-    "products": "Products",
-    "users": "Users",
+    "accountItems": {
+      "account": "Account",
+      "orders": "Orders",
+      "products": "Products",
+      "users": "Users"
+    },
     "logout": "Log out"
   },
   "Home": {

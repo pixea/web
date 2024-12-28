@@ -4,6 +4,7 @@ import { useCallback, useState } from "react";
 import { Flex, Box, Button, Text, Theme, Separator } from "@radix-ui/themes";
 import { Bars3Icon } from "@heroicons/react/24/solid";
 import { useTranslations } from "next-intl";
+import Image from "next/image";
 
 import {
   Sheet,
@@ -12,12 +13,13 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/sheet";
-
-import themeConfig from "@/app/_themes/config";
-import MobileSubMenu from "./submenu";
 import { Link } from "@/i18n/routing";
-import Image from "next/image";
 import { MenuItem } from "@/app/[locale]/header";
+import themeConfig from "@/app/_themes/config";
+import { accountItems } from "../accountItems";
+
+import MobileSubMenu from "./submenu";
+import MobileAccountMenu from "./account";
 
 const MobileMenu = ({ items }: { items: readonly MenuItem[] }) => {
   const t = useTranslations("Header");
@@ -40,7 +42,7 @@ const MobileMenu = ({ items }: { items: readonly MenuItem[] }) => {
           <Bars3Icon className="size-6" />
         </Button>
       </SheetTrigger>
-      <SheetContent className="w-full">
+      <SheetContent className="w-full xs:w-[360px]">
         <SheetHeader className="text-left">
           <Box className="mb-7">
             <Link href="/" title={"home"} onClick={onInteraction}>
@@ -132,6 +134,13 @@ const MobileMenu = ({ items }: { items: readonly MenuItem[] }) => {
                     </Text>
                   </Link>
                 </Button>
+              </li>
+
+              <li>
+                <MobileAccountMenu
+                  items={accountItems}
+                  onInteraction={onInteraction}
+                />
               </li>
             </ul>
           </Flex>

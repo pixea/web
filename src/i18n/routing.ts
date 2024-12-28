@@ -28,7 +28,7 @@ export const routing = defineRouting({
       en: "/order/item",
       sk: "/objednavka/polozka",
     },
-    "/product": {
+    "/products": {
       en: "/products",
       sk: "/produkty",
     },
@@ -63,6 +63,14 @@ export const routing = defineRouting({
     "/auth/verify": {
       en: "/auth/verify",
       sk: "/auth/verify",
+    },
+    "/orders": {
+      en: "/orders",
+      sk: "objednavky",
+    },
+    "/users": {
+      en: "/users",
+      sk: "/pouzivatelia",
     },
   },
 });
