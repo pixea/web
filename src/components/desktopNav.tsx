@@ -8,8 +8,10 @@ import { cn } from "@/lib/utils";
 
 import { Flex, Button } from "@radix-ui/themes";
 import * as NavigationMenu from "@radix-ui/react-navigation-menu";
+import { DropdownMenu } from "@radix-ui/themes";
 
 import { ChevronDownIcon } from "@heroicons/react/24/solid";
+import { UserIcon } from "@heroicons/react/24/outline";
 
 import { MenuItem } from "@/app/[locale]/header";
 
@@ -75,14 +77,14 @@ const DesktopNavigation = ({ items }: { items: readonly MenuItem[] }) => {
                   </NavigationMenu.Trigger>
                 </Button>
 
-                <NavigationMenu.Content className="bg-gray-4 absolute left-0 top-0 w-full data-[motion=from-end]:animate-enterFromRight data-[motion=from-start]:animate-enterFromLeft data-[motion=to-end]:animate-exitToRight data-[motion=to-start]:animate-exitToLeft sm:w-auto">
+                <NavigationMenu.Content className="bg-gray-3 dark:bg-gray-4 absolute left-0 top-0 w-full data-[motion=from-end]:animate-enterFromRight data-[motion=from-start]:animate-enterFromLeft data-[motion=to-end]:animate-exitToRight data-[motion=to-start]:animate-exitToLeft sm:w-auto">
                   <ul className="one flex flex-col m-0 list-none gap-2 p-1.5 w-96">
                     {item.items.map((subItem) => (
                       <ListItem
                         key={subItem.name}
                         href={subItem.href}
                         title={t(subItem.name)}
-                        className="hover:bg-gray-6"
+                        className="hover:bg-gray-2 dark:hover:bg-gray-6"
                       >
                         Desc
                       </ListItem>
@@ -100,7 +102,7 @@ const DesktopNavigation = ({ items }: { items: readonly MenuItem[] }) => {
           )}
 
           <NavigationMenu.Indicator className="top-full z-10 flex h-2.5 items-end justify-center overflow-hidden transition-[width,transform_250ms_ease] data-[state=hidden]:animate-fadeOut data-[state=visible]:animate-fadeIn">
-            <div className="relative top-3/4 size-2.5 rotate-45 rounded-tl-sm bg-gray-4" />
+            <div className="relative top-3/4 size-2.5 rotate-45 rounded-tl-sm bg-gray-3 dark:bg-gray-4" />
           </NavigationMenu.Indicator>
         </NavigationMenu.List>
 
@@ -108,6 +110,39 @@ const DesktopNavigation = ({ items }: { items: readonly MenuItem[] }) => {
           <NavigationMenu.Viewport className="relative mt-2.5 h-[var(--radix-navigation-menu-viewport-height)] w-full origin-[top_center] overflow-hidden rounded-md bg-gray-4 transition-[width,_height] duration-300 data-[state=closed]:animate-scaleOut data-[state=open]:animate-scaleIn sm:w-[var(--radix-navigation-menu-viewport-width)]" />
         </div>
       </NavigationMenu.Root>
+
+      <DropdownMenu.Root>
+        <DropdownMenu.Trigger asChild>
+          <Button variant="ghost" color="gray" size="3">
+            <UserIcon className="size-5" />
+          </Button>
+        </DropdownMenu.Trigger>
+        <DropdownMenu.Content>
+          <DropdownMenu.Item shortcut="⌘ E">Edit</DropdownMenu.Item>
+          <DropdownMenu.Item shortcut="⌘ D">Duplicate</DropdownMenu.Item>
+          <DropdownMenu.Separator />
+          <DropdownMenu.Item shortcut="⌘ N">Archive</DropdownMenu.Item>
+
+          <DropdownMenu.Sub>
+            <DropdownMenu.SubTrigger>More</DropdownMenu.SubTrigger>
+            <DropdownMenu.SubContent>
+              <DropdownMenu.Item>Move to project…</DropdownMenu.Item>
+              <DropdownMenu.Item>Move to folder…</DropdownMenu.Item>
+
+              <DropdownMenu.Separator />
+              <DropdownMenu.Item>Advanced options…</DropdownMenu.Item>
+            </DropdownMenu.SubContent>
+          </DropdownMenu.Sub>
+
+          <DropdownMenu.Separator />
+          <DropdownMenu.Item>Share</DropdownMenu.Item>
+          <DropdownMenu.Item>Add to favorites</DropdownMenu.Item>
+          <DropdownMenu.Separator />
+          <DropdownMenu.Item shortcut="⌘ ⌫" color="red">
+            Delete
+          </DropdownMenu.Item>
+        </DropdownMenu.Content>
+      </DropdownMenu.Root>
 
       <Button
         variant="soft"
