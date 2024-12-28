@@ -60,7 +60,7 @@ const OrderItemSelectionPage = () => {
 
   return (
     <Container className="w-full" mt="4">
-      <Flex direction="row" justify="between" align="center">
+      <Flex direction="row" justify="between" align="center" gap="4">
         <Heading size="7">{t("title")}</Heading>
 
         <Button asChild color="gray" variant="ghost">
