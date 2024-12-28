@@ -8,15 +8,14 @@ import { cn } from "@/lib/utils";
 
 import { Flex, Button } from "@radix-ui/themes";
 import * as NavigationMenu from "@radix-ui/react-navigation-menu";
-import { DropdownMenu } from "@radix-ui/themes";
 
 import { ChevronDownIcon } from "@heroicons/react/24/solid";
-import { UserIcon } from "@heroicons/react/24/outline";
 
 import { MenuItem } from "@/app/[locale]/header";
 
 import { useTranslations } from "next-intl";
 import DesktopLink from "./desktopLink";
+import Personalized from "./personalized";
 
 const DesktopNavigation = ({ items }: { items: readonly MenuItem[] }) => {
   const t = useTranslations("Header");
@@ -62,7 +61,7 @@ const DesktopNavigation = ({ items }: { items: readonly MenuItem[] }) => {
         />
       </Link>
 
-      <NavigationMenu.Root className="relative z-10 flex w-screen justify-center">
+      <NavigationMenu.Root className="relative z-10 flex justify-center">
         <NavigationMenu.List className="center m-0 flex list-none rounded-3 gap-6 p-1">
           {items.map((item) =>
             "items" in item ? (
@@ -111,58 +110,9 @@ const DesktopNavigation = ({ items }: { items: readonly MenuItem[] }) => {
         </div>
       </NavigationMenu.Root>
 
-      <DropdownMenu.Root>
-        <DropdownMenu.Trigger asChild>
-          <Button variant="ghost" color="gray" size="3">
-            <UserIcon className="size-5" />
-          </Button>
-        </DropdownMenu.Trigger>
-        <DropdownMenu.Content>
-          <DropdownMenu.Item shortcut="⌘ E">Edit</DropdownMenu.Item>
-          <DropdownMenu.Item shortcut="⌘ D">Duplicate</DropdownMenu.Item>
-          <DropdownMenu.Separator />
-          <DropdownMenu.Item shortcut="⌘ N">Archive</DropdownMenu.Item>
-
-          <DropdownMenu.Sub>
-            <DropdownMenu.SubTrigger>More</DropdownMenu.SubTrigger>
-            <DropdownMenu.SubContent>
-              <DropdownMenu.Item>Move to project…</DropdownMenu.Item>
-              <DropdownMenu.Item>Move to folder…</DropdownMenu.Item>
-
-              <DropdownMenu.Separator />
-              <DropdownMenu.Item>Advanced options…</DropdownMenu.Item>
-            </DropdownMenu.SubContent>
-          </DropdownMenu.Sub>
-
-          <DropdownMenu.Separator />
-          <DropdownMenu.Item>Share</DropdownMenu.Item>
-          <DropdownMenu.Item>Add to favorites</DropdownMenu.Item>
-          <DropdownMenu.Separator />
-          <DropdownMenu.Item shortcut="⌘ ⌫" color="red">
-            Delete
-          </DropdownMenu.Item>
-        </DropdownMenu.Content>
-      </DropdownMenu.Root>
-
-      <Button
-        variant="soft"
-        size="3"
-        className="relative font-semibold"
-        asChild
-      >
-        <Link href="/order">
-          {t("order")}
-
-          {/* <Box
-            position="absolute"
-            top="0"
-            right="0"
-            className="bg-blue-solid"
-          >
-            1
-          </Box> */}
-        </Link>
-      </Button>
+      <Flex direction="row" align="center" gap="4">
+        <Personalized />
+      </Flex>
     </Flex>
   );
 };

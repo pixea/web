@@ -11,6 +11,7 @@ import {
   Heading,
   Text,
   VisuallyHidden,
+  Container,
 } from "@radix-ui/themes";
 import { useFormatter, useLocale, useTranslations } from "next-intl";
 import Image from "next/image";
@@ -104,7 +105,7 @@ const OrderItem = () => {
   const [price, setPrice] = useState(0);
 
   return (
-    <Flex direction="column" gap="4" mt="4">
+    <Container className="w-full gap-4" mt="4">
       <Flex direction="row" justify="between" align="center">
         <Heading size="7">{t("title")}</Heading>
 
@@ -211,7 +212,7 @@ const OrderItem = () => {
           </Button>
         </Flex>
       </Flex>
-    </Flex>
+    </Container>
   );
 };
 

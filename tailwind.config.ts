@@ -189,6 +189,13 @@ export default {
       exitToLeft: "exitToLeft 250ms ease",
       exitToRight: "exitToRight 250ms ease",
     },
+    screens: {
+      xs: "520px",
+      sm: "768px",
+      md: "1024px",
+      lg: "1280px",
+      xl: "1640px",
+    },
   },
   plugins: [tailwindCssAnimate],
 } satisfies Config;

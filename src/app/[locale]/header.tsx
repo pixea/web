@@ -2,7 +2,7 @@ import { Container, Flex } from "@radix-ui/themes";
 
 // Mobile and desktop navigation
 import MobileNavigation from "@/components/mobile-menu/nav";
-import DesktopNavigation from "@/components/desktopNav";
+import DesktopNavigation from "@/components/desktop-menu/nav";
 
 // Navigation menu items
 const menu = [

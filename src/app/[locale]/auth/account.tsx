@@ -1,9 +1,9 @@
 import { Button, Heading, Text, TextField } from "@radix-ui/themes";
 import { Session } from "next-auth";
 import { useTranslations } from "next-intl";
-import { logout, saveProfile } from "./actions";
+import { logout, saveAccount } from "./actions";
 
-const Profile = ({ session }: { session: Session }) => {
+const Account = ({ session }: { session: Session }) => {
   const t = useTranslations("Auth");
 
   const name = session.user?.name;
@@ -11,9 +11,9 @@ const Profile = ({ session }: { session: Session }) => {
 
   return (
     <>
-      <Heading>{hasName ? t("profile", { name }) : t("welcome")}</Heading>
+      <Heading>{hasName ? t("account", { name }) : t("welcome")}</Heading>
 
-      <form action={saveProfile}>
+      <form action={saveAccount}>
         <Text as="label">
           {t("name")}
           <TextField.Root
@@ -46,4 +46,4 @@ const Profile = ({ session }: { session: Session }) => {
   );
 };
 
-export default Profile;
+export default Account;

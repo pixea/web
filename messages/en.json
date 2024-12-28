@@ -13,7 +13,12 @@
       "about": "About",
       "contact": "Contact"
     },
-    "login": "Log in"
+    "login": "Log in",
+    "account": "Account",
+    "orders": "Orders",
+    "products": "Products",
+    "users": "Users",
+    "logout": "Log out"
   },
   "Home": {
     "title": "Touch your memories",
@@ -64,7 +69,7 @@
       "Default": "We have encountered an error. Please contact us if the problem persists."
     },
     "welcome": "Welcome!",
-    "profile": "Profile: {name}",
+    "account": "Account: {name}",
     "name": "Name",
     "enterName": "Enter your name",
     "logout": "Log out",

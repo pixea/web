@@ -20,7 +20,7 @@ export const sendCode = async (formData: FormData) => {
   await signIn("resend", formData);
 };
 
-export const saveProfile = async (formData: FormData) => {
+export const saveAccount = async (formData: FormData) => {
   const session = await auth();
 
   if (!session?.user?.id) {

@@ -1,5 +1,5 @@
 import { Link } from "@/i18n/routing";
-import { Button, Flex, Heading, Grid } from "@radix-ui/themes";
+import { Button, Flex, Heading, Grid, Container } from "@radix-ui/themes";
 import { ArrowUturnLeftIcon } from "@heroicons/react/24/solid";
 import { useTranslations } from "next-intl";
 import ProductPreview, { Product } from "./product";
@@ -59,7 +59,7 @@ const OrderItemSelectionPage = () => {
   ] as Product[];
 
   return (
-    <Flex direction="column" gap="2" mt="4">
+    <Container className="w-full" mt="4">
       <Flex direction="row" justify="between" align="center">
         <Heading size="7">{t("title")}</Heading>
 
@@ -74,9 +74,9 @@ const OrderItemSelectionPage = () => {
       <Grid
         columns={{
           initial: "1",
-          sm: "2",
-          md: "3",
-          lg: "4",
+          xs: "2",
+          sm: "3",
+          md: "4",
         }}
         gap="4"
         width="full"
@@ -86,7 +86,7 @@ const OrderItemSelectionPage = () => {
           <ProductPreview key={option.id} product={option} />
         ))}
       </Grid>
-    </Flex>
+    </Container>
   );
 };
 
