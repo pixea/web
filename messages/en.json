@@ -107,7 +107,8 @@
     "preview": "Use code {code} to verify your e-mail address and log in.",
     "title": "Login verification code",
     "description": "Your verification code is below - copy and paste or type it on the \"Verification\" screen to log in.",
-    "warning": "If you did not request this e-mail, you can safely ignore it.",
+    "warning1": "This code is only valid for 1 hour. After it expires, please request a new one.",
+    "warning2": "If you did not request this e-mail, you can safely ignore it.",
     "links": {
       "home": "Home",
       "privacy": "Privacy Policy",
