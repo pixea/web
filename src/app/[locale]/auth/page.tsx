@@ -11,7 +11,10 @@ const AuthPage = async () => {
   const session = await auth();
 
   return (
-    <Container size={session ? "" : "1"} className="w-full justify-center">
+    <Container
+      size={session ? undefined : "1"}
+      className="w-full justify-center"
+    >
       {session ? <Heading size="7">Moja Pixea</Heading> : ""}
 
       <Card className="w-full mt-4">

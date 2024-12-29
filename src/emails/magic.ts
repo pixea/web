@@ -13,6 +13,7 @@ const from = "Pixea <no-reply@pixea.sk>";
 export const resendConfig: EmailUserConfig = {
   from,
   generateVerificationToken: () => CrockfordBase32.encode(randomBytes(5)),
+  maxAge: 60 * 60 * 1,
   sendVerificationRequest: async (params) => {
     const locale = (await getLocale()) as Locales;
 
