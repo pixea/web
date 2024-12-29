@@ -29,6 +29,7 @@ export const users = pgTable("user", {
   email: varchar().unique(),
   emailVerified: timestamp("emailVerified", { mode: "date" }),
   image: text(),
+  role: varchar().default("customer").$type<"customer" | "admin">(),
   ...timestamps,
 });
 
@@ -100,7 +101,7 @@ export const authenticators = pgTable(
   })
 );
 
-export const productsTable = pgTable("product", {
+export const products = pgTable("product", {
   id: uuid().primaryKey().defaultRandom(),
   slug: varchar().notNull().unique(),
   name: jsonb()

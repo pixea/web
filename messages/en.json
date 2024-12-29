@@ -53,8 +53,21 @@
     "cancel": "Cancel",
     "confirm": "Confirm"
   },
-  "Product": {
-    "title": "Products"
+  "Products": {
+    "title": "Product administration",
+    "name": "Name",
+    "description": "Description",
+    "created": "Created",
+    "updated": "Updated",
+    "actions": "Actions",
+    "add": "Add",
+    "edit": "Edit",
+    "delete": "Delete"
+  },
+  "ProductEdit": {
+    "title": "Product administration",
+    "back": "Back",
+    "save": "Save"
   },
   "Photo": {
     "title": "Photo Print"
