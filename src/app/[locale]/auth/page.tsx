@@ -4,6 +4,7 @@ import { Card, Container, Flex, Heading } from "@radix-ui/themes";
 import { auth } from "@/auth";
 import LogIn from "./login";
 import Profile from "./account";
+import { cn } from "@/lib/utils";
 
 const AuthPage = async () => {
   const cookieStore = await cookies();
@@ -13,7 +14,7 @@ const AuthPage = async () => {
   return (
     <Container
       size={session ? undefined : "1"}
-      className="w-full justify-center"
+      className={cn("w-full", session ? "mt-4" : "justify-center")}
     >
       {session ? <Heading size="7">Moja Pixea</Heading> : ""}
 

@@ -1,12 +1,14 @@
 import { EmailUserConfig } from "next-auth/providers";
 import { randomBytes } from "node:crypto";
 import { CrockfordBase32 } from "crockford-base32";
+import { getLocale } from "next-intl/server";
+import { render } from "@react-email/render";
+
+import { Locales } from "@/i18n/locales";
 
 import VerificationEmail from "../../emails/verification";
 import { resend } from ".";
-import { getLocale } from "next-intl/server";
 import messages from "../../messages";
-import { Locales } from "@/i18n/locales";
 
 const from = "Pixea <no-reply@pixea.sk>";
 
@@ -21,11 +23,14 @@ export const resendConfig: EmailUserConfig = {
 
     const { identifier: to, token } = params;
 
+    const emailJSX = VerificationEmail({ code: token, locale });
+
     const res = await resend.emails.send({
       from,
       to,
       subject,
-      react: VerificationEmail({ code: token, locale }),
+      html: await render(emailJSX, { pretty: true }),
+      text: await render(emailJSX, { plainText: true }),
     });
 
     if (res.error)
