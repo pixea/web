@@ -1,6 +1,6 @@
 "use server";
 
-import { auth, signIn, signOut } from "@/auth";
+import { auth, signIn, signOut, unstable_update } from "@/auth";
 import db from "@/db";
 import { users } from "@/db/schema";
 import { eq } from "drizzle-orm";
@@ -33,6 +33,8 @@ export const saveAccount = async (formData: FormData) => {
       name: formData.get("name") as string,
     })
     .where(eq(users.id, session.user?.id));
+
+  await unstable_update({});
 };
 
 export const logout = async () => {

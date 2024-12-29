@@ -15,8 +15,14 @@ const VerifyForm = ({ email }: { email?: string }) => {
 
         const lastUrl = "/order";
 
-        const token = formData.get("token") as string;
+        const tokenInput = formData.get("token") as string;
         const email = formData.get("email") as string;
+
+        if (typeof tokenInput !== "string" || typeof email !== "string") {
+          throw new Error("Missing required properties");
+        }
+
+        const token = tokenInput.toUpperCase().replaceAll(/[^A-Z0-9]/g, "");
 
         // We are simulating real redirect to match email link click
         const path = `/api/auth/callback/resend?callbackUrl=${lastUrl}&token=${token}&email=${email}`;
@@ -36,7 +42,9 @@ const VerifyForm = ({ email }: { email?: string }) => {
         type="text"
         name="token"
         required
+        minLength={8}
         placeholder={t("enterCode")}
+        className="[&_input]:uppercase [&_input]:font-medium [&_input]:placeholder:normal-case [&_input]:placeholder:font-normal"
       />
 
       <Button size="3" type="submit" variant="solid" className="w-full mt-4">

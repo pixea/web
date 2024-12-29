@@ -90,7 +90,7 @@
     },
     "welcome": "Welcome!",
     "account": "Account: {name}",
-    "name": "Name",
+    "name": "Full Name",
     "enterName": "Enter your name",
     "logout": "Log out",
     "save": "Save"
