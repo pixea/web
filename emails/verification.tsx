@@ -52,15 +52,15 @@ export const VerificationEmail = ({ code, locale }: VerificationEmailProps) => {
               <Link href="https://pixea.sk" target="_blank">
                 <Img
                   src={`${baseUrl}/brand/logo-light.png`}
-                  width="120"
-                  height="47"
+                  width="100"
+                  height="39"
                   alt="Pixea logo"
                   className="block dark:hidden"
                 />
                 <Img
                   src={`${baseUrl}/brand/logo-dark.png`}
-                  width="120"
-                  height="47"
+                  width="100"
+                  height="39"
                   alt="Pixea logo"
                   className="hidden dark:block"
                 />
@@ -82,7 +82,11 @@ export const VerificationEmail = ({ code, locale }: VerificationEmailProps) => {
             </Section>
 
             <Text className="text-black text-gray-500 dark:text-gray-400 text-sm leading-6">
-              {intl("warning")}
+              {intl("warning1")}
+            </Text>
+
+            <Text className="text-black text-gray-500 dark:text-gray-400 text-sm leading-6">
+              {intl("warning2")}
             </Text>
 
             <Section>
@@ -91,15 +95,15 @@ export const VerificationEmail = ({ code, locale }: VerificationEmailProps) => {
                   <Link href="https://pixea.sk" target="_blank">
                     <Img
                       src={`${baseUrl}/brand/logo-light.png`}
-                      width="120"
-                      height="47"
+                      width="100"
+                      height="39"
                       alt="Pixea logo"
                       className="block dark:hidden"
                     />
                     <Img
                       src={`${baseUrl}/brand/logo-dark.png`}
-                      width="120"
-                      height="47"
+                      width="100"
+                      height="39"
                       alt="Pixea logo"
                       className="hidden dark:block"
                     />
@@ -206,7 +210,7 @@ export const VerificationEmail = ({ code, locale }: VerificationEmailProps) => {
 
 VerificationEmail.PreviewProps = {
   code: "3FDXT2A8",
-  locale: "en",
+  locale: "sk",
 } as VerificationEmailProps;
 
 export default VerificationEmail;
