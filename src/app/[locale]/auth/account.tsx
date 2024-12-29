@@ -1,4 +1,4 @@
-import { Button, Heading, Text, TextField, Tabs, Box } from "@radix-ui/themes";
+import { Button, Text, TextField, Tabs, Box } from "@radix-ui/themes";
 import { Session } from "next-auth";
 import { useTranslations } from "next-intl";
 import { logout, saveAccount } from "./actions";
@@ -9,12 +9,8 @@ const Account = ({ session }: { session: Session }) => {
 
   const name = session.user?.name;
 
-  const hasName = !!name;
-
   return (
     <>
-      {/* <Heading>{hasName ? t("account", { name }) : t("welcome")}</Heading> */}
-
       <Tabs.Root defaultValue="account">
         <Tabs.List>
           <Tabs.Trigger value="orders">Objednávky</Tabs.Trigger>

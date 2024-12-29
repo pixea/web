@@ -20,6 +20,7 @@ const ProductsPage = () => {
           <Heading size="7">{t("title")}</Heading>
 
           <Button asChild color="blue" variant="solid" size="2">
+            {/* @ts-expect-error Dynamic path */}
             <Link href="/products/new" className="flex items-center gap-1.5">
               <PlusIcon className="size-4" />
               {t("add")}

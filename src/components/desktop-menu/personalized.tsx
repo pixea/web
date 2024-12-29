@@ -9,7 +9,7 @@ import { Button, DropdownMenu } from "@radix-ui/themes";
 import { Session } from "next-auth";
 import { useTranslations } from "next-intl";
 import { logout } from "@/app/[locale]/auth/actions";
-import { AccountMenuItem } from "@/app/[locale]/header";
+import { AccountMenuItem } from "@/components/accountItems";
 
 const Personalized = ({
   session,
