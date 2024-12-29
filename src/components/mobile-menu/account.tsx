@@ -80,12 +80,8 @@ const MobileAccountMenu = ({
                   onClick={onInteraction}
                   type="submit"
                 >
-                  <Link href="/" className="gap-1.5">
-                    <ArrowLeftEndOnRectangleIcon
-                      className={`size-${iconSize}`}
-                    />
-                    <Text size="4">{t("logout")}</Text>
-                  </Link>
+                  <ArrowLeftEndOnRectangleIcon className={`size-${iconSize}`} />
+                  <Text size="4">{t("logout")}</Text>
                 </Button>
               </form>
             </li>

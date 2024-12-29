@@ -74,7 +74,7 @@ const Personalized = ({
         <DropdownMenu.Separator />
 
         <form action={logout}>
-          <DropdownMenu.Item color="red" asChild>
+          <DropdownMenu.Item color="red" className="w-full" asChild>
             <button type="submit">
               <ArrowLeftEndOnRectangleIcon className="size-4" /> {t("logout")}
             </button>
