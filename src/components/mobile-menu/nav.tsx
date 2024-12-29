@@ -3,12 +3,20 @@ import Image from "next/image";
 import { useTranslations } from "next-intl";
 import { Flex, Button } from "@radix-ui/themes";
 
+import { Session } from "next-auth";
+
 import { MenuItem } from "@/app/[locale]/header";
 import { Link } from "@/i18n/routing";
 
 import MobileMenu from "./menu";
 
-const MobileNavigation = ({ items }: { items: readonly MenuItem[] }) => {
+const MobileNavigation = ({
+  session,
+  items,
+}: {
+  session?: Session | null;
+  items: readonly MenuItem[];
+}) => {
   const t = useTranslations("Header");
 
   return (
@@ -56,7 +64,7 @@ const MobileNavigation = ({ items }: { items: readonly MenuItem[] }) => {
           </Link>
         </Button>
 
-        <MobileMenu items={items} />
+        <MobileMenu items={items} session={session} />
       </Flex>
     </Flex>
   );

@@ -77,14 +77,14 @@
     },
     "welcome": "Vitajte!",
     "account": "Účet: {name}",
-    "name": "Meno",
+    "name": "Meno a priezvisko",
     "enterName": "Zadajte meno",
     "logout": "Odhlásiť sa",
     "save": "Uložiť"
   },
   "AuthVerify": {
     "title": "Overenie",
-    "description": "Na e-mail {email} sme zaslali overovací kod. Skopírujte a prilepte ho alebo opíšte nižšie.",
+    "description": "Na e-mail {email} sme zaslali overovací kód. Skopírujte a prilepte ho alebo opíšte nižšie.",
     "enterCode": "Zadajte kód",
     "continue": "Pokračovať",
     "back": "Späť"

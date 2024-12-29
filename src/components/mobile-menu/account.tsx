@@ -5,6 +5,7 @@ import { ChevronDownIcon, ChevronUpIcon } from "@heroicons/react/24/solid";
 import { Button, Flex, Separator, Text } from "@radix-ui/themes";
 import { useState } from "react";
 import { useTranslations } from "next-intl";
+import { logout } from "@/app/[locale]/auth/actions";
 
 import { Link } from "@/i18n/routing";
 import { AccountMenuItem } from "@/components/accountItems";
@@ -71,17 +72,22 @@ const MobileAccountMenu = ({
             <Separator orientation="horizontal" className="w-full" />
 
             <li>
-              <Button
-                variant="ghost"
-                color="red"
-                className="py-2 w-full justify-start"
-                asChild
-              >
-                <Link href="/" onClick={onInteraction} className="gap-1.5">
-                  <ArrowLeftEndOnRectangleIcon className={`size-${iconSize}`} />
-                  <Text size="4">{t("logout")}</Text>
-                </Link>
-              </Button>
+              <form action={logout}>
+                <Button
+                  variant="ghost"
+                  color="red"
+                  className="py-2 w-full justify-start gap-1.5"
+                  onClick={onInteraction}
+                  type="submit"
+                >
+                  <Link href="/" className="gap-1.5">
+                    <ArrowLeftEndOnRectangleIcon
+                      className={`size-${iconSize}`}
+                    />
+                    <Text size="4">{t("logout")}</Text>
+                  </Link>
+                </Button>
+              </form>
             </li>
           </ul>
         </Flex>

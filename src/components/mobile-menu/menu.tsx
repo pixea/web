@@ -6,6 +6,8 @@ import { Bars3Icon } from "@heroicons/react/24/solid";
 import { useTranslations } from "next-intl";
 import Image from "next/image";
 
+import { Session } from "next-auth";
+
 import {
   Sheet,
   SheetContent,
@@ -21,7 +23,13 @@ import { accountItems } from "../accountItems";
 import MobileSubMenu from "./submenu";
 import MobileAccountMenu from "./account";
 
-const MobileMenu = ({ items }: { items: readonly MenuItem[] }) => {
+const MobileMenu = ({
+  session,
+  items,
+}: {
+  session?: Session | null;
+  items: readonly MenuItem[];
+}) => {
   const t = useTranslations("Header");
   const [open, setOpen] = useState(false);
 
@@ -117,31 +125,33 @@ const MobileMenu = ({ items }: { items: readonly MenuItem[] }) => {
 
               <Separator orientation="horizontal" className="w-full" />
 
-              <li>
-                <Button
-                  variant="soft"
-                  color="gray"
-                  className="py-6 w-full"
-                  asChild
-                >
-                  <Link
-                    href="/auth"
-                    className="rounded-3"
-                    onClick={onInteraction}
+              {session ? (
+                <li>
+                  <MobileAccountMenu
+                    items={accountItems}
+                    onInteraction={onInteraction}
+                  />
+                </li>
+              ) : (
+                <li>
+                  <Button
+                    variant="soft"
+                    color="gray"
+                    className="py-6 w-full"
+                    asChild
                   >
-                    <Text size="4" className="font-semibold">
-                      {t("login")}
-                    </Text>
-                  </Link>
-                </Button>
-              </li>
-
-              <li>
-                <MobileAccountMenu
-                  items={accountItems}
-                  onInteraction={onInteraction}
-                />
-              </li>
+                    <Link
+                      href="/auth"
+                      className="rounded-3"
+                      onClick={onInteraction}
+                    >
+                      <Text size="4" className="font-semibold">
+                        {t("login")}
+                      </Text>
+                    </Link>
+                  </Button>
+                </li>
+              )}
             </ul>
           </Flex>
         </Theme>

@@ -1,5 +1,7 @@
 import { Container, Flex } from "@radix-ui/themes";
 
+import { auth } from "@/auth";
+
 // Mobile and desktop navigation
 import MobileNavigation from "@/components/mobile-menu/nav";
 import DesktopNavigation from "@/components/desktop-menu/nav";
@@ -19,7 +21,9 @@ const menu = [
 
 export type MenuItem = (typeof menu)[number];
 
-const Header = () => {
+const Header = async () => {
+  const session = await auth();
+
   return (
     <Flex
       position="sticky"
@@ -34,9 +38,9 @@ const Header = () => {
     >
       <header>
         <Container className="w-full">
-          <MobileNavigation items={menu} />
+          <MobileNavigation items={menu} session={session} />
 
-          <DesktopNavigation items={menu} />
+          <DesktopNavigation items={menu} session={session} />
         </Container>
       </header>
     </Flex>

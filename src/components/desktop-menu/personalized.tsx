@@ -8,7 +8,7 @@ import {
 import { Button, DropdownMenu } from "@radix-ui/themes";
 import { Session } from "next-auth";
 import { useTranslations } from "next-intl";
-import { signOut } from "@/auth";
+import { logout } from "@/app/[locale]/auth/actions";
 import { AccountMenuItem } from "@/app/[locale]/header";
 
 const Personalized = ({
@@ -73,13 +73,7 @@ const Personalized = ({
 
         <DropdownMenu.Separator />
 
-        <form
-          action={async () => {
-            "use server";
-
-            await signOut();
-          }}
-        >
+        <form action={logout}>
           <DropdownMenu.Item color="red" asChild>
             <button type="submit">
               <ArrowLeftEndOnRectangleIcon className="size-4" /> {t("logout")}

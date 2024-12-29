@@ -34,11 +34,16 @@ export const VerificationEmail = ({ code, locale }: VerificationEmailProps) => {
     locale,
   });
 
+  const firstFour = code?.slice(0, 4);
+  const lastFour = code?.slice(4);
+
+  const slicedCode = firstFour + "-" + lastFour;
+
   return (
     <Tailwind config={_tailwindConfig}>
       <Html lang={locale} dir="ltr">
         <Head />
-        <Preview>{intl("preview", { code })}</Preview>
+        <Preview>{intl("preview", { code: slicedCode })}</Preview>
         <Body style={main} className="mx-auto bg-white dark:bg-black">
           <Container className="mx-auto px-5">
             <Section className="mt-8">
@@ -70,7 +75,7 @@ export const VerificationEmail = ({ code, locale }: VerificationEmailProps) => {
 
             <Section className="bg-black/5 dark:bg-white/10 rounded-lg mb-8 px-2.5 py-9 text-center">
               <Text className="font-mono text-black dark:text-white tracking-[7px] text-3xl align-middle">
-                {code}
+                {slicedCode}
               </Text>
             </Section>
 
@@ -199,6 +204,7 @@ export const VerificationEmail = ({ code, locale }: VerificationEmailProps) => {
 
 VerificationEmail.PreviewProps = {
   code: "3FDXT2A8",
+  locale: "en",
 } as VerificationEmailProps;
 
 export default VerificationEmail;
