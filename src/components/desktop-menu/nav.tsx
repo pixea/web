@@ -50,14 +50,14 @@ const DesktopNavigation = ({
         <Image
           src="/brand/logo-light.svg"
           alt=""
-          width={120}
+          width={100}
           height={40}
           className="block dark:hidden"
         />
         <Image
           src="/brand/logo-dark.svg"
           alt=""
-          width={120}
+          width={100}
           height={40}
           className="hidden dark:block"
         />
