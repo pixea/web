@@ -12,6 +12,7 @@ import {
   boolean,
 } from "drizzle-orm/pg-core";
 import { AdapterAccountType } from "next-auth/adapters";
+import { Address } from "./address";
 
 const timestamps = {
   created: timestamp({ mode: "string" })
@@ -28,6 +29,8 @@ export const users = pgTable("user", {
   name: varchar(),
   email: varchar().unique(),
   emailVerified: timestamp("emailVerified", { mode: "date" }),
+  phone: varchar(),
+  address: jsonb().$type<Partial<Address>>(),
   image: text(),
   role: varchar().default("customer").$type<"customer" | "admin">(),
   ...timestamps,

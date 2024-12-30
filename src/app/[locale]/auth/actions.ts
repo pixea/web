@@ -27,10 +27,21 @@ export const saveAccount = async (formData: FormData) => {
     throw new Error("Not authenticated");
   }
 
+  const country = formData.get("country");
+
   await db
     .update(users)
     .set({
       name: formData.get("name") as string,
+      phone: formData.get("phone") as string,
+      address: {
+        street: (formData.get("street") as string) || undefined,
+        additional: (formData.get("additional") as string) || undefined,
+        zip: (formData.get("zip") as string) || undefined,
+        city: (formData.get("city") as string) || undefined,
+        country:
+          !country || country === "none" ? undefined : (country as string),
+      },
     })
     .where(eq(users.id, session.user?.id));
 

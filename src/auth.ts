@@ -10,16 +10,21 @@ import {
   users,
   verificationTokens,
 } from "./db/schema";
+import { Address } from "./db/address";
 
 declare module "next-auth" {
   interface Session {
     user: {
       role?: "customer" | "admin";
+      phone?: string;
+      address?: Partial<Address>;
     } & DefaultSession["user"];
   }
 
   interface User {
     role?: "customer" | "admin";
+    phone?: string;
+    address?: Partial<Address>;
   }
 }
 
@@ -42,6 +47,8 @@ export const { handlers, signIn, signOut, auth, unstable_update } = NextAuth({
   callbacks: {
     session({ session, user }) {
       session.user.role = user.role;
+      session.user.phone = user.phone;
+      session.user.address = user.address;
       return session;
     },
   },
