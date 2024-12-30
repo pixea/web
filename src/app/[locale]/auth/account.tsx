@@ -10,11 +10,13 @@ import {
   Select,
   Grid,
   Callout,
+  Separator,
 } from "@radix-ui/themes";
 import { Session } from "next-auth";
 import { useTranslations } from "next-intl";
 import { saveAccountAction } from "./actions";
 import {
+  ArrowLeftEndOnRectangleIcon,
   EnvelopeIcon,
   ExclamationTriangleIcon,
   PhoneIcon,
@@ -23,6 +25,7 @@ import {
 } from "@heroicons/react/24/outline";
 import { useEffect, useRef } from "react";
 import { Link } from "@/i18n/routing";
+import { logoutAction } from "./actions";
 
 import { useLocale } from "next-intl";
 
@@ -448,17 +451,19 @@ const Account = ({ session }: { session: Session }) => {
               </Flex>
             </form>
 
-            {/* <form action={logout}>
+            <Separator orientation="horizontal" className="w-full mt-4" />
+
+            <form action={logoutAction}>
               <Button
                 size="3"
                 type="submit"
-                variant="solid"
+                variant="soft"
                 color="red"
                 className="w-full mt-4 gap-1.5"
               >
                 <ArrowLeftEndOnRectangleIcon className="size-4" /> {t("logout")}
               </Button>
-            </form> */}
+            </form>
           </Tabs.Content>
         </Box>
       </Tabs.Root>
