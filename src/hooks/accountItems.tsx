@@ -1,4 +1,3 @@
-import { User } from "@/db/schema";
 import {
   UserIcon,
   ShoppingBagIcon,
@@ -6,6 +5,11 @@ import {
   UserGroupIcon,
 } from "@heroicons/react/24/outline";
 import { Session } from "next-auth";
+import { JSX } from "react";
+
+import { User } from "@/db/schema";
+import { DropdownMenu } from "@radix-ui/themes";
+import { AppPathnames } from "@/i18n/routing";
 
 // Account menu items
 const accountItems = [
@@ -35,21 +39,22 @@ const accountItems = [
     href: "/users",
     role: ["admin"],
   },
-] as Array<
-  | "SEPARATOR"
-  | {
-      name: string;
-      icon: unknown;
-      href: string;
-      role?: User["role"][];
-    }
->;
+] as Array<"SEPARATOR" | AccountMenuItem>;
 
-export type AccountMenuItem = (typeof accountItems)[number];
+// TODO: Is there a better type? Looks like a literal union in their code.
+type Color = DropdownMenu.ItemProps["color"];
 
-const useAccountItems = (
+type AccountMenuItem = {
+  name: string;
+  icon: JSX.ElementType;
+  href: AppPathnames;
+  color?: Color;
+  role?: User["role"][];
+};
+
+const useAccountItems = <T extends boolean>(
   session?: Session | null,
-  includeSeparators = true
+  includeSeparators = true as T
 ) => {
   const role = session?.user?.role;
 
@@ -69,32 +74,35 @@ const useAccountItems = (
         : {
             ...item,
             color:
-              item.role && item.role.includes("admin") ? "yellow" : undefined,
+              item.role && item.role.includes("admin")
+                ? ("yellow" as Color)
+                : undefined,
           }
     );
 
-  const withoutUnwantedSeparators = wantedItems.reduce<AccountMenuItem[]>(
-    (acc, item, index) => {
-      const isSeparator = item === "SEPARATOR";
+  const withoutUnwantedSeparators = wantedItems.reduce<
+    (AccountMenuItem | "SEPARATOR")[]
+  >((acc, item, index) => {
+    const isSeparator = item === "SEPARATOR";
 
-      // Remove separators at the beginning and end
-      if (isSeparator && (index === 0 || index === wantedItems.length - 1)) {
-        return acc;
-      }
-
-      // Remove separators that are followed by another separator
-      const prevIsSeparator = acc.length && acc[acc.length - 1] === "SEPARATOR";
-      if (isSeparator && prevIsSeparator) {
-        return acc;
-      }
-
-      acc.push(item);
+    // Remove separators at the beginning and end
+    if (isSeparator && (index === 0 || index === wantedItems.length - 1)) {
       return acc;
-    },
-    []
-  );
+    }
 
-  return withoutUnwantedSeparators;
+    // Remove separators that are followed by another separator
+    const prevIsSeparator = acc.length && acc[acc.length - 1] === "SEPARATOR";
+    if (isSeparator && prevIsSeparator) {
+      return acc;
+    }
+
+    acc.push(item);
+    return acc;
+  }, []);
+
+  return withoutUnwantedSeparators as T extends false
+    ? AccountMenuItem[]
+    : (AccountMenuItem | "SEPARATOR")[];
 };
 
 export default useAccountItems;

@@ -1,14 +1,17 @@
+"use client";
+
 import { PencilIcon, TrashIcon } from "@heroicons/react/24/solid";
 import { Badge, Button, Flex, Table } from "@radix-ui/themes";
-import { useFormatter, useLocale, useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
+import Link from "next/link";
+import { DateTime } from "luxon";
 
-import { Link } from "@/i18n/routing";
 import { Product } from "@/db/schema";
 import { Locales } from "@/i18n/locales";
+import { deleteProductAction } from "./actions";
 
 const ProductsTable = ({ products }: { products: Product[] }) => {
   const t = useTranslations("Products");
-  const format = useFormatter();
   const locale = useLocale() as Locales;
 
   return (
@@ -38,21 +41,23 @@ const ProductsTable = ({ products }: { products: Product[] }) => {
               )}
             </Table.Cell>
             <Table.Cell>
-              {format.relativeTime(new Date(product.created))}
+              {DateTime.fromSQL(product.created, { zone: "UTC" }).toRelative()}
             </Table.Cell>
             <Table.Cell>
-              {format.relativeTime(new Date(product.updated))}
+              {DateTime.fromSQL(product.updated, { zone: "UTC" }).toRelative()}
             </Table.Cell>
             <Table.Cell>
               <Flex gap="2">
                 <Button asChild>
-                  {/* @ts-expect-error Dynamic route .. meh ... */}
-                  <Link href={`/products/${1}`}>
+                  <Link href={`/${locale}/products/${product.id}`}>
                     <PencilIcon className="size-4" /> {t("edit")}
                   </Link>
                 </Button>
 
-                <Button color="red">
+                <Button
+                  color="red"
+                  onClick={() => deleteProductAction(product.id)}
+                >
                   <TrashIcon className="size-3" /> {t("delete")}
                 </Button>
               </Flex>
