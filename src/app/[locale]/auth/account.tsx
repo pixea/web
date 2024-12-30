@@ -1,3 +1,5 @@
+"use client";
+
 import {
   Button,
   Text,
@@ -14,9 +16,10 @@ import { useTranslations } from "next-intl";
 import { saveAccount } from "./actions";
 import {
   EnvelopeIcon,
-  InformationCircleIcon,
+  ExclamationTriangleIcon,
   PhoneIcon,
 } from "@heroicons/react/24/outline";
+import { useEffect, useRef } from "react";
 
 import { useLocale } from "next-intl";
 
@@ -25,6 +28,16 @@ const Account = ({ session }: { session: Session }) => {
   const locale = useLocale();
 
   const name = session.user?.name;
+
+  // Autofocus "Name" field on new account
+  const autofocustRef = useRef(null);
+
+  useEffect(() => {
+    if (!name && autofocustRef.current) {
+      autofocustRef.current.focus();
+    }
+  }, [name]); // Reacts to changes in shouldFocus
+
   const email = session.user?.email;
   const phone = session.user?.phone;
   const address = session.user?.address;
@@ -117,26 +130,24 @@ const Account = ({ session }: { session: Session }) => {
           </Tabs.Content>
 
           <Tabs.Content value="account" mt="2">
-            {!name ? (
-              <Callout.Root>
-                <Callout.Icon>
-                  <InformationCircleIcon className="size-4" />
-                </Callout.Icon>
-                <Callout.Text>
-                  Prosím vyplňte svoje meno, aby sme vás vedeli ľahko
-                  identifikovať.
-                </Callout.Text>
-              </Callout.Root>
-            ) : undefined}
-
             <form action={saveAccount}>
               <Flex direction="column" gap="6">
+                {/* <Callout.Root variant="surface" color="orange" role="alert">
+                  <Callout.Icon>
+                    <ExclamationTriangleIcon className="size-4" />
+                  </Callout.Icon>
+                  <Callout.Text>
+                    Prosím vyplňte svoje meno, aby sme vás vedeli ľahko
+                    identifikovať.
+                  </Callout.Text>
+                </Callout.Root> */}
+
                 {/* NAME */}
-                <Grid columns="1" gap="4" className="sm:grid-cols-2">
+                <Grid columns="1" className="sm:grid-cols-2 sm:gap-4">
                   <Flex direction="column" gap="2">
                     <Text
                       size="1"
-                      color="gray"
+                      color={!name ? "orange" : "gray"}
                       weight="medium"
                       as="label"
                       htmlFor="name"
@@ -146,15 +157,28 @@ const Account = ({ session }: { session: Session }) => {
                     <TextField.Root
                       size="3"
                       variant="surface"
-                      color="gray"
+                      color={!name ? "orange" : "gray"}
                       radius="large"
                       required
+                      ref={autofocustRef}
                       placeholder={t("enterName")}
                       defaultValue={name || undefined}
                       type="text"
                       id="name"
                       name="name"
                     />
+
+                    <Text
+                      size="2"
+                      color="orange"
+                      weight="medium"
+                      className={`flex items-center gap-1.5 ${!name ? "block" : "hidden"}`}
+                      role="alert"
+                    >
+                      <ExclamationTriangleIcon className="size-4" /> Prosím
+                      vyplňte svoje meno, aby sme vás vedeli ľahko
+                      identifikovať.
+                    </Text>
                   </Flex>
                 </Grid>
 
