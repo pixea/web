@@ -12,7 +12,7 @@ import {
 } from "@radix-ui/themes";
 import { Session } from "next-auth";
 import { useTranslations } from "next-intl";
-import { saveAccount } from "./actions";
+import { saveAccountAction } from "./actions";
 import {
   EnvelopeIcon,
   ExclamationTriangleIcon,
@@ -129,7 +129,7 @@ const Account = ({ session }: { session: Session }) => {
           </Tabs.Content>
 
           <Tabs.Content value="account" mt="2">
-            <form action={saveAccount}>
+            <form action={saveAccountAction}>
               <Flex direction="column" gap="6">
                 {/* <Callout.Root variant="surface" color="orange" role="alert">
                   <Callout.Icon>

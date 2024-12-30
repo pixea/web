@@ -18,6 +18,7 @@ import Image from "next/image";
 import RadioCardRenderer, { RadioCardConfiguration } from "./radio-card";
 import TextAreaRenderer from "./textarea";
 import SizeRenderer from "./size";
+import BottomBar from "@/components/bottomBar";
 
 export type BaseProductConfiguration = {
   id: string;
@@ -28,61 +29,83 @@ export type ProductConfiguration = RadioCardConfiguration;
 
 const configuration = [
   {
-    id: "size",
-    type: "size",
-    name: {
-      en: "Size",
-      sk: "Veľkosť",
-    },
-    options: [
-      {
-        dimensions: [9, 13],
-        other: true,
-        price: 3.6,
-      },
-      {
-        dimensions: [10, 15],
-        price: 4.8,
-      },
-      {
-        dimensions: [13, 18],
-        other: true,
-        price: 4.8,
-      },
-      {
-        dimensions: [15, 20],
-        price: 5.6,
-      },
-    ],
-  },
-  {
-    id: "abc124",
+    id: "process",
     type: "radio-card",
     name: {
-      sk: "Povrch",
-      en: "Surface",
+      sk: "Spracovanie",
+      en: "Process",
     },
     options: [
       {
-        id: "surface1",
+        id: "standard",
         name: {
-          sk: "Matný",
-          en: "Matte",
+          sk: "Štandard",
+          en: "Standard",
+        },
+        description: {
+          sk: "Zakladne orezanie a spracovanie clovekom.",
+          en: "Basic cropping and manual processing.",
         },
         price: 0,
       },
       {
-        id: "surface2",
+        id: "premium",
         name: {
-          sk: "Lesklý",
-          en: "Glossy",
+          sk: "Premium",
+          en: "Premium",
         },
-        price: 0,
+        description: {
+          sk: "Orezanie, uprava kontrastu a farieb, odstranenie chyb.",
+          en: "Cropping, contrast and color adjustment, defect removal.",
+        },
+        price: 2,
       },
     ],
   },
   {
-    id: "abc125",
+    id: "frame",
+    type: "radio-card",
+    name: {
+      sk: "Rám",
+      en: "Frame",
+    },
+    options: [
+      {
+        id: "none",
+        name: {
+          sk: "Bez rámu",
+          en: "No frame",
+        },
+        price: 0,
+      },
+      {
+        id: "black",
+        name: {
+          sk: "Čierna lista",
+          en: "Black",
+        },
+        price: 10,
+      },
+      {
+        id: "white",
+        name: {
+          sk: "Biela lista",
+          en: "White",
+        },
+        price: 10,
+      },
+      {
+        id: "wood",
+        name: {
+          sk: "Drevena lista",
+          en: "Wooden frame",
+        },
+        price: 20,
+      },
+    ],
+  },
+  {
+    id: "note",
     type: "textarea",
     name: {
       sk: "Poznámka",
@@ -182,15 +205,7 @@ const OrderItem = () => {
         </Flex>
       </Flex>
 
-      <Flex
-        direction="row"
-        justify="between"
-        align="center"
-        position="sticky"
-        bottom="2"
-        p="4"
-        className="bg-blue-2 rounded-3 border border-blue-5"
-      >
+      <BottomBar>
         <Text weight="medium">
           {t("total")}:{" "}
           <Text as="span" size="4" className="flex flex-col font-bold">
@@ -207,11 +222,16 @@ const OrderItem = () => {
           >
             {t("cancel")}
           </Button>
-          <Button variant="solid" size="3" className="font-semibold">
+          <Button
+            type="submit"
+            variant="solid"
+            size="3"
+            className="font-semibold"
+          >
             {t("confirm")}
           </Button>
         </Flex>
-      </Flex>
+      </BottomBar>
     </Container>
   );
 };

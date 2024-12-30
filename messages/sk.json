@@ -57,9 +57,12 @@
     "title": "Administrácia produktov",
     "name": "Názov",
     "description": "Popis",
+    "status": "Stav",
     "created": "Vytvorené",
     "updated": "Upravené",
     "actions": "Akcie",
+    "active": "Aktívny",
+    "draft": "Draft",
     "add": "Pridať",
     "edit": "Upraviť",
     "delete": "Vymazať"
@@ -143,7 +146,7 @@
   },
   "AuthVerify": {
     "title": "Overenie",
-    "description": "Na e-mail {email} sme zaslali overovací kód. Skopírujte a prilepte ho alebo opíšte nižšie.",
+    "description": "Na e-mail {email} sme zaslali overovací kód. Skopírujte ho alebo opíšte nižšie.",
     "enterCode": "Zadajte kód",
     "continue": "Pokračovať",
     "back": "Späť"
@@ -152,7 +155,7 @@
     "subject": "Prihlásenie do systému Pixea",
     "preview": "Použite kód {code} na overenie svojej e-mailovej adresy a prihlásenie.",
     "title": "Overovací kód na prihlásenie",
-    "description": "Váš overovací kód je nižšie - skopírujte a prilepte alebo napíšte ho na obrazovke \"Overenie\", aby ste sa prihlásili.",
+    "description": "Váš overovací kód je nižšie. Skopírujte ho alebo opíšte na obrazovku \"Overenie\", aby ste sa prihlásili.",
     "warning1": "Tento kód je platný len 1 hodinu. Po vypršaní si, prosím, vyžiadajte nový.",
     "warning2": "Ak ste si tento e-mail nevyžiadali, môžete ho pokojne ignorovať.",
     "links": {

@@ -1,5 +1,5 @@
 import { Locales } from "@/i18n/locales";
-import { sql } from "drizzle-orm";
+import { InferSelectModel, sql } from "drizzle-orm";
 import {
   uuid,
   pgTable,
@@ -10,9 +10,11 @@ import {
   integer,
   primaryKey,
   boolean,
+  pgEnum,
 } from "drizzle-orm/pg-core";
 import { AdapterAccountType } from "next-auth/adapters";
 import { Address } from "./address";
+import { ProductPayload } from "./validation";
 
 const timestamps = {
   created: timestamp({ mode: "string" })
@@ -24,6 +26,15 @@ const timestamps = {
     .$onUpdate(() => sql`(now())`),
 };
 
+const translatedColumn = jsonb()
+  .notNull()
+  .default({ en: "", sk: "" })
+  .$type<Record<Locales, string>>();
+
+export const roleEnum = pgEnum("role", ["customer", "admin"]);
+
+export const productStatus = pgEnum("product_status", ["active", "draft"]);
+
 export const users = pgTable("user", {
   id: uuid().primaryKey().defaultRandom(),
   name: varchar(),
@@ -32,7 +43,7 @@ export const users = pgTable("user", {
   phone: varchar(),
   address: jsonb().$type<Partial<Address>>(),
   image: text(),
-  role: varchar().default("customer").$type<"customer" | "admin">(),
+  role: roleEnum().notNull().default("customer"),
   ...timestamps,
 });
 
@@ -106,16 +117,23 @@ export const authenticators = pgTable(
 
 export const products = pgTable("product", {
   id: uuid().primaryKey().defaultRandom(),
-  slug: varchar().notNull().unique(),
-  name: jsonb()
+  name: translatedColumn.notNull(),
+  description: translatedColumn.notNull(),
+  status: productStatus().notNull().default("draft"),
+  image: varchar(),
+
+  files: jsonb().notNull().default({}).$type<ProductPayload["files"]>(),
+
+  size: jsonb().notNull().default({}).$type<ProductPayload["size"]>(),
+
+  configuration: jsonb()
     .notNull()
-    .default({ en: "", sk: "" })
-    .$type<Record<Locales, string>>(),
-  description: jsonb()
-    .notNull()
-    .default({ en: "", sk: "" })
-    .$type<Record<Locales, string>>(),
-  image: varchar().notNull(),
-  configuration: jsonb().notNull().default({}),
+    .default([])
+    .$type<ProductPayload["configuration"]>(),
+
   ...timestamps,
 });
+
+export type User = InferSelectModel<typeof users>;
+
+export type Product = InferSelectModel<typeof products>;

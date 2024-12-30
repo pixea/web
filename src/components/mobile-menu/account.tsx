@@ -5,28 +5,29 @@ import { ChevronDownIcon, ChevronUpIcon } from "@heroicons/react/24/solid";
 import { Button, Flex, Separator, Text } from "@radix-ui/themes";
 import { useState } from "react";
 import { useTranslations } from "next-intl";
-import { logout } from "@/app/[locale]/auth/actions";
+import { logoutAction } from "@/app/[locale]/auth/actions";
 
 import { Link } from "@/i18n/routing";
-import { AccountMenuItem } from "@/components/accountItems";
 import {
   ArrowLeftEndOnRectangleIcon,
   UserCircleIcon,
 } from "@heroicons/react/24/outline";
+import useAccountItems from "@/hooks/accountItems";
+import { Session } from "next-auth";
 
 const MobileAccountMenu = ({
-  items,
   onInteraction,
+  session,
 }: {
-  items: readonly AccountMenuItem[];
   onInteraction: () => void;
+  session?: Session | null;
 }) => {
   const t = useTranslations("Header");
   const [open, setOpen] = useState(false);
 
-  const iconSize = 4;
+  const items = useAccountItems(session, false);
 
-  const renderableItems = items.filter((item) => item !== "SEPARATOR");
+  const iconSize = 4;
 
   return (
     <Collapsible.Root open={open} onOpenChange={setOpen}>
@@ -47,7 +48,7 @@ const MobileAccountMenu = ({
       <Collapsible.Content>
         <Flex direction="column" className="mt-5" asChild>
           <ul className="gap-5 ml-5">
-            {renderableItems.map((subItem) => (
+            {items.map((subItem) => (
               <li key={subItem.name}>
                 <Button
                   variant="ghost"
@@ -72,7 +73,7 @@ const MobileAccountMenu = ({
             <Separator orientation="horizontal" className="w-full" />
 
             <li>
-              <form action={logout}>
+              <form action={logoutAction}>
                 <Button
                   variant="ghost"
                   color="red"

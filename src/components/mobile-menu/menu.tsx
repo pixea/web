@@ -18,7 +18,6 @@ import {
 import { Link } from "@/i18n/routing";
 import { MenuItem } from "@/app/[locale]/header";
 import themeConfig from "@/app/_themes/config";
-import { accountItems } from "../accountItems";
 
 import MobileSubMenu from "./submenu";
 import MobileAccountMenu from "./account";
@@ -128,7 +127,7 @@ const MobileMenu = ({
               {session ? (
                 <li>
                   <MobileAccountMenu
-                    items={accountItems}
+                    session={session}
                     onInteraction={onInteraction}
                   />
                 </li>

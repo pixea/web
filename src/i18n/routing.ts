@@ -66,7 +66,7 @@ export const routing = defineRouting({
     },
     "/orders": {
       en: "/orders",
-      sk: "objednavky",
+      sk: "/objednavky",
     },
     "/users": {
       en: "/users",

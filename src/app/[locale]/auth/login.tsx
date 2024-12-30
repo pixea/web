@@ -1,7 +1,7 @@
 import { Button, Heading, Text, TextField } from "@radix-ui/themes";
 
 import { socialLoginProviders } from "./social";
-import { sendCode } from "./actions";
+import { sendCodeAction } from "./actions";
 import ErrorAlert from "./error-alert";
 import { useTranslations } from "next-intl";
 
@@ -16,7 +16,7 @@ const LogIn = ({ email }: { email?: string }) => {
 
       <ErrorAlert />
 
-      <form action={sendCode}>
+      <form action={sendCodeAction}>
         <TextField.Root
           size="3"
           type="email"

@@ -6,7 +6,7 @@ import { users } from "@/db/schema";
 import { eq } from "drizzle-orm";
 import { cookies } from "next/headers";
 
-export const sendCode = async (formData: FormData) => {
+export const sendCodeAction = async (formData: FormData) => {
   const cookieStore = await cookies();
   cookieStore.set({
     name: "email",
@@ -20,7 +20,7 @@ export const sendCode = async (formData: FormData) => {
   await signIn("resend", formData);
 };
 
-export const saveAccount = async (formData: FormData) => {
+export const saveAccountAction = async (formData: FormData) => {
   const session = await auth();
 
   if (!session?.user?.id) {
@@ -48,7 +48,7 @@ export const saveAccount = async (formData: FormData) => {
   await unstable_update({});
 };
 
-export const logout = async () => {
+export const logoutAction = async () => {
   const cookieStore = await cookies();
   cookieStore.delete("email");
 

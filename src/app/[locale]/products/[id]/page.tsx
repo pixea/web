@@ -5,12 +5,41 @@ import { zodToJsonSchema } from "zod-to-json-schema";
 
 import { Link } from "@/i18n/routing";
 
-import { productSchema } from "./schema";
-import { save } from "./actions";
+import { saveAction } from "./actions";
 import MonacoInput from "./monaco";
+import BottomBar from "@/components/bottomBar";
+import db from "@/db";
+import { productSchema } from "@/db/validation";
+import { eq } from "drizzle-orm";
+import { products } from "@/db/schema";
+import { auth } from "@/auth";
 
-const ProductEditPage = async () => {
+const ProductEditPage = async (params: Promise<{ id: string }>) => {
+  const session = await auth();
+  if (session?.user.role !== "admin") {
+    throw new Error("Unauthorized");
+  }
+
   const t = await getTranslations("ProductEdit");
+
+  const { id } = await params;
+  const product =
+    id === "new"
+      ? null
+      : await db.query.products.findFirst({ where: eq(products.id, id) });
+
+  const value = JSON.stringify(
+    product
+      ? {
+          ...product,
+          id: undefined,
+          createdAt: undefined,
+          updatedAt: undefined,
+        }
+      : {},
+    null,
+    2
+  );
 
   return (
     <Container className="w-full" mt="4">
@@ -32,14 +61,30 @@ const ProductEditPage = async () => {
           </Button>
         </Flex>
 
-        <form action={save}>
-          <TextField.Root type="hidden" name="id" className="hidden" />
+        <form action={saveAction}>
+          <TextField.Root
+            type="hidden"
+            name="id"
+            className="hidden"
+            value={id}
+          />
 
           <MonacoInput
             name="values"
-            defaultValue="{}"
+            defaultValue={value}
             schema={zodToJsonSchema(productSchema)}
           />
+
+          <BottomBar justify="end">
+            <Button
+              type="submit"
+              variant="solid"
+              size="3"
+              className="font-semibold"
+            >
+              {t("save")}
+            </Button>
+          </BottomBar>
         </form>
       </Flex>
     </Container>

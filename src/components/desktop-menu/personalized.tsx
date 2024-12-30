@@ -8,17 +8,12 @@ import {
 import { Button, DropdownMenu } from "@radix-ui/themes";
 import { Session } from "next-auth";
 import { useTranslations } from "next-intl";
-import { logout } from "@/app/[locale]/auth/actions";
-import { AccountMenuItem } from "@/components/accountItems";
+import { logoutAction } from "@/app/[locale]/auth/actions";
+import useAccountItems from "@/hooks/accountItems";
 
-const Personalized = ({
-  session,
-  items,
-}: {
-  session?: Session | null;
-  items: readonly AccountMenuItem[];
-}) => {
+const Personalized = ({ session }: { session?: Session | null }) => {
   const t = useTranslations("Header");
+  const items = useAccountItems(session);
 
   const accountButton = (
     <Button
@@ -73,7 +68,7 @@ const Personalized = ({
 
         <DropdownMenu.Separator />
 
-        <form action={logout}>
+        <form action={logoutAction}>
           <DropdownMenu.Item color="red" className="w-full" asChild>
             <button type="submit">
               <ArrowLeftEndOnRectangleIcon className="size-4" /> {t("logout")}

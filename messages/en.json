@@ -57,9 +57,12 @@
     "title": "Product administration",
     "name": "Name",
     "description": "Description",
+    "status": "Status",
     "created": "Created",
     "updated": "Updated",
     "actions": "Actions",
+    "active": "Active",
+    "draft": "Draft",
     "add": "Add",
     "edit": "Edit",
     "delete": "Delete"

@@ -3,17 +3,15 @@ import { Flex, Button } from "@radix-ui/themes";
 import * as NavigationMenu from "@radix-ui/react-navigation-menu";
 import Image from "next/image";
 import { ChevronDownIcon } from "@heroicons/react/24/solid";
-
 import { Session } from "next-auth";
+import { useTranslations } from "next-intl";
 
 import { MenuItem } from "@/app/[locale]/header";
 import { AppPathnames, Link } from "@/i18n/routing";
 import { cn } from "@/lib/utils";
-import { accountItems } from "@/components/accountItems";
 
 import DesktopLink from "./desktopLink";
 import Personalized from "./personalized";
-import { useTranslations } from "next-intl";
 
 const DesktopNavigation = ({
   session,
@@ -115,7 +113,7 @@ const DesktopNavigation = ({
       </NavigationMenu.Root>
 
       <Flex direction="row" align="center" gap="4">
-        <Personalized session={session} items={accountItems} />
+        <Personalized session={session} />
       </Flex>
     </Flex>
   );

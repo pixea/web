@@ -5,22 +5,8 @@
     {
       "idx": 0,
       "version": "7",
-      "when": 1735248001715,
-      "tag": "0000_gray_stingray",
-      "breakpoints": true
-    },
-    {
-      "idx": 1,
-      "version": "7",
-      "when": 1735423365765,
-      "tag": "0001_handy_nemesis",
-      "breakpoints": true
-    },
-    {
-      "idx": 2,
-      "version": "7",
-      "when": 1735490444271,
-      "tag": "0002_modern_purifiers",
+      "when": 1735590697357,
+      "tag": "0000_gifted_centennial",
       "breakpoints": true
     }
   ]

@@ -1,11 +1,21 @@
 import { Link } from "@/i18n/routing";
-import { PencilIcon, PlusIcon, TrashIcon } from "@heroicons/react/24/solid";
-import { Button, Container, Flex, Heading, Table } from "@radix-ui/themes";
-import { useFormatter, useTranslations } from "next-intl";
+import { PlusIcon } from "@heroicons/react/24/solid";
+import { Button, Container, Flex, Heading } from "@radix-ui/themes";
+import { getTranslations } from "next-intl/server";
+import ProductsTable from "./table";
+import db from "@/db";
+import { products as productsSchema } from "@/db/schema";
+import { auth } from "@/auth";
 
-const ProductsPage = () => {
-  const t = useTranslations("Products");
-  const format = useFormatter();
+const ProductsPage = async () => {
+  const session = await auth();
+  if (session?.user.role !== "admin") {
+    throw new Error("Unauthorized");
+  }
+
+  const t = await getTranslations("Products");
+
+  const products = await db.select().from(productsSchema);
 
   return (
     <Container className="w-full" mt="4">
@@ -28,42 +38,7 @@ const ProductsPage = () => {
           </Button>
         </Flex>
 
-        <Table.Root>
-          <Table.Header>
-            <Table.Row align="center">
-              <Table.ColumnHeaderCell>{t("name")}</Table.ColumnHeaderCell>
-              <Table.ColumnHeaderCell>
-                {t("description")}
-              </Table.ColumnHeaderCell>
-              <Table.ColumnHeaderCell>{t("created")}</Table.ColumnHeaderCell>
-              <Table.ColumnHeaderCell>{t("updated")}</Table.ColumnHeaderCell>
-              <Table.ColumnHeaderCell>{t("actions")}</Table.ColumnHeaderCell>
-            </Table.Row>
-          </Table.Header>
-
-          <Table.Body>
-            <Table.Row align="center">
-              <Table.RowHeaderCell>Photo</Table.RowHeaderCell>
-              <Table.Cell>Description</Table.Cell>
-              <Table.Cell>{format.relativeTime(new Date())}</Table.Cell>
-              <Table.Cell>{format.relativeTime(new Date())}</Table.Cell>
-              <Table.Cell>
-                <Flex gap="2">
-                  <Button asChild>
-                    {/* @ts-expect-error Dynamic route .. meh ... */}
-                    <Link href={`/products/${1}`}>
-                      <PencilIcon className="size-4" /> {t("edit")}
-                    </Link>
-                  </Button>
-
-                  <Button color="red">
-                    <TrashIcon className="size-3" /> {t("delete")}
-                  </Button>
-                </Flex>
-              </Table.Cell>
-            </Table.Row>
-          </Table.Body>
-        </Table.Root>
+        <ProductsTable products={products} />
       </Flex>
     </Container>
   );

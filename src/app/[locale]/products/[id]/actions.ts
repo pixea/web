@@ -4,12 +4,13 @@ import { auth } from "@/auth";
 import db from "@/db";
 import { products } from "@/db/schema";
 import { eq } from "drizzle-orm";
+import { redirect } from "next/navigation";
 
-export const save = async (formData: FormData) => {
+export const saveAction = async (formData: FormData) => {
   const session = await auth();
 
   if (session?.user.role !== "admin") {
-    throw new Error("Not authorized");
+    throw new Error("Unauthorized");
   }
 
   const id = formData.get("id") as string;
@@ -20,6 +21,11 @@ export const save = async (formData: FormData) => {
   if (id) {
     await db.update(products).set(values).where(eq(products.id, id));
   } else {
-    await db.insert(products).values(values);
+    const product = await db
+      .insert(products)
+      .values(values)
+      .returning({ insertedId: products.id });
+
+    redirect(`/products/${product[0].insertedId}`);
   }
 };

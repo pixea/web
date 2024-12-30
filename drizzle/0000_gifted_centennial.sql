@@ -1,3 +1,5 @@
+CREATE TYPE "public"."product_status" AS ENUM('active', 'draft');--> statement-breakpoint
+CREATE TYPE "public"."role" AS ENUM('customer', 'admin');--> statement-breakpoint
 CREATE TABLE "account" (
 	"userId" uuid NOT NULL,
 	"type" varchar NOT NULL,
@@ -30,14 +32,14 @@ CREATE TABLE "authenticator" (
 --> statement-breakpoint
 CREATE TABLE "product" (
 	"id" uuid PRIMARY KEY DEFAULT gen_random_uuid() NOT NULL,
-	"slug" varchar NOT NULL,
 	"name" jsonb DEFAULT '{"en":"","sk":""}'::jsonb NOT NULL,
-	"description" jsonb DEFAULT '{"en":"","sk":""}'::jsonb NOT NULL,
-	"image" varchar NOT NULL,
-	"configuration" jsonb DEFAULT '{}'::jsonb NOT NULL,
+	"status" "product_status" DEFAULT 'draft' NOT NULL,
+	"image" varchar,
+	"files" jsonb DEFAULT '{}'::jsonb NOT NULL,
+	"size" jsonb DEFAULT '{}'::jsonb NOT NULL,
+	"configuration" jsonb DEFAULT '[]'::jsonb NOT NULL,
 	"created" timestamp DEFAULT (now()) NOT NULL,
-	"updated" timestamp DEFAULT (now()) NOT NULL,
-	CONSTRAINT "product_slug_unique" UNIQUE("slug")
+	"updated" timestamp DEFAULT (now()) NOT NULL
 );
 --> statement-breakpoint
 CREATE TABLE "session" (
@@ -51,7 +53,10 @@ CREATE TABLE "user" (
 	"name" varchar,
 	"email" varchar,
 	"emailVerified" timestamp,
+	"phone" varchar,
+	"address" jsonb,
 	"image" text,
+	"role" "role" DEFAULT 'customer' NOT NULL,
 	"created" timestamp DEFAULT (now()) NOT NULL,
 	"updated" timestamp DEFAULT (now()) NOT NULL,
 	CONSTRAINT "user_email_unique" UNIQUE("email")

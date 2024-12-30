@@ -11,6 +11,7 @@ import { resend } from ".";
 import messages from "../../messages";
 
 const from = "Pixea <no-reply@pixea.sk>";
+const replyTo = "Pixea <info@pixea.sk>";
 
 export const resendConfig: EmailUserConfig = {
   from,
@@ -28,6 +29,7 @@ export const resendConfig: EmailUserConfig = {
     const res = await resend.emails.send({
       from,
       to,
+      replyTo,
       subject,
       html: await render(emailJSX, { pretty: true }),
       text: await render(emailJSX, { plainText: true }),
