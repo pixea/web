@@ -14,7 +14,7 @@ const ErrorAlert = () => {
   if (!errorCode) return null;
 
   return (
-    <Callout.Root color="red" role="alert">
+    <Callout.Root variant="surface" color="red" role="alert">
       <Callout.Icon>
         <ExclamationCircleIcon className="size-4" />
       </Callout.Icon>
