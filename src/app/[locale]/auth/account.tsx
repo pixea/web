@@ -9,7 +9,6 @@ import {
   Flex,
   Select,
   Grid,
-  Callout,
 } from "@radix-ui/themes";
 import { Session } from "next-auth";
 import { useTranslations } from "next-intl";
@@ -30,7 +29,7 @@ const Account = ({ session }: { session: Session }) => {
   const name = session.user?.name;
 
   // Autofocus "Name" field on new account
-  const autofocustRef = useRef(null);
+  const autofocustRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     if (!name && autofocustRef.current) {
