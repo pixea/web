@@ -1,22 +1,46 @@
 import { cookies } from "next/headers";
-import { Card, Container, Flex, Heading } from "@radix-ui/themes";
+import { Card, Container, Flex, Heading, Text, Badge } from "@radix-ui/themes";
+
+import { getTranslations } from "next-intl/server";
 
 import { auth } from "@/auth";
 import LogIn from "./login";
 import Profile from "./account";
 import { cn } from "@/lib/utils";
+import { StarIcon } from "@heroicons/react/24/outline";
 
 const AuthPage = async () => {
+  const t = await getTranslations("Auth");
+
   const cookieStore = await cookies();
 
   const session = await auth();
+
+  const name = session?.user?.name;
+  const role = session?.user?.role;
 
   return (
     <Container
       size={session ? undefined : "1"}
       className={cn("w-full", session ? "mt-4" : "justify-center")}
     >
-      {session ? <Heading size="7">Moja Pixea</Heading> : ""}
+      {session ? (
+        <Flex direction="column">
+          <Text
+            size="3"
+            color="gray"
+            className="flex items-center gap-1.5 uppercase"
+          >
+            {t("my")} Pixea{" "}
+            {role === "admin" ? (
+              <Badge variant="solid" size="1" color="yellow" radius="full">
+                ADMIN
+              </Badge>
+            ) : undefined}
+          </Text>
+          <Heading size="7">{name}</Heading>
+        </Flex>
+      ) : undefined}
 
       <Card className="w-full mt-4">
         <Flex

@@ -15,6 +15,8 @@ const Personalized = ({ session }: { session?: Session | null }) => {
   const t = useTranslations("Header");
   const items = useAccountItems(session);
 
+  const role = session?.user.role;
+
   const accountButton = (
     <Button
       variant="ghost"
@@ -37,7 +39,7 @@ const Personalized = ({ session }: { session?: Session | null }) => {
       <DropdownMenu.Trigger>
         <Button
           variant="ghost"
-          color="gray"
+          color={role === "admin" ? "yellow" : "gray"}
           size="3"
           className="py-2.5"
           title={t("accountItems.account")}

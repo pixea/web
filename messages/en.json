@@ -78,7 +78,8 @@
   "Auth": {
     "title": "Login",
     "description": "Sign in for order tracking and management, data prefilling and a better overall experience.",
-    "contact": "Contact",
+    "my": "My",
+    "contact": "Contact information",
     "email": "E-mail",
     "enterEmail": "Enter your e-mail",
     "phone": "Phone number",
@@ -94,8 +95,7 @@
       "Verification": "The provided verification code is invalid. Please try again.",
       "Default": "We have encountered an error. Please contact us if the problem persists."
     },
-    "welcome": "Welcome!",
-    "account": "Account: {name}",
+    "basic": "Basic information",
     "name": "Full Name",
     "enterName": "Enter your full name",
     "address": {
@@ -140,7 +140,14 @@
         "im": "Isle of Man"
       }
     },
-    "optional": "Optional",
+    "optional": "optional",
+    "orders": {
+      "adminWarning": {
+        "bold": "This tab is not for managing all received orders!",
+        "desc": "This is the tab a casual customer sees. Therefore, a user with the \"admin\" role can use it for e.g. testing out the order process.",
+        "link": "Open management of all received orders"
+      }
+    },
     "logout": "Log out",
     "save": "Save"
   },

@@ -9,6 +9,7 @@ import {
   Flex,
   Select,
   Grid,
+  Callout,
 } from "@radix-ui/themes";
 import { Session } from "next-auth";
 import { useTranslations } from "next-intl";
@@ -17,8 +18,11 @@ import {
   EnvelopeIcon,
   ExclamationTriangleIcon,
   PhoneIcon,
+  ShoppingBagIcon,
+  UserIcon,
 } from "@heroicons/react/24/outline";
 import { useEffect, useRef } from "react";
+import { Link } from "@/i18n/routing";
 
 import { useLocale } from "next-intl";
 
@@ -40,6 +44,8 @@ const Account = ({ session }: { session: Session }) => {
   const email = session.user?.email;
   const phone = session.user?.phone;
   const address = session.user?.address;
+
+  const role = session.user?.role;
 
   const countries = {
     en: [
@@ -114,72 +120,89 @@ const Account = ({ session }: { session: Session }) => {
       <Tabs.Root defaultValue="account">
         <Tabs.List className="">
           <Tabs.Trigger value="orders">
-            <Text size="3">Objednávky</Text>
+            <Text size="3" className="flex items-center gap-1.5">
+              <ShoppingBagIcon className="size-4" /> Objednávky
+            </Text>
           </Tabs.Trigger>
           <Tabs.Trigger value="account">
-            <Text size="3">Môj účet</Text>
+            <Text size="3" className="flex items-center gap-1.5">
+              <UserIcon className="size-4" /> Môj účet
+            </Text>
           </Tabs.Trigger>
         </Tabs.List>
 
         <Box pt="3">
           <Tabs.Content value="orders">
-            <Text size="2">
-              Edit your profile or update contact information.
-            </Text>
+            {role === "admin" ? (
+              <Callout.Root
+                size="2"
+                variant="surface"
+                color="orange"
+                role="alert"
+              >
+                <Callout.Icon>
+                  <ExclamationTriangleIcon className="size-4" />
+                </Callout.Icon>
+                <Callout.Text>
+                  <Text weight="bold">{t("orders.adminWarning.bold")}</Text>{" "}
+                  {t("orders.adminWarning.desc")}{" "}
+                  <Link href="/orders" className="underline">
+                    {t("orders.adminWarning.link")}
+                  </Link>
+                </Callout.Text>
+              </Callout.Root>
+            ) : undefined}
           </Tabs.Content>
 
-          <Tabs.Content value="account" mt="2">
+          <Tabs.Content value="account" mt="3">
             <form action={saveAccountAction}>
               <Flex direction="column" gap="6">
-                {/* <Callout.Root variant="surface" color="orange" role="alert">
-                  <Callout.Icon>
-                    <ExclamationTriangleIcon className="size-4" />
-                  </Callout.Icon>
-                  <Callout.Text>
-                    Prosím vyplňte svoje meno, aby sme vás vedeli ľahko
-                    identifikovať.
-                  </Callout.Text>
-                </Callout.Root> */}
+                {/* BASIC */}
+                <Flex direction="column" gap="4">
+                  <Text size="3" weight="medium">
+                    {t("basic")}
+                  </Text>
 
-                {/* NAME */}
-                <Grid columns="1" className="sm:grid-cols-2 sm:gap-4">
-                  <Flex direction="column" gap="2">
-                    <Text
-                      size="1"
-                      color={!name ? "orange" : "gray"}
-                      weight="medium"
-                      as="label"
-                      htmlFor="name"
-                    >
-                      {t("name")}
-                    </Text>
-                    <TextField.Root
-                      size="3"
-                      variant="surface"
-                      color={!name ? "orange" : "gray"}
-                      radius="large"
-                      required
-                      ref={autofocustRef}
-                      placeholder={t("enterName")}
-                      defaultValue={name || undefined}
-                      type="text"
-                      id="name"
-                      name="name"
-                    />
+                  <Grid columns="1" className="sm:grid-cols-2 sm:gap-4">
+                    {/* NAME */}
+                    <Flex direction="column" gap="2">
+                      <Text
+                        size="1"
+                        color={!name ? "orange" : "gray"}
+                        weight="medium"
+                        as="label"
+                        htmlFor="name"
+                      >
+                        {t("name")}
+                      </Text>
+                      <TextField.Root
+                        size="3"
+                        variant="surface"
+                        color={!name ? "orange" : "gray"}
+                        radius="large"
+                        required
+                        ref={autofocustRef}
+                        placeholder={t("enterName")}
+                        defaultValue={name || undefined}
+                        type="text"
+                        id="name"
+                        name="name"
+                      />
 
-                    <Text
-                      size="2"
-                      color="orange"
-                      weight="medium"
-                      className={`flex items-center gap-1.5 ${!name ? "block" : "hidden"}`}
-                      role="alert"
-                    >
-                      <ExclamationTriangleIcon className="size-4" /> Prosím
-                      vyplňte svoje meno, aby sme vás vedeli ľahko
-                      identifikovať.
-                    </Text>
-                  </Flex>
-                </Grid>
+                      <Text
+                        size="2"
+                        color="orange"
+                        weight="medium"
+                        className={`flex items-center gap-1.5 ${!name ? "block" : "hidden"}`}
+                        role="alert"
+                      >
+                        <ExclamationTriangleIcon className="size-4" /> Prosím
+                        vyplňte svoje meno, aby sme vás vedeli ľahko
+                        identifikovať.
+                      </Text>
+                    </Flex>
+                  </Grid>
+                </Flex>
 
                 {/* CONTACT */}
                 <Flex direction="column" gap="4">
@@ -285,8 +308,7 @@ const Account = ({ session }: { session: Session }) => {
                         as="label"
                         htmlFor="additional"
                       >
-                        {t("address.additional")} ({t("optional").toLowerCase()}
-                        )
+                        {t("address.additional")} ({t("optional")})
                       </Text>
                       <TextField.Root
                         size="3"
@@ -414,7 +436,7 @@ const Account = ({ session }: { session: Session }) => {
                 </Flex>
               </Flex>
 
-              <Flex position="sticky" bottom="2" mt="8">
+              <Flex position="sticky" bottom="2" mt="6">
                 <Button
                   size="3"
                   type="submit"

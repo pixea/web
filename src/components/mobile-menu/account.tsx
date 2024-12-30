@@ -29,13 +29,20 @@ const MobileAccountMenu = ({
 
   const iconSize = 4;
 
+  const name = session?.user.name;
+  const role = session?.user.role;
+
   return (
     <Collapsible.Root open={open} onOpenChange={setOpen}>
       <Collapsible.Trigger asChild>
-        <Button variant="soft" color="gray" className="py-6 gap-1.5 w-full">
+        <Button
+          variant="soft"
+          color={role === "admin" ? "yellow" : "gray"}
+          className="py-6 gap-1.5 w-full"
+        >
           <UserCircleIcon className="size-6" />
           <Text size="4" className="font-semibold">
-            {t("accountItems.account")}
+            {name}
           </Text>
           {open ? (
             <ChevronUpIcon className="size-5" />

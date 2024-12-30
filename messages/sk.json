@@ -78,6 +78,7 @@
   "Auth": {
     "title": "Prihlásenie",
     "description": "Prihláste sa pre správu a sledovanie objednávok, predvypĺňanie údajov a príjemnejší zážitok.",
+    "my": "Moja",
     "contact": "Kontaktné údaje",
     "email": "E-mail",
     "enterEmail": "Zadajte váš e-mail",
@@ -94,8 +95,7 @@
       "Verification": "Poskytnutý overovací kód je neplatný. Skúste to, prosím, znova.",
       "Default": "Narazili sme na chybu. Ak problém pretrváva, kontaktujte nás, prosím."
     },
-    "welcome": "Vitajte!",
-    "account": "Účet: {name}",
+    "basic": "Základné informácie",
     "name": "Meno a priezvisko",
     "enterName": "Zadajte vaše celé meno",
     "address": {
@@ -140,7 +140,14 @@
         "sk": "Slovensko"
       }
     },
-    "optional": "Voliteľné",
+    "optional": "voliteľné",
+    "orders": {
+      "adminWarning": {
+        "bold": "Tento tab neslúži na správu všetkých prijatých objednávok!",
+        "desc": "Ide o tab, ktorý vidí aj bežný zákazník. Tým pádom používateľ s rolou \"admin\" cez neho dokáže napríklad testovať objednávkový proces.",
+        "link": "Otvoriť správu všetkých prijatých objednávok"
+      }
+    },
     "logout": "Odhlásiť sa",
     "save": "Uložiť"
   },
