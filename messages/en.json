@@ -1,4 +1,14 @@
 {
+  "Common": {
+    "done": "Done",
+    "error": "Error",
+    "noChanges": "No changes",
+    "message": {
+      "done": "The action was successfully performed.",
+      "error": "An error occurred while performing the action.",
+      "noChanges": "No changes were made."
+    }
+  },
   "Header": {
     "home": "Home",
     "order": "Order",
@@ -67,13 +77,7 @@
     "edit": "Edit",
     "delete": "Delete",
     "back": "Back",
-    "save": "Save",
-    "done": "Done",
-    "error": "Error",
-    "message": {
-      "done": "The action was successfully performed.",
-      "error": "An error occurred while performing the action."
-    }
+    "save": "Save"
   },
   "Photo": {
     "title": "Photo Print"

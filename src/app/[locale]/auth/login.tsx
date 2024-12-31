@@ -12,6 +12,7 @@ import { useSearchParams } from "next/navigation";
 const LogIn = ({ email }: { email?: string }) => {
   const t = useTranslations("Auth");
   const [state, formAction, pending] = useActionState(sendCodeAction, {
+    result: "",
     message: "",
   });
   const params = useSearchParams();
@@ -23,7 +24,7 @@ const LogIn = ({ email }: { email?: string }) => {
 
       <Text>{t("description")}</Text>
 
-      <ErrorAlert code={state.message === "error" ? "Default" : undefined} />
+      <ErrorAlert code={state.result === "error" ? "Default" : undefined} />
 
       <form action={formAction}>
         <input type="hidden" name="lastPath" value={redirectUrl || ""} />

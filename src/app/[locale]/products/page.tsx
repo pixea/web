@@ -7,6 +7,7 @@ import db from "@/db";
 import { products as productsSchema } from "@/db/schema";
 import { auth } from "@/auth";
 import { redirect } from "next/navigation";
+import { desc } from "drizzle-orm";
 
 const ProductsPage = async () => {
   const locale = await getLocale();
@@ -17,7 +18,10 @@ const ProductsPage = async () => {
 
   const t = await getTranslations("Products");
 
-  const products = await db.select().from(productsSchema);
+  const products = await db
+    .select()
+    .from(productsSchema)
+    .orderBy(desc(productsSchema.created));
 
   return (
     <Container className="w-full" mt="4">

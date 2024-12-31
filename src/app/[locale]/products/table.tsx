@@ -9,8 +9,10 @@ import { DateTime } from "luxon";
 
 import { Product } from "@/db/schema";
 import { Locales } from "@/i18n/locales";
+import { ActionToasts } from "@/components/actionToasts";
+
 import { deleteProductAction } from "./actions";
-import Toast, { ToastProvider } from "@/components/toast/toast";
+import { ActionState } from "@/lib/utils";
 
 const ProductsTable = ({ products }: { products: Product[] }) => {
   const t = useTranslations("Products");
@@ -18,7 +20,7 @@ const ProductsTable = ({ products }: { products: Product[] }) => {
 
   const [deleteState, deleteAction, deletePending] = useActionState(
     deleteProductAction,
-    { message: "" }
+    {} as ActionState
   );
 
   return (
@@ -79,13 +81,8 @@ const ProductsTable = ({ products }: { products: Product[] }) => {
           ))}
         </Table.Body>
       </Table.Root>
-      <ToastProvider>
-        {deleteState.message && (
-          <Toast title={t(deleteState.message)}>
-            {t(`message.${deleteState.message}`)}
-          </Toast>
-        )}
-      </ToastProvider>
+
+      <ActionToasts state={deleteState} />
     </>
   );
 };

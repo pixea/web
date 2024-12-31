@@ -4,6 +4,7 @@ import { auth } from "@/auth";
 import db from "@/db";
 import { products } from "@/db/schema";
 import { ProductPayload } from "@/db/validation";
+import { error, noChanges, success } from "@/lib/utils";
 import { eq } from "drizzle-orm";
 import { getLocale } from "next-intl/server";
 import { revalidatePath } from "next/cache";
@@ -24,6 +25,10 @@ export const saveProductAction = async (
   const id = formData.get("id") as string;
   const valuesString = formData.get("values") as string;
 
+  if (!valuesString) {
+    return noChanges();
+  }
+
   const values = JSON.parse(valuesString) as ProductPayload;
 
   try {
@@ -42,10 +47,10 @@ export const saveProductAction = async (
       throw e;
     }
 
-    return { message: "error", details: e };
+    return error("error", e);
   }
 
-  return { message: "done" };
+  return success();
 };
 
 export const deleteProductAction = async (
@@ -63,10 +68,10 @@ export const deleteProductAction = async (
   try {
     await db.delete(products).where(eq(products.id, id));
   } catch (e) {
-    return { message: "error", details: e };
+    return error("error", e);
   }
 
   revalidatePath(`/${locale}/products/${id}`);
 
-  return { message: "done" };
+  return success();
 };

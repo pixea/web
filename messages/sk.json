@@ -1,4 +1,14 @@
 {
+  "Common": {
+    "done": "Hotovo",
+    "error": "Chyba",
+    "noChanges": "Žiadne zmeny",
+    "message": {
+      "done": "Akcia bola úspešne vykonaná.",
+      "error": "Počas vykonávania akcie nastala chyba.",
+      "noChanges": "Žiadne zmeny neboli vykonané."
+    }
+  },
   "Header": {
     "home": "Domov",
     "order": "Objednať",
@@ -65,15 +75,9 @@
     "draft": "Draft",
     "add": "Pridať",
     "edit": "Upraviť",
-    "back": "Späť",
-    "save": "Uložiť",
     "delete": "Vymazať",
-    "done": "Dokončené",
-    "error": "Chyba",
-    "message": {
-      "done": "Akcia bola úspešne vykonaná.",
-      "error": "Počas vykonávania akcie nastala chyba."
-    }
+    "back": "Späť",
+    "save": "Uložiť"
   },
   "Photo": {
     "title": "Tlač fotografií"

@@ -1,14 +1,15 @@
 "use client";
 
 import { useActionState } from "react";
-
-import { saveProductAction } from "../actions";
-import MonacoInput from "./monaco";
-import BottomBar from "@/components/bottomBar";
 import { JsonSchema7Type } from "zod-to-json-schema";
 import { Button, TextField } from "@radix-ui/themes";
 import { useTranslations } from "next-intl";
-import Toast, { ToastProvider } from "@/components/toast/toast";
+
+import BottomBar from "@/components/bottomBar";
+import { ActionToasts } from "@/components/actionToasts";
+
+import { saveProductAction } from "../actions";
+import MonacoInput from "./monaco";
 
 const ProductForm = ({
   id,
@@ -49,13 +50,7 @@ const ProductForm = ({
         </Button>
       </BottomBar>
 
-      <ToastProvider>
-        {actionState.message && (
-          <Toast title={t(actionState.message)}>
-            {t(`message.${actionState.message}`)}
-          </Toast>
-        )}
-      </ToastProvider>
+      <ActionToasts state={actionState} />
     </form>
   );
 };

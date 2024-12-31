@@ -36,10 +36,10 @@ export const sendCodeAction = async (
       throw e;
     }
 
-    return { message: "error", details: e };
+    return { result: "error", message: "error", details: e };
   }
 
-  return { message: "success" };
+  return { result: "success", message: "done" };
 };
 
 export const saveAccountAction = async (formData: FormData) => {
