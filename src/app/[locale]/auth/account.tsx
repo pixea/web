@@ -99,12 +99,12 @@ const Account = ({ session }: { session: Session }) => {
         <Tabs.List className="">
           <Tabs.Trigger value="orders">
             <Text size="3" className="flex items-center gap-1.5">
-              <ShoppingBagIcon className="size-4" /> Objednávky
+              <ShoppingBagIcon className="size-4" /> {t("orders.tab")}
             </Text>
           </Tabs.Trigger>
           <Tabs.Trigger value="account">
             <Text size="3" className="flex items-center gap-1.5">
-              <UserIcon className="size-4" /> Môj účet
+              <UserIcon className="size-4" /> {t("account")}
             </Text>
           </Tabs.Trigger>
         </Tabs.List>

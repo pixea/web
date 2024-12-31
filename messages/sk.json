@@ -79,22 +79,7 @@
     "title": "Prihlásenie",
     "description": "Prihláste sa pre správu a sledovanie objednávok, predvypĺňanie údajov a príjemnejší zážitok.",
     "my": "Moja",
-    "contact": "Kontaktné údaje",
-    "email": "E-mail",
-    "enterEmail": "Zadajte váš e-mail",
-    "phone": "Telefónne číslo",
-    "enterPhone": "Zadajte vaše telefónne číslo",
-    "continue": "Pokračovať",
-    "or": "alebo",
-    "google": "Prihlásiť sa cez Google",
-    "facebook": "Prihlásiť sa cez Facebook",
-    "apple": "Prihlásiť sa cez Apple",
-    "error": {
-      "Configuration": "Narazili sme na problém s konfiguráciou. Ak problém pretrváva, kontaktujte nás, prosím.",
-      "AccessDenied": "Narazili sme na problém s prístupom. Ak problém pretrváva, kontaktujte nás, prosím.",
-      "Verification": "Poskytnutý overovací kód je neplatný. Skúste to, prosím, znova.",
-      "Default": "Narazili sme na chybu. Ak problém pretrváva, kontaktujte nás, prosím."
-    },
+    "account": "Môj účet",
     "basic": "Základné informácie",
     "name": "Meno a priezvisko",
     "enterName": "Zadajte vaše celé meno",
@@ -105,6 +90,11 @@
       "taxId": "DIČ",
       "vatId": "IČ DPH"
     },
+    "contact": "Kontaktné údaje",
+    "email": "E-mail",
+    "enterEmail": "Zadajte váš e-mail",
+    "phone": "Telefónne číslo",
+    "enterPhone": "Zadajte vaše telefónne číslo",
     "address": {
       "title": "Adresa",
       "street": "Ulica a číslo domu",
@@ -149,6 +139,7 @@
     },
     "optional": "voliteľné",
     "orders": {
+      "tab": "Objednávky",
       "adminWarning": {
         "bold": "Tento tab neslúži na správu všetkých prijatých objednávok!",
         "desc": "Ide o tab, ktorý vidí aj bežný zákazník. Tým pádom používateľ s rolou \"admin\" cez neho dokáže napríklad testovať objednávkový proces.",
@@ -156,7 +147,18 @@
       }
     },
     "logout": "Odhlásiť sa",
-    "save": "Uložiť"
+    "save": "Uložiť",
+    "continue": "Pokračovať",
+    "or": "alebo",
+    "google": "Prihlásiť sa cez Google",
+    "facebook": "Prihlásiť sa cez Facebook",
+    "apple": "Prihlásiť sa cez Apple",
+    "error": {
+      "Configuration": "Narazili sme na problém s konfiguráciou. Ak problém pretrváva, kontaktujte nás, prosím.",
+      "AccessDenied": "Narazili sme na problém s prístupom. Ak problém pretrváva, kontaktujte nás, prosím.",
+      "Verification": "Poskytnutý overovací kód je neplatný. Skúste to, prosím, znova.",
+      "Default": "Narazili sme na chybu. Ak problém pretrváva, kontaktujte nás, prosím."
+    }
   },
   "AuthVerify": {
     "title": "Overenie",

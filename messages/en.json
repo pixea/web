@@ -79,22 +79,7 @@
     "title": "Login",
     "description": "Sign in for order tracking and management, data prefilling and a better overall experience.",
     "my": "My",
-    "contact": "Contact information",
-    "email": "E-mail",
-    "enterEmail": "Enter your e-mail",
-    "phone": "Phone number",
-    "enterPhone": "Enter your phone number",
-    "continue": "Continue",
-    "or": "or",
-    "google": "Sign in with Google",
-    "facebook": "Sign in with Facebook",
-    "apple": "Sign in with Apple",
-    "error": {
-      "Configuration": "We have encountered a configuration problem on our side. Please contact us if the problem persists.",
-      "AccessDenied": "We have encountered an access problem on our side. Please contact us if the problem persists.",
-      "Verification": "The provided verification code is invalid. Please try again.",
-      "Default": "We have encountered an error. Please contact us if the problem persists."
-    },
+    "account": "My account",
     "basic": "Basic information",
     "name": "Full Name",
     "enterName": "Enter your full name",
@@ -105,6 +90,11 @@
       "taxId": "Tax ID (TIN)",
       "vatId": "VAT ID"
     },
+    "contact": "Contact information",
+    "email": "E-mail",
+    "enterEmail": "Enter your e-mail",
+    "phone": "Phone number",
+    "enterPhone": "Enter your phone number",
     "address": {
       "title": "Address",
       "street": "Street and number",
@@ -149,6 +139,7 @@
     },
     "optional": "optional",
     "orders": {
+      "tab": "Orders",
       "adminWarning": {
         "bold": "This tab is not for managing all received orders!",
         "desc": "This is the tab a casual customer sees. Therefore, a user with the \"admin\" role can use it for e.g. testing out the order process.",
@@ -156,7 +147,18 @@
       }
     },
     "logout": "Log out",
-    "save": "Save"
+    "save": "Save",
+    "continue": "Continue",
+    "or": "or",
+    "google": "Sign in with Google",
+    "facebook": "Sign in with Facebook",
+    "apple": "Sign in with Apple",
+    "error": {
+      "Configuration": "We have encountered a configuration problem on our side. Please contact us if the problem persists.",
+      "AccessDenied": "We have encountered an access problem on our side. Please contact us if the problem persists.",
+      "Verification": "The provided verification code is invalid. Please try again.",
+      "Default": "We have encountered an error. Please contact us if the problem persists."
+    }
   },
   "AuthVerify": {
     "title": "Verification",
