@@ -5,7 +5,7 @@ import { zodToJsonSchema } from "zod-to-json-schema";
 
 import { Link } from "@/i18n/routing";
 
-import { saveAction } from "./actions";
+import { saveProductAction } from "../actions";
 import MonacoInput from "./monaco";
 import BottomBar from "@/components/bottomBar";
 import db from "@/db";
@@ -14,7 +14,11 @@ import { eq } from "drizzle-orm";
 import { products } from "@/db/schema";
 import { auth } from "@/auth";
 
-const ProductEditPage = async (params: Promise<{ id: string }>) => {
+const ProductEditPage = async ({
+  params,
+}: {
+  params: Promise<{ id: string }>;
+}) => {
   const session = await auth();
   if (session?.user.role !== "admin") {
     throw new Error("Unauthorized");
@@ -33,8 +37,8 @@ const ProductEditPage = async (params: Promise<{ id: string }>) => {
       ? {
           ...product,
           id: undefined,
-          createdAt: undefined,
-          updatedAt: undefined,
+          created: undefined,
+          updated: undefined,
         }
       : {},
     null,
@@ -61,12 +65,12 @@ const ProductEditPage = async (params: Promise<{ id: string }>) => {
           </Button>
         </Flex>
 
-        <form action={saveAction}>
+        <form action={saveProductAction}>
           <TextField.Root
             type="hidden"
             name="id"
             className="hidden"
-            value={id}
+            value={id === "new" ? "" : id}
           />
 
           <MonacoInput

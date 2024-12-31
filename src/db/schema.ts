@@ -16,7 +16,7 @@ import { AdapterAccountType } from "next-auth/adapters";
 import { Address } from "./address";
 import { ProductPayload } from "./validation";
 
-const timestamps = {
+const timestamps = () => ({
   created: timestamp({ mode: "string" })
     .default(sql`(now())`)
     .notNull(),
@@ -24,12 +24,13 @@ const timestamps = {
     .default(sql`(now())`)
     .notNull()
     .$onUpdate(() => sql`(now())`),
-};
+});
 
-const translatedColumn = jsonb()
-  .notNull()
-  .default({ en: "", sk: "" })
-  .$type<Record<Locales, string>>();
+const translatedColumn = () =>
+  jsonb()
+    .notNull()
+    .default({ en: "", sk: "" })
+    .$type<Record<Locales, string>>();
 
 export const roleEnum = pgEnum("role", ["customer", "admin"]);
 
@@ -48,8 +49,7 @@ export const users = pgTable("user", {
   address: jsonb().$type<Partial<Address>>(),
   image: text(),
   role: roleEnum().notNull().default("customer"),
-
-  ...timestamps,
+  ...timestamps(),
 });
 
 export const accounts = pgTable(
@@ -68,7 +68,7 @@ export const accounts = pgTable(
     scope: varchar(),
     id_token: varchar(),
     session_state: varchar(),
-    ...timestamps,
+    ...timestamps(),
   },
   (account) => ({
     compoundKey: primaryKey({
@@ -83,6 +83,7 @@ export const sessions = pgTable("session", {
     .notNull()
     .references(() => users.id, { onDelete: "cascade" }),
   expires: timestamp("expires", { mode: "date" }).notNull(),
+  ...timestamps(),
 });
 
 export const verificationTokens = pgTable(
@@ -112,6 +113,7 @@ export const authenticators = pgTable(
     credentialDeviceType: varchar().notNull(),
     credentialBackedUp: boolean().notNull(),
     transports: varchar(),
+    ...timestamps(),
   },
   (authenticator) => ({
     compositePK: primaryKey({
@@ -122,8 +124,8 @@ export const authenticators = pgTable(
 
 export const products = pgTable("product", {
   id: uuid().primaryKey().defaultRandom(),
-  name: translatedColumn.notNull(),
-  description: translatedColumn.notNull(),
+  name: translatedColumn().notNull(),
+  description: translatedColumn().notNull(),
   status: productStatus().notNull().default("draft"),
   image: varchar(),
 
@@ -136,7 +138,7 @@ export const products = pgTable("product", {
     .default([])
     .$type<ProductPayload["configuration"]>(),
 
-  ...timestamps,
+  ...timestamps(),
 });
 
 export type User = InferSelectModel<typeof users>;

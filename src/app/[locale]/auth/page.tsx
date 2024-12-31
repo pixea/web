@@ -7,7 +7,6 @@ import { auth } from "@/auth";
 import LogIn from "./login";
 import Profile from "./account";
 import { cn } from "@/lib/utils";
-import { StarIcon } from "@heroicons/react/24/outline";
 
 const AuthPage = async () => {
   const t = await getTranslations("Auth");

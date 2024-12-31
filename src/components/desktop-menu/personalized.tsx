@@ -51,15 +51,12 @@ const Personalized = ({ session }: { session?: Session | null }) => {
         {items.map((item, index) =>
           item === "SEPARATOR" ? (
             <DropdownMenu.Separator key={"Separator" + index} />
-          ) : "color" in item ? (
-            <DropdownMenu.Item key={item.name} color={item.color} asChild>
-              <NextLink href={item.href}>
-                <item.icon className={`size-${accountMenuIconSize}`} />{" "}
-                {t(item.name)}
-              </NextLink>
-            </DropdownMenu.Item>
           ) : (
-            <DropdownMenu.Item key={item.name} asChild>
+            <DropdownMenu.Item
+              key={item.name}
+              color={"color" in item ? item.color : undefined}
+              asChild
+            >
               <NextLink href={item.href}>
                 <item.icon className={`size-${accountMenuIconSize}`} />{" "}
                 {t(item.name)}
