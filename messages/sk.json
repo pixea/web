@@ -65,6 +65,8 @@
     "draft": "Draft",
     "add": "Pridať",
     "edit": "Upraviť",
+    "back": "Späť",
+    "save": "Uložiť",
     "delete": "Vymazať",
     "done": "Dokončené",
     "error": "Chyba",
@@ -72,11 +74,6 @@
       "done": "Akcia bola úspešne vykonaná.",
       "error": "Počas vykonávania akcie nastala chyba."
     }
-  },
-  "ProductEdit": {
-    "title": "Administrácia produktu",
-    "back": "Späť",
-    "save": "Uložiť"
   },
   "Photo": {
     "title": "Tlač fotografií"

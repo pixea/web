@@ -66,17 +66,14 @@
     "add": "Add",
     "edit": "Edit",
     "delete": "Delete",
+    "back": "Back",
+    "save": "Save",
     "done": "Done",
     "error": "Error",
     "message": {
       "done": "The action was successfully performed.",
       "error": "An error occurred while performing the action."
     }
-  },
-  "ProductEdit": {
-    "title": "Product administration",
-    "back": "Back",
-    "save": "Save"
   },
   "Photo": {
     "title": "Photo Print"

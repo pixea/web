@@ -10,7 +10,10 @@ import { revalidatePath } from "next/cache";
 import { isRedirectError } from "next/dist/client/components/redirect-error";
 import { redirect } from "next/navigation";
 
-export const saveProductAction = async (formData: FormData) => {
+export const saveProductAction = async (
+  _prevState: unknown,
+  formData: FormData
+) => {
   const session = await auth();
   const locale = await getLocale();
 

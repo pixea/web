@@ -1,19 +1,16 @@
 import { ArrowUturnLeftIcon } from "@heroicons/react/24/solid";
-import { Button, Container, Flex, Heading, TextField } from "@radix-ui/themes";
+import { Button, Container, Flex, Heading } from "@radix-ui/themes";
 import { getLocale, getTranslations } from "next-intl/server";
+import { eq } from "drizzle-orm";
+import { redirect } from "next/navigation";
 import { zodToJsonSchema } from "zod-to-json-schema";
 
-import { Link } from "@/i18n/routing";
-
-import { saveProductAction } from "../actions";
-import MonacoInput from "./monaco";
-import BottomBar from "@/components/bottomBar";
-import db from "@/db";
-import { productSchema } from "@/db/validation";
-import { eq } from "drizzle-orm";
-import { products } from "@/db/schema";
 import { auth } from "@/auth";
-import { redirect } from "next/navigation";
+import { Link } from "@/i18n/routing";
+import db from "@/db";
+import { products } from "@/db/schema";
+import { productSchema } from "@/db/validation";
+import ProductForm from "./form";
 
 const ProductEditPage = async ({
   params,
@@ -26,7 +23,7 @@ const ProductEditPage = async ({
     redirect(`/auth?redirect=${encodeURIComponent(`/${locale}/products`)}`);
   }
 
-  const t = await getTranslations("ProductEdit");
+  const t = await getTranslations("Products");
 
   const { id } = await params;
   const product =
@@ -67,31 +64,11 @@ const ProductEditPage = async ({
           </Button>
         </Flex>
 
-        <form action={saveProductAction}>
-          <TextField.Root
-            type="hidden"
-            name="id"
-            className="hidden"
-            value={id === "new" ? "" : id}
-          />
-
-          <MonacoInput
-            name="values"
-            defaultValue={value}
-            schema={zodToJsonSchema(productSchema)}
-          />
-
-          <BottomBar justify="end">
-            <Button
-              type="submit"
-              variant="solid"
-              size="3"
-              className="font-semibold"
-            >
-              {t("save")}
-            </Button>
-          </BottomBar>
-        </form>
+        <ProductForm
+          id={id}
+          value={value}
+          schema={zodToJsonSchema(productSchema)}
+        />
       </Flex>
     </Container>
   );
