@@ -8,6 +8,13 @@
       "when": 1735590697357,
       "tag": "0000_gifted_centennial",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1735602665989,
+      "tag": "0001_dry_blue_blade",
+      "breakpoints": true
     }
   ]
 }

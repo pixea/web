@@ -38,12 +38,17 @@ export const productStatus = pgEnum("product_status", ["active", "draft"]);
 export const users = pgTable("user", {
   id: uuid().primaryKey().defaultRandom(),
   name: varchar(),
+  company: varchar(),
+  companyId: varchar(),
+  taxId: varchar(),
+  vatId: varchar(),
   email: varchar().unique(),
   emailVerified: timestamp("emailVerified", { mode: "date" }),
   phone: varchar(),
   address: jsonb().$type<Partial<Address>>(),
   image: text(),
   role: roleEnum().notNull().default("customer"),
+
   ...timestamps,
 });
 

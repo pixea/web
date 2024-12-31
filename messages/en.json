@@ -98,6 +98,13 @@
     "basic": "Basic information",
     "name": "Full Name",
     "enterName": "Enter your full name",
+    "company": {
+      "switch": "Fill in company information",
+      "name": "Company name",
+      "id": "Company ID",
+      "taxId": "Tax ID (TIN)",
+      "vatId": "VAT ID"
+    },
     "address": {
       "title": "Address",
       "street": "Street and number",

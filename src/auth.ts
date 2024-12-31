@@ -16,6 +16,10 @@ declare module "next-auth" {
   interface Session {
     user: {
       role?: "customer" | "admin";
+      company?: string;
+      companyId?: string;
+      taxId?: string;
+      vatId?: string;
       phone?: string;
       address?: Partial<Address>;
     } & DefaultSession["user"];
@@ -23,6 +27,10 @@ declare module "next-auth" {
 
   interface User {
     role?: "customer" | "admin";
+    company?: string;
+    companyId?: string;
+    taxId?: string;
+    vatId?: string;
     phone?: string;
     address?: Partial<Address>;
   }
@@ -47,6 +55,10 @@ export const { handlers, signIn, signOut, auth, unstable_update } = NextAuth({
   callbacks: {
     session({ session, user }) {
       session.user.role = user.role;
+      session.user.company = user.company;
+      session.user.companyId = user.companyId;
+      session.user.taxId = user.taxId;
+      session.user.vatId = user.vatId;
       session.user.phone = user.phone;
       session.user.address = user.address;
       return session;

@@ -98,6 +98,13 @@
     "basic": "Základné informácie",
     "name": "Meno a priezvisko",
     "enterName": "Zadajte vaše celé meno",
+    "company": {
+      "switch": "Vyplniť firemné údaje",
+      "name": "Názov firmy",
+      "id": "IČO",
+      "taxId": "DIČ",
+      "vatId": "IČ DPH"
+    },
     "address": {
       "title": "Adresa",
       "street": "Ulica a číslo domu",

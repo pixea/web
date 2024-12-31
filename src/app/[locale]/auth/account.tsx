@@ -11,6 +11,7 @@ import {
   Grid,
   Callout,
   Separator,
+  Switch,
 } from "@radix-ui/themes";
 import { Session } from "next-auth";
 import { useTranslations } from "next-intl";
@@ -23,104 +24,78 @@ import {
   ShoppingBagIcon,
   UserIcon,
 } from "@heroicons/react/24/outline";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Link } from "@/i18n/routing";
 import { logoutAction } from "./actions";
 
-import { useLocale } from "next-intl";
+const countries = [
+  "at",
+  "be",
+  "bg",
+  "hr",
+  "cy",
+  "dk",
+  "ee",
+  "fi",
+  "fr",
+  "de",
+  "gr",
+  "hu",
+  "ie",
+  "im",
+  "it",
+  "lv",
+  "lt",
+  "lu",
+  "mt",
+  "mc",
+  "nl",
+  "pl",
+  "pt",
+  "ro",
+  "si",
+  "es",
+  "se",
+];
 
 const Account = ({ session }: { session: Session }) => {
   const t = useTranslations("Auth");
-  const locale = useLocale();
 
   const name = session.user?.name;
 
   // Autofocus "Name" field on new account
-  const autofocustRef = useRef<HTMLInputElement>(null);
+  const nameFieldRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
-    if (!name && autofocustRef.current) {
-      autofocustRef.current.focus();
+    if (!name && nameFieldRef.current) {
+      nameFieldRef.current.focus();
     }
-  }, [name]); // Reacts to changes in shouldFocus
+  }, [name]);
 
   const email = session.user?.email;
+
+  const company = session.user?.company;
+  const companyId = session.user?.companyId;
+  const taxId = session.user?.taxId;
+  const vatId = session.user?.vatId;
+
   const phone = session.user?.phone;
   const address = session.user?.address;
 
   const role = session.user?.role;
 
-  const countries = {
-    en: [
-      "sk",
-      "cz",
-      "SEPARATOR",
-      "at",
-      "be",
-      "bg",
-      "hr",
-      "cy",
-      "dk",
-      "ee",
-      "fi",
-      "fr",
-      "de",
-      "gr",
-      "hu",
-      "ie",
-      "im",
-      "it",
-      "lv",
-      "lt",
-      "lu",
-      "mt",
-      "mc",
-      "nl",
-      "pl",
-      "pt",
-      "ro",
-      "si",
-      "es",
-      "se",
-    ],
+  // "Fill in company info" switch handling
+  const hasAnyCompanyDetails = Boolean(company || companyId || taxId || vatId);
+  const [companyChecked, setCompanyChecked] = useState(hasAnyCompanyDetails);
 
-    sk: [
-      "sk",
-      "cz",
-      "SEPARATOR",
-      "be",
-      "bg",
-      "cy",
-      "dk",
-      "ee",
-      "fi",
-      "fr",
-      "gr",
-      "nl",
-      "hr",
-      "ie",
-      "lt",
-      "lv",
-      "lu",
-      "hu",
-      "mt",
-      "mc",
-      "de",
-      "im",
-      "pl",
-      "pt",
-      "at",
-      "ro",
-      "si",
-      "es",
-      "se",
-      "it",
-    ],
-  };
+  const countryOptions = countries
+    .map((code) => ({ code, label: t(`address.country.${code}`) }))
+    .sort((a, b) => a.label.localeCompare(b.label));
 
   return (
     <>
       <Tabs.Root defaultValue="account">
+        {/* TAB NAVIGATION */}
         <Tabs.List className="">
           <Tabs.Trigger value="orders">
             <Text size="3" className="flex items-center gap-1.5">
@@ -135,7 +110,9 @@ const Account = ({ session }: { session: Session }) => {
         </Tabs.List>
 
         <Box pt="3">
+          {/* ORDERS */}
           <Tabs.Content value="orders">
+            {/* ADMIN WARNING */}
             {role === "admin" ? (
               <Callout.Root
                 size="2"
@@ -157,6 +134,7 @@ const Account = ({ session }: { session: Session }) => {
             ) : undefined}
           </Tabs.Content>
 
+          {/* ACCOUNT */}
           <Tabs.Content value="account" mt="3">
             <form action={saveAccountAction}>
               <Flex direction="column" gap="6">
@@ -166,8 +144,8 @@ const Account = ({ session }: { session: Session }) => {
                     {t("basic")}
                   </Text>
 
+                  {/* NAME */}
                   <Grid columns="1" className="sm:grid-cols-2 sm:gap-4">
-                    {/* NAME */}
                     <Flex direction="column" gap="2">
                       <Text
                         size="1"
@@ -184,7 +162,7 @@ const Account = ({ session }: { session: Session }) => {
                         color={!name ? "orange" : "gray"}
                         radius="large"
                         required
-                        ref={autofocustRef}
+                        ref={nameFieldRef}
                         placeholder={t("enterName")}
                         defaultValue={name || undefined}
                         type="text"
@@ -205,6 +183,126 @@ const Account = ({ session }: { session: Session }) => {
                       </Text>
                     </Flex>
                   </Grid>
+
+                  {/* COMPANY */}
+                  <Grid columns="1" className="sm:grid-cols-2 sm:gap-4">
+                    <Text
+                      color={!companyChecked ? "gray" : undefined}
+                      as="label"
+                      size="3"
+                    >
+                      <Flex gap="2">
+                        <Switch
+                          variant="soft"
+                          size="2"
+                          color="blue"
+                          checked={companyChecked}
+                          onCheckedChange={setCompanyChecked}
+                        />{" "}
+                        {t("company.switch")}
+                      </Flex>
+                    </Text>
+                  </Grid>
+
+                  {companyChecked ? (
+                    <Grid columns="1" className="sm:grid-cols-2 sm:gap-4">
+                      {/* COMPANY NAME */}
+                      <Flex direction="column" gap="2" className="w-full">
+                        <Text
+                          size="1"
+                          color="gray"
+                          weight="medium"
+                          as="label"
+                          htmlFor="company"
+                        >
+                          {t("company.name")}
+                        </Text>
+                        <TextField.Root
+                          size="3"
+                          variant="surface"
+                          color="gray"
+                          radius="large"
+                          placeholder={t("company.name")}
+                          defaultValue={company || undefined}
+                          type="text"
+                          name="company"
+                          id="company"
+                        />
+                      </Flex>
+
+                      {/* COMPANY ID */}
+                      <Flex direction="column" gap="2" className="w-full">
+                        <Text
+                          size="1"
+                          color="gray"
+                          weight="medium"
+                          as="label"
+                          htmlFor="companyId"
+                        >
+                          {t("company.id")}
+                        </Text>
+                        <TextField.Root
+                          size="3"
+                          variant="surface"
+                          color="gray"
+                          radius="large"
+                          placeholder={t("company.id")}
+                          defaultValue={companyId || undefined}
+                          type="text"
+                          name="companyId"
+                          id="companyId"
+                        />
+                      </Flex>
+
+                      {/* TAX ID */}
+                      <Flex direction="column" gap="2" className="w-full">
+                        <Text
+                          size="1"
+                          color="gray"
+                          weight="medium"
+                          as="label"
+                          htmlFor="taxId"
+                        >
+                          {t("company.taxId")}
+                        </Text>
+                        <TextField.Root
+                          size="3"
+                          variant="surface"
+                          color="gray"
+                          radius="large"
+                          placeholder={t("company.taxId")}
+                          defaultValue={taxId || undefined}
+                          type="text"
+                          name="taxId"
+                          id="taxId"
+                        />
+                      </Flex>
+
+                      {/* VAT ID */}
+                      <Flex direction="column" gap="2" className="w-full">
+                        <Text
+                          size="1"
+                          color="gray"
+                          weight="medium"
+                          as="label"
+                          htmlFor="vatId"
+                        >
+                          {t("company.vatId")}
+                        </Text>
+                        <TextField.Root
+                          size="3"
+                          variant="surface"
+                          color="gray"
+                          radius="large"
+                          placeholder={t("company.vatId")}
+                          defaultValue={vatId || undefined}
+                          type="text"
+                          name="vatId"
+                          id="vatId"
+                        />
+                      </Flex>
+                    </Grid>
+                  ) : undefined}
                 </Flex>
 
                 {/* CONTACT */}
@@ -406,31 +504,21 @@ const Account = ({ session }: { session: Session }) => {
 
                             <Select.Separator />
 
-                            {locale === "en"
-                              ? countries.en.map((country, index) =>
-                                  country === "SEPARATOR" ? (
-                                    <Select.Separator key={country + index} />
-                                  ) : (
-                                    <Select.Item
-                                      key={country}
-                                      value={t(`address.country.${country}`)}
-                                    >
-                                      {t(`address.country.${country}`)}
-                                    </Select.Item>
-                                  )
-                                )
-                              : countries.sk.map((country, index) =>
-                                  country === "SEPARATOR" ? (
-                                    <Select.Separator key={country + index} />
-                                  ) : (
-                                    <Select.Item
-                                      key={country}
-                                      value={t(`address.country.${country}`)}
-                                    >
-                                      {t(`address.country.${country}`)}
-                                    </Select.Item>
-                                  )
-                                )}
+                            <Select.Item value="sk">
+                              {t("address.country.sk")}
+                            </Select.Item>
+
+                            <Select.Item value="cz">
+                              {t("address.country.cz")}
+                            </Select.Item>
+
+                            <Select.Separator />
+
+                            {countryOptions.map(({ code, label }) => (
+                              <Select.Item key={code} value={label}>
+                                {label}
+                              </Select.Item>
+                            ))}
                           </Select.Group>
                         </Select.Content>
                       </Select.Root>

@@ -33,6 +33,10 @@ export const saveAccountAction = async (formData: FormData) => {
     .update(users)
     .set({
       name: formData.get("name") as string,
+      company: formData.get("company") as string,
+      companyId: formData.get("companyId") as string,
+      taxId: formData.get("taxId") as string,
+      vatId: formData.get("vatId") as string,
       phone: formData.get("phone") as string,
       address: {
         street: (formData.get("street") as string) || undefined,
