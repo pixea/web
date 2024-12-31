@@ -21,6 +21,7 @@ import themeConfig from "@/app/_themes/config";
 
 import MobileSubMenu from "./submenu";
 import MobileAccountMenu from "./account";
+import useAuthUrl from "@/hooks/authUrl";
 
 const MobileMenu = ({
   session,
@@ -30,6 +31,7 @@ const MobileMenu = ({
   items: readonly MenuItem[];
 }) => {
   const t = useTranslations("Header");
+  const authUrl = useAuthUrl();
   const [open, setOpen] = useState(false);
 
   const onInteraction = useCallback(() => {
@@ -140,7 +142,7 @@ const MobileMenu = ({
                     asChild
                   >
                     <Link
-                      href="/auth"
+                      href={authUrl}
                       className="rounded-3"
                       onClick={onInteraction}
                     >

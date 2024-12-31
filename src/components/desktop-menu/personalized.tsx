@@ -10,10 +10,12 @@ import { Session } from "next-auth";
 import { useTranslations } from "next-intl";
 import { logoutAction } from "@/app/[locale]/auth/actions";
 import useAccountItems from "@/hooks/accountItems";
+import useAuthUrl from "@/hooks/authUrl";
 
 const Personalized = ({ session }: { session?: Session | null }) => {
   const t = useTranslations("Header");
   const items = useAccountItems(session);
+  const authUrl = useAuthUrl();
 
   const role = session?.user.role;
 
@@ -26,7 +28,7 @@ const Personalized = ({ session }: { session?: Session | null }) => {
       title={t("accountItems.account")}
       asChild
     >
-      <Link href="/auth">
+      <Link href={authUrl}>
         <UserCircleIcon className="size-5" />
       </Link>
     </Button>

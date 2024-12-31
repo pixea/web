@@ -1,5 +1,6 @@
 "use client";
 
+import { useActionState } from "react";
 import { PencilIcon, TrashIcon } from "@heroicons/react/24/solid";
 import { Badge, Button, Flex, Table } from "@radix-ui/themes";
 import { useLocale, useTranslations } from "next-intl";
@@ -9,10 +10,16 @@ import { DateTime } from "luxon";
 import { Product } from "@/db/schema";
 import { Locales } from "@/i18n/locales";
 import { deleteProductAction } from "./actions";
+import Toast, { ToastProvider } from "@/components/toast/toast";
 
 const ProductsTable = ({ products }: { products: Product[] }) => {
   const t = useTranslations("Products");
   const locale = useLocale() as Locales;
+
+  const [deleteState, deleteAction, deletePending] = useActionState(
+    deleteProductAction,
+    { message: "" }
+  );
 
   return (
     <Table.Root>
@@ -54,12 +61,21 @@ const ProductsTable = ({ products }: { products: Product[] }) => {
                   </Link>
                 </Button>
 
-                <Button
-                  color="red"
-                  onClick={() => deleteProductAction(product.id)}
-                >
-                  <TrashIcon className="size-3" /> {t("delete")}
-                </Button>
+                <ToastProvider>
+                  {deleteState.message && (
+                    <Toast title={t(deleteState.message)}>
+                      {t(`message.${deleteState.message}`)}
+                    </Toast>
+                  )}
+                </ToastProvider>
+
+                <form action={deleteAction}>
+                  <input type="hidden" name="id" value={product.id} />
+
+                  <Button type="submit" color="red" loading={deletePending}>
+                    <TrashIcon className="size-3" /> {t("delete")}
+                  </Button>
+                </form>
               </Flex>
             </Table.Cell>
           </Table.Row>

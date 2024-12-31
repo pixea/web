@@ -65,7 +65,13 @@
     "draft": "Draft",
     "add": "Add",
     "edit": "Edit",
-    "delete": "Delete"
+    "delete": "Delete",
+    "done": "Done",
+    "error": "Error",
+    "message": {
+      "done": "The action was successfully performed.",
+      "error": "An error occurred while performing the action."
+    }
   },
   "ProductEdit": {
     "title": "Product administration",

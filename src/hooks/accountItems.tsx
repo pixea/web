@@ -13,7 +13,7 @@ import { AppPathnames } from "@/i18n/routing";
 
 // Account menu items
 const accountItems = [
-  { name: "accountItems.account", icon: UserIcon, href: "/auth?tab=profile" },
+  { name: "accountItems.account", icon: UserIcon, href: "/auth?tab=account" },
   {
     name: "accountItems.orders",
     icon: ShoppingBagIcon,

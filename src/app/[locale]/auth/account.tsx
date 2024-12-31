@@ -65,13 +65,13 @@ const Account = ({ session }: { session: Session }) => {
 
   const t = useTranslations("Auth");
 
-  // Get current tab or default to "profile"
-  const tab = searchParams.get("tab") || "profile";
+  // Get current tab or default to "account"
+  const tab = searchParams.get("tab") || "account";
 
   // Change tab and update the URL
   const handleTab = (tab: string) => {
     const newUrl = `/auth/?tab=${tab}`;
-    router.push(newUrl); //
+    router.push(newUrl);
   };
 
   // Get `name` from session
@@ -109,7 +109,7 @@ const Account = ({ session }: { session: Session }) => {
 
   return (
     <>
-      <Tabs.Root value={tab ? tab : "profile"} onValueChange={handleTab}>
+      <Tabs.Root value={tab} onValueChange={handleTab}>
         {/* TAB NAVIGATION */}
         <Tabs.List>
           <Tabs.Trigger value="orders">
@@ -117,7 +117,7 @@ const Account = ({ session }: { session: Session }) => {
               <ShoppingBagIcon className="size-4" /> {t("orders.tab")}
             </Text>
           </Tabs.Trigger>
-          <Tabs.Trigger value="profile">
+          <Tabs.Trigger value="account">
             <Text size="3" className="flex items-center gap-1.5">
               <UserIcon className="size-4" /> {t("account")}
             </Text>
@@ -150,7 +150,7 @@ const Account = ({ session }: { session: Session }) => {
           </Tabs.Content>
 
           {/* ACCOUNT */}
-          <Tabs.Content value="profile" mt="3">
+          <Tabs.Content value="account" mt="3">
             <form action={saveAccountAction}>
               <Flex direction="column" gap="6">
                 {/* BASIC */}

@@ -4,9 +4,13 @@ import { auth, signIn, signOut, unstable_update } from "@/auth";
 import db from "@/db";
 import { users } from "@/db/schema";
 import { eq } from "drizzle-orm";
+import { isRedirectError } from "next/dist/client/components/redirect-error";
 import { cookies } from "next/headers";
 
-export const sendCodeAction = async (formData: FormData) => {
+export const sendCodeAction = async (
+  _prevState: unknown,
+  formData: FormData
+) => {
   const cookieStore = await cookies();
   cookieStore.set({
     name: "email",
@@ -16,8 +20,26 @@ export const sendCodeAction = async (formData: FormData) => {
     path: "/",
     sameSite: "lax",
   });
+  cookieStore.set({
+    name: "lastPath",
+    value: formData.get("lastPath") as string,
+    maxAge: 60 * 60 * 24,
+    httpOnly: true,
+    path: "/",
+    sameSite: "lax",
+  });
 
-  await signIn("resend", formData);
+  try {
+    await signIn("resend", formData);
+  } catch (e) {
+    if (isRedirectError(e)) {
+      throw e;
+    }
+
+    return { message: "error", details: e };
+  }
+
+  return { message: "success" };
 };
 
 export const saveAccountAction = async (formData: FormData) => {

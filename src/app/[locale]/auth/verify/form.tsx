@@ -2,18 +2,29 @@
 
 import { Button, TextField } from "@radix-ui/themes";
 import { useTranslations } from "next-intl";
+import { useState } from "react";
 
-const VerifyForm = ({ email }: { email?: string }) => {
+const VerifyForm = ({
+  email,
+  lastPath,
+}: {
+  email?: string;
+  lastPath?: string;
+}) => {
   const t = useTranslations("AuthVerify");
+  // We produce a redirect on submit so can just keep it in loading state
+  const [submitted, setSubmitted] = useState(false);
 
   return (
     <form
       onSubmit={(event) => {
         event.preventDefault();
 
+        setSubmitted(true);
+
         const formData = new FormData(event.target as HTMLFormElement);
 
-        const lastUrl = "/order";
+        const redirectUrl = lastPath || "/order";
 
         const tokenInput = formData.get("token") as string;
         const email = formData.get("email") as string;
@@ -25,7 +36,7 @@ const VerifyForm = ({ email }: { email?: string }) => {
         const token = tokenInput.toUpperCase().replaceAll(/[^A-Z0-9]/g, "");
 
         // We are simulating real redirect to match email link click
-        const path = `/api/auth/callback/resend?callbackUrl=${lastUrl}&token=${token}&email=${email}`;
+        const path = `/api/auth/callback/resend?callbackUrl=${redirectUrl}&token=${token}&email=${email}`;
         window.location.href = path;
       }}
     >
@@ -47,7 +58,13 @@ const VerifyForm = ({ email }: { email?: string }) => {
         className="[&_input]:uppercase [&_input]:font-medium [&_input]:placeholder:normal-case [&_input]:placeholder:font-normal"
       />
 
-      <Button size="3" type="submit" variant="solid" className="w-full mt-4">
+      <Button
+        size="3"
+        type="submit"
+        variant="solid"
+        className="w-full mt-4"
+        loading={submitted}
+      >
         {t("continue")}
       </Button>
     </form>

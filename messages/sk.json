@@ -65,7 +65,13 @@
     "draft": "Draft",
     "add": "Pridať",
     "edit": "Upraviť",
-    "delete": "Vymazať"
+    "delete": "Vymazať",
+    "done": "Dokončené",
+    "error": "Chyba",
+    "message": {
+      "done": "Akcia bola úspešne vykonaná.",
+      "error": "Počas vykonávania akcie nastala chyba."
+    }
   },
   "ProductEdit": {
     "title": "Administrácia produktu",

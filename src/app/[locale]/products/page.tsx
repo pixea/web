@@ -1,16 +1,18 @@
 import { Link } from "@/i18n/routing";
 import { PlusIcon } from "@heroicons/react/24/solid";
 import { Button, Container, Flex, Heading } from "@radix-ui/themes";
-import { getTranslations } from "next-intl/server";
+import { getLocale, getTranslations } from "next-intl/server";
 import ProductsTable from "./table";
 import db from "@/db";
 import { products as productsSchema } from "@/db/schema";
 import { auth } from "@/auth";
+import { redirect } from "next/navigation";
 
 const ProductsPage = async () => {
+  const locale = await getLocale();
   const session = await auth();
   if (session?.user.role !== "admin") {
-    throw new Error("Unauthorized");
+    redirect(`/auth?redirect=${encodeURIComponent(`/${locale}/products`)}`);
   }
 
   const t = await getTranslations("Products");

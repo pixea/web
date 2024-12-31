@@ -1,6 +1,6 @@
 import { ArrowUturnLeftIcon } from "@heroicons/react/24/solid";
 import { Button, Container, Flex, Heading, TextField } from "@radix-ui/themes";
-import { getTranslations } from "next-intl/server";
+import { getLocale, getTranslations } from "next-intl/server";
 import { zodToJsonSchema } from "zod-to-json-schema";
 
 import { Link } from "@/i18n/routing";
@@ -13,15 +13,17 @@ import { productSchema } from "@/db/validation";
 import { eq } from "drizzle-orm";
 import { products } from "@/db/schema";
 import { auth } from "@/auth";
+import { redirect } from "next/navigation";
 
 const ProductEditPage = async ({
   params,
 }: {
   params: Promise<{ id: string }>;
 }) => {
+  const locale = await getLocale();
   const session = await auth();
   if (session?.user.role !== "admin") {
-    throw new Error("Unauthorized");
+    redirect(`/auth?redirect=${encodeURIComponent(`/${locale}/products`)}`);
   }
 
   const t = await getTranslations("ProductEdit");

@@ -1,3 +1,5 @@
+"use client";
+
 import { forwardRef, ReactNode } from "react";
 import { Flex, Button } from "@radix-ui/themes";
 import * as NavigationMenu from "@radix-ui/react-navigation-menu";

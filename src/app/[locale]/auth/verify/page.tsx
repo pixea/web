@@ -19,7 +19,10 @@ const AuthVerifyPage = async () => {
             {t("description", { email: cookieStore.get("email")?.value })}
           </Text>
 
-          <VerifyForm email={cookieStore.get("email")?.value} />
+          <VerifyForm
+            email={cookieStore.get("email")?.value}
+            lastPath={cookieStore.get("lastPath")?.value}
+          />
         </Flex>
       </Card>
 

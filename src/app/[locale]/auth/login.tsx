@@ -1,12 +1,21 @@
+"use client";
+
 import { Button, Heading, Text, TextField } from "@radix-ui/themes";
 
 import { socialLoginProviders } from "./social";
 import { sendCodeAction } from "./actions";
 import ErrorAlert from "./error-alert";
 import { useTranslations } from "next-intl";
+import { useActionState } from "react";
+import { useSearchParams } from "next/navigation";
 
 const LogIn = ({ email }: { email?: string }) => {
   const t = useTranslations("Auth");
+  const [state, formAction, pending] = useActionState(sendCodeAction, {
+    message: "",
+  });
+  const params = useSearchParams();
+  const redirectUrl = params.get("redirect");
 
   return (
     <>
@@ -14,9 +23,11 @@ const LogIn = ({ email }: { email?: string }) => {
 
       <Text>{t("description")}</Text>
 
-      <ErrorAlert />
+      <ErrorAlert code={state.message === "error" ? "Default" : undefined} />
 
-      <form action={sendCodeAction}>
+      <form action={formAction}>
+        <input type="hidden" name="lastPath" value={redirectUrl || ""} />
+
         <TextField.Root
           size="3"
           type="email"
@@ -26,7 +37,13 @@ const LogIn = ({ email }: { email?: string }) => {
           placeholder={t("enterEmail")}
         />
 
-        <Button size="3" type="submit" variant="solid" className="w-full mt-4">
+        <Button
+          size="3"
+          type="submit"
+          variant="solid"
+          className="w-full mt-4"
+          loading={pending}
+        >
           {t("continue")}
         </Button>
       </form>
