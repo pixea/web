@@ -27,6 +27,7 @@ import {
 import { useEffect, useRef, useState } from "react";
 import { Link } from "@/i18n/routing";
 import { logoutAction } from "./actions";
+import { useRouter, useSearchParams } from "next/navigation";
 
 const countries = [
   "at",
@@ -59,8 +60,21 @@ const countries = [
 ];
 
 const Account = ({ session }: { session: Session }) => {
+  const searchParams = useSearchParams();
+  const router = useRouter();
+
   const t = useTranslations("Auth");
 
+  // Get current tab or default to "profile"
+  const tab = searchParams.get("tab") || "profile";
+
+  // Change tab and update the URL
+  const handleTab = (tab: string) => {
+    const newUrl = `/auth/?tab=${tab}`;
+    router.push(newUrl); //
+  };
+
+  // Get `name` from session
   const name = session.user?.name;
 
   // Autofocus "Name" field on new account
@@ -72,6 +86,7 @@ const Account = ({ session }: { session: Session }) => {
     }
   }, [name]);
 
+  // Get other user's data from session
   const email = session.user?.email;
 
   const company = session.user?.company;
@@ -94,15 +109,15 @@ const Account = ({ session }: { session: Session }) => {
 
   return (
     <>
-      <Tabs.Root defaultValue="account">
+      <Tabs.Root value={tab ? tab : "profile"} onValueChange={handleTab}>
         {/* TAB NAVIGATION */}
-        <Tabs.List className="">
+        <Tabs.List>
           <Tabs.Trigger value="orders">
             <Text size="3" className="flex items-center gap-1.5">
               <ShoppingBagIcon className="size-4" /> {t("orders.tab")}
             </Text>
           </Tabs.Trigger>
-          <Tabs.Trigger value="account">
+          <Tabs.Trigger value="profile">
             <Text size="3" className="flex items-center gap-1.5">
               <UserIcon className="size-4" /> {t("account")}
             </Text>
@@ -135,7 +150,7 @@ const Account = ({ session }: { session: Session }) => {
           </Tabs.Content>
 
           {/* ACCOUNT */}
-          <Tabs.Content value="account" mt="3">
+          <Tabs.Content value="profile" mt="3">
             <form action={saveAccountAction}>
               <Flex direction="column" gap="6">
                 {/* BASIC */}
