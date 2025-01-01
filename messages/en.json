@@ -79,6 +79,22 @@
     "back": "Back",
     "save": "Save"
   },
+  "Users": {
+    "title": "User administration",
+    "name": "Name",
+    "company": "Company",
+    "email": "Email",
+    "role": "Role",
+    "created": "Created",
+    "updated": "Updated",
+    "actions": "Actions",
+    "admin": "Admin",
+    "customer": "Customer",
+    "edit": "Edit",
+    "delete": "Delete",
+    "back": "Back",
+    "save": "Save"
+  },
   "Photo": {
     "title": "Photo Print"
   },

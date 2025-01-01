@@ -50,7 +50,6 @@ export const { handlers, signIn, signOut, auth, unstable_update } = NextAuth({
     signOut: "/auth",
     error: "/auth",
     verifyRequest: "/auth/verify",
-    newUser: "/auth",
   },
   callbacks: {
     session({ session, user }) {

@@ -36,9 +36,18 @@ export const roleEnum = pgEnum("role", ["customer", "admin"]);
 
 export const productStatus = pgEnum("product_status", ["active", "draft"]);
 
+export const orderStatus = pgEnum("order_status", [
+  "new",
+  "processed",
+  "prepared",
+  "delivery",
+  "delivered",
+]);
+
 export const users = pgTable("user", {
   id: uuid().primaryKey().defaultRandom(),
   name: varchar(),
+  role: roleEnum().notNull().default("customer"),
   company: varchar(),
   companyId: varchar(),
   taxId: varchar(),
@@ -48,7 +57,6 @@ export const users = pgTable("user", {
   phone: varchar(),
   address: jsonb().$type<Partial<Address>>(),
   image: text(),
-  role: roleEnum().notNull().default("customer"),
   ...timestamps(),
 });
 
@@ -141,6 +149,25 @@ export const products = pgTable("product", {
   ...timestamps(),
 });
 
-export type User = InferSelectModel<typeof users>;
+export const orders = pgTable("order", {
+  id: uuid().primaryKey().defaultRandom(),
 
+  status: orderStatus().notNull().default("new"),
+  paid: boolean().notNull().default(false),
+
+  // items: jsonb().notNull().default([]).$type<OrderItemPayload>(),
+  itemsSummary: text(),
+
+  // sum: jsonb().notNull().default([]).$type<OrderPayload["sum"]>(),
+
+  deliveryAddress: jsonb().notNull().default({}).$type<Address>(),
+  invoiceAddress: jsonb().notNull().default({}).$type<Address>(),
+
+  // delivery:
+
+  ...timestamps(),
+});
+
+export type User = InferSelectModel<typeof users>;
 export type Product = InferSelectModel<typeof products>;
+export type Order = InferSelectModel<typeof orders>;

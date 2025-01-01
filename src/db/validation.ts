@@ -67,4 +67,33 @@ export const productSchema = z.object({
   ),
 });
 
+export const userSchema = z.object({
+  name: z.string().optional().nullable(),
+  role: z.enum(["customer", "admin"]).default("customer"),
+  company: z.string().optional().nullable(),
+  companyId: z.string().optional().nullable(),
+  taxId: z.string().optional().nullable(),
+  vatId: z.string().optional().nullable(),
+  email: z.string().email(),
+  emailVerified: z.string().optional().nullable(),
+  phone: z.string().optional().nullable(),
+  address: z
+    .object({
+      street: z.string().optional(),
+      additional: z.string().optional(),
+      zip: z.string().optional(),
+      city: z.string().optional(),
+      country: z.string().optional(),
+    })
+    .optional(),
+  image: z.string().optional().nullable(),
+});
+
+export const orderSchema = z.object({
+  role: z.enum(["customer", "admin"]).default("customer"),
+
+  image: z.string().optional().nullable(),
+});
+
+export type UserPayload = z.infer<typeof userSchema>;
 export type ProductPayload = z.infer<typeof productSchema>;

@@ -79,6 +79,22 @@
     "back": "Späť",
     "save": "Uložiť"
   },
+  "Users": {
+    "title": "Administrácia používateľov",
+    "name": "Meno",
+    "company": "Právnická osoba",
+    "email": "E-mail",
+    "role": "Rola",
+    "created": "Vytvorené",
+    "updated": "Upravené",
+    "actions": "Akcie",
+    "admin": "Admin",
+    "customer": "Zákazník",
+    "edit": "Upraviť",
+    "delete": "Vymazať",
+    "back": "Späť",
+    "save": "Uložiť"
+  },
   "Photo": {
     "title": "Tlač fotografií"
   },

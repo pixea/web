@@ -7,11 +7,11 @@ import { useTranslations } from "next-intl";
 
 import BottomBar from "@/components/bottomBar";
 import { ActionToasts } from "@/components/actionToasts";
-
-import { saveProductAction } from "../actions";
 import MonacoInput from "@/components/monaco";
 
-const ProductForm = ({
+import { saveOrderAction } from "../actions";
+
+const OrderForm = ({
   id,
   schema,
   value,
@@ -20,12 +20,11 @@ const ProductForm = ({
   schema: JsonSchema7Type;
   value: string;
 }) => {
-  const t = useTranslations("Products");
+  const t = useTranslations("Orders");
 
-  const [actionState, action, actionPending] = useActionState(
-    saveProductAction,
-    { message: "" }
-  );
+  const [actionState, action, actionPending] = useActionState(saveOrderAction, {
+    message: "",
+  });
 
   return (
     <form action={action}>
@@ -55,4 +54,4 @@ const ProductForm = ({
   );
 };
 
-export default ProductForm;
+export default OrderForm;

@@ -7,25 +7,24 @@ import { useTranslations } from "next-intl";
 
 import BottomBar from "@/components/bottomBar";
 import { ActionToasts } from "@/components/actionToasts";
-
-import { saveProductAction } from "../actions";
 import MonacoInput from "@/components/monaco";
 
-const ProductForm = ({
+import { saveUserAction } from "../actions";
+
+const UserForm = ({
   id,
   schema,
   value,
 }: {
-  id?: string;
+  id: string;
   schema: JsonSchema7Type;
   value: string;
 }) => {
-  const t = useTranslations("Products");
+  const t = useTranslations("Users");
 
-  const [actionState, action, actionPending] = useActionState(
-    saveProductAction,
-    { message: "" }
-  );
+  const [actionState, action, actionPending] = useActionState(saveUserAction, {
+    message: "",
+  });
 
   return (
     <form action={action}>
@@ -55,4 +54,4 @@ const ProductForm = ({
   );
 };
 
-export default ProductForm;
+export default UserForm;
