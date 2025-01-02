@@ -1,9 +1,8 @@
 import * as React from "react";
 import * as RadixToast from "@radix-ui/react-toast";
-import { IconButton, Theme, Box } from "@radix-ui/themes";
+import { IconButton } from "@radix-ui/themes";
 import { XMarkIcon } from "@heroicons/react/24/solid";
 import { cn } from "@/lib/utils";
-import themeConfig from "@/app/_themes/config";
 import {
   CheckCircleIcon,
   ExclamationTriangleIcon,
