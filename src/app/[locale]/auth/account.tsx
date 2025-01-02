@@ -24,10 +24,12 @@ import {
   ShoppingBagIcon,
   UserIcon,
 } from "@heroicons/react/24/outline";
-import { useEffect, useRef, useState } from "react";
+import { useActionState, useEffect, useRef, useState } from "react";
 import { Link } from "@/i18n/routing";
 import { logoutAction } from "./actions";
 import { useRouter, useSearchParams } from "next/navigation";
+import { ActionState } from "@/lib/utils";
+import { ActionToasts } from "@/components/actionToasts";
 
 const countries = [
   "at",
@@ -107,6 +109,12 @@ const Account = ({ session }: { session: Session }) => {
     .map((code) => ({ code, label: t(`address.country.${code}`) }))
     .sort((a, b) => a.label.localeCompare(b.label));
 
+  // Handle action toasts
+  const [saveState, saveAction, savePending] = useActionState(
+    saveAccountAction,
+    {} as ActionState
+  );
+
   return (
     <>
       <Tabs.Root value={tab} onValueChange={handleTab}>
@@ -151,7 +159,7 @@ const Account = ({ session }: { session: Session }) => {
 
           {/* ACCOUNT */}
           <Tabs.Content value="account" mt="3">
-            <form action={saveAccountAction}>
+            <form action={saveAction}>
               <Flex direction="column" gap="6">
                 {/* BASIC */}
                 <Flex direction="column" gap="4">
@@ -548,6 +556,7 @@ const Account = ({ session }: { session: Session }) => {
                   type="submit"
                   variant="solid"
                   className="w-full"
+                  loading={savePending}
                 >
                   {t("save")}
                 </Button>
@@ -570,6 +579,8 @@ const Account = ({ session }: { session: Session }) => {
           </Tabs.Content>
         </Box>
       </Tabs.Root>
+
+      <ActionToasts state={saveState} />
     </>
   );
 };
