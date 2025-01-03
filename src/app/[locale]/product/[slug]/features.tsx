@@ -37,7 +37,7 @@ const features = [
 export default function Features() {
   return (
     <Flex direction="column" align="center" className="my-32">
-      <Heading size="9" className="font-semibold mb-20">
+      <Heading size="9" className="text-center font-semibold mb-20">
         Touch your memories.
       </Heading>
 
@@ -56,7 +56,12 @@ export default function Features() {
             <Text size="5" weight="medium" align="center">
               {feature.name}
             </Text>
-            <Text size="3" color="gray" align="center">
+            <Text
+              size="3"
+              color="gray"
+              align="center"
+              className="max-w-sm sm:max-w-full"
+            >
               {feature.description}
             </Text>
           </Flex>

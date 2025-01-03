@@ -61,7 +61,7 @@ export default async function ProductPage({
   console.log(product);
 
   return (
-    <Container className="w-full" mt={{ initial: "0", sm: "4", md: "8" }}>
+    <Container className="w-full" mt={{ initial: "0", sm: "6", md: "8" }}>
       <Flex
         direction={{ initial: "column", sm: "row" }}
         className="gap-10 sm:gap-14 md:gap-16 lg:gap-20"
@@ -100,11 +100,7 @@ export default async function ProductPage({
         </Flex>
 
         <Flex direction="column" gap="7" className="w-full sm:w-1/2">
-          <Flex
-            direction="column"
-            mt={{ initial: "2", md: "4", lg: "5" }}
-            gap="6"
-          >
+          <Flex direction="column" mt={{ initial: "2", md: "5" }} gap="6">
             <Heading size="9" className="font-semibold">
               {product.name[locale]}
             </Heading>
@@ -132,7 +128,11 @@ export default async function ProductPage({
             </Button>
           </Flex>
 
-          <Grid columns={{ initial: "1", xs: "2", sm: "1" }} gap="4" mt="7">
+          <Grid
+            columns={{ initial: "1", xs: "2", sm: "1" }}
+            gap="4"
+            mt={{ initial: "7", md: "8" }}
+          >
             {features.map((feature) => (
               <Flex key={feature.name} direction="row" gap="2">
                 <feature.icon color="magenta" className="size-5 mt-1" />
