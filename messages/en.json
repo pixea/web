@@ -95,10 +95,6 @@
     "back": "Back",
     "save": "Save"
   },
-  "Product": {
-    "title": "Photo Print",
-    "description": "Turn your favorite moments into tangible memories! We offer high-quality photo printing in various sizes and formats – from classic dimensions to large posters."
-  },
   "Auth": {
     "title": "Login",
     "description": "Sign in for order tracking and management, data prefilling and a better overall experience.",
