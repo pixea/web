@@ -35,7 +35,7 @@ export default function MoreProducts() {
                 className="w-full h-full object-cover rounded-2"
               />
 
-              <Flex className="absolute inset-0 bg-blue-9 mix-blend-multiply rounded-2"></Flex>
+              <Flex className="absolute inset-0 bg-blue-9 group-hover:bg-transparent mix-blend-multiply rounded-2 transition-all"></Flex>
             </Flex>
           </Flex>
         </Link>
@@ -62,7 +62,7 @@ export default function MoreProducts() {
                 className="w-full h-full object-cover rounded-2"
               />
 
-              <Flex className="absolute inset-0 bg-blue-9 mix-blend-multiply rounded-2"></Flex>
+              <Flex className="absolute inset-0 bg-blue-9 group-hover:bg-transparent mix-blend-multiply rounded-2 transition-all"></Flex>
             </Flex>
           </Flex>
         </Link>
@@ -89,7 +89,7 @@ export default function MoreProducts() {
                 className="w-full h-full object-cover rounded-2"
               />
 
-              <Flex className="absolute inset-0 bg-blue-9 mix-blend-multiply rounded-2"></Flex>
+              <Flex className="absolute inset-0 bg-blue-9 group-hover:bg-transparent mix-blend-multiply rounded-2 transition-all"></Flex>
             </Flex>
           </Flex>
         </Link>
