@@ -12,7 +12,6 @@ import {
   PrinterIcon,
   Square3Stack3DIcon,
 } from "@heroicons/react/24/outline";
-import { desc } from "drizzle-orm";
 
 const sizes = [
   "9 x 13",
