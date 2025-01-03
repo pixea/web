@@ -96,7 +96,8 @@
     "save": "Uložiť"
   },
   "Photo": {
-    "title": "Tlač fotografií"
+    "title": "Tlač fotografií",
+    "description": "Premeňte svoje obľúbené momenty na hmatateľné spomienky! Ponúkame vysokokvalitnú tlač fotografií rôznych veľkostí a formátov – od klasických rozmerov až po veľkoplošné postery."
   },
   "Auth": {
     "title": "Prihlásenie",

@@ -96,7 +96,8 @@
     "save": "Save"
   },
   "Photo": {
-    "title": "Photo Print"
+    "title": "Photo Print",
+    "description": "Turn your favorite moments into tangible memories! We offer high-quality photo printing in various sizes and formats – from classic dimensions to large posters."
   },
   "Auth": {
     "title": "Login",

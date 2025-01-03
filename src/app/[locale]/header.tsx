@@ -33,7 +33,7 @@ const Header = async () => {
       align="center"
       gap="3"
       p="4"
-      className="rounded-b-3 bg-panel-solid z-10"
+      className="bg-panel-solid z-10"
       asChild
     >
       <header>
