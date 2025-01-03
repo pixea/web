@@ -13,6 +13,8 @@ import db from "@/db";
 import { sql } from "drizzle-orm";
 import { notFound } from "next/navigation";
 import { Locales } from "@/i18n/locales";
+import Features from "./features";
+import MoreProducts from "./more-products";
 
 const features = [
   {
@@ -98,7 +100,11 @@ export default async function ProductPage({
         </Flex>
 
         <Flex direction="column" gap="7" className="w-full sm:w-1/2">
-          <Flex direction="column" mt="5" gap="6">
+          <Flex
+            direction="column"
+            mt={{ initial: "2", md: "4", lg: "5" }}
+            gap="6"
+          >
             <Heading size="9" className="font-semibold">
               {product.name[locale]}
             </Heading>
@@ -145,9 +151,99 @@ export default async function ProductPage({
       </Flex>
 
       <Flex
+        direction={{ initial: "column", sm: "row" }}
+        className="gap-10 sm:gap-14 md:gap-16 lg:gap-20 mt-24"
+      >
+        <Flex
+          direction="column"
+          justify="center"
+          gap="6"
+          className="w-full sm:w-1/2"
+        >
+          <Heading size="9" className="font-semibold">
+            Feature 1
+          </Heading>
+
+          <Text size="5" color="gray" className="leading-8">
+            {product.description[locale]}
+          </Text>
+        </Flex>
+
+        <Flex className="w-full sm:w-[360] md:w-[480] h-[320] xs:h-[480] sm:h-[560]">
+          <Image
+            src="/products/photo.jpg"
+            width="740"
+            height="560"
+            alt="Photo"
+            className="object-cover rounded-2"
+          />
+        </Flex>
+      </Flex>
+
+      <Flex
+        direction={{ initial: "column", sm: "row" }}
+        className="gap-10 sm:gap-14 md:gap-16 lg:gap-20 mt-24 sm:mt-12"
+      >
+        <Flex
+          direction="column"
+          justify="center"
+          gap="6"
+          className="w-full sm:w-1/2"
+        >
+          <Heading size="9" className="font-semibold">
+            Feature 2
+          </Heading>
+
+          <Text size="5" color="gray" className="leading-8">
+            {product.description[locale]}
+          </Text>
+        </Flex>
+
+        <Flex className="w-full sm:w-[360] md:w-[480] h-[320] xs:h-[480] sm:h-[560] sm:order-first">
+          <Image
+            src="/products/photo.jpg"
+            width="740"
+            height="560"
+            alt="Photo"
+            className="object-cover rounded-2"
+          />
+        </Flex>
+      </Flex>
+
+      <Flex
+        direction={{ initial: "column", sm: "row" }}
+        className="gap-10 sm:gap-14 md:gap-16 lg:gap-20 mt-24 sm:mt-12"
+      >
+        <Flex
+          direction="column"
+          justify="center"
+          gap="6"
+          className="w-full sm:w-1/2"
+        >
+          <Heading size="9" className="font-semibold">
+            Feature 3
+          </Heading>
+
+          <Text size="5" color="gray" className="leading-8">
+            {product.description[locale]}
+          </Text>
+        </Flex>
+
+        <Flex className="w-full sm:w-[360] md:w-[480] h-[320] xs:h-[480] sm:h-[560]">
+          <Image
+            src="/products/photo.jpg"
+            width="740"
+            height="560"
+            alt="Photo"
+            className="object-cover rounded-2"
+          />
+        </Flex>
+      </Flex>
+
+      <Flex
         direction="column"
         gap={{ initial: "2", xs: "4" }}
-        className="mt-20"
+        className="mt-24 sm:mt-10"
       >
         <Text size="6" weight="medium">
           Ukážky prác
@@ -246,6 +342,10 @@ export default async function ProductPage({
           />
         </Grid>
       </Flex>
+
+      <Features />
+
+      <MoreProducts />
     </Container>
   );
 }
