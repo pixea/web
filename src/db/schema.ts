@@ -132,9 +132,13 @@ export const authenticators = pgTable(
 
 export const products = pgTable("product", {
   id: uuid().primaryKey().defaultRandom(),
+
+  slug: translatedColumn().notNull().default({ en: "", sk: "" }),
   name: translatedColumn().notNull(),
   description: translatedColumn().notNull(),
+
   status: productStatus().notNull().default("draft"),
+
   image: varchar(),
 
   files: jsonb().notNull().default({}).$type<ProductPayload["files"]>(),

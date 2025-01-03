@@ -35,9 +35,16 @@ export const radioCardConfigurationSchema = baseConfigurationSchema.merge(
 );
 
 export const productSchema = z.object({
+  slug: translatedPropertySchema
+    .required()
+    .describe(
+      "Unique URL identifier. Please do NOT change this after the product is published. Do NOT use spaces and diacritics."
+    ),
   name: translatedPropertySchema.required(),
   description: translatedPropertySchema.required(),
+
   status: z.enum(["active", "draft"]).default("draft"),
+
   image: z.string().optional(),
 
   files: z.object({

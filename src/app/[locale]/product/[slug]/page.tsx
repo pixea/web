@@ -1,32 +1,18 @@
-"use client";
-
 import { Container, Flex, Grid, Heading, Text, Button } from "@radix-ui/themes";
 import Image from "next/image";
-import { useState } from "react";
 
-import { useTranslations } from "next-intl";
 import {
-  ArrowsPointingOutIcon,
   ClockIcon,
   PencilIcon,
   PrinterIcon,
   Square3Stack3DIcon,
 } from "@heroicons/react/24/outline";
-
-const sizes = [
-  "9 x 13",
-  "10 x 15",
-  "13 x 18",
-  "15 x 21",
-  "18 x 24",
-  "20 x 30",
-  "24 x 30",
-  "30 x 40",
-  "40 x 50",
-  "50 x 70",
-  "70 x 100",
-  "100 x 150",
-];
+import Sizes from "./sizes";
+import { getLocale } from "next-intl/server";
+import db from "@/db";
+import { sql } from "drizzle-orm";
+import { notFound } from "next/navigation";
+import { Locales } from "@/i18n/locales";
 
 const features = [
   {
@@ -51,10 +37,26 @@ const features = [
   },
 ];
 
-export default function PageSlug() {
-  const t = useTranslations("Photo");
+export default async function ProductPage({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}) {
+  const { slug } = await params;
 
-  const [showAll, setShowAll] = useState(false);
+  const locale = (await getLocale()) as Locales;
+
+  const decodedSlug = decodeURIComponent(slug);
+
+  const product = await db.query.products.findFirst({
+    where: sql`slug->>'${sql.raw(locale)}' = ${decodedSlug}`,
+  });
+
+  if (!product) {
+    return notFound();
+  }
+
+  console.log(product);
 
   return (
     <Container className="w-full" mt={{ initial: "0", sm: "4", md: "8" }}>
@@ -98,62 +100,14 @@ export default function PageSlug() {
         <Flex direction="column" gap="7" className="w-full sm:w-1/2">
           <Flex direction="column" mt="5" gap="6">
             <Heading size="9" className="font-semibold">
-              {t("title")}
+              {product.name[locale]}
             </Heading>
 
             <Text size="6" color="gray" className="leading-9">
-              {t("description")}
+              {product.description[locale]}
             </Text>
 
-            <Flex direction="column" gap="3">
-              <Text
-                weight="medium"
-                size="3"
-                className="flex items-center gap-1.5"
-              >
-                <ArrowsPointingOutIcon className="size-5" /> Obľúbené rozmery
-              </Text>
-
-              <Flex
-                direction="row"
-                align="center"
-                gap="2"
-                wrap="wrap"
-                className="text-gray-11"
-              >
-                {sizes.slice(0, 4).map((size) => (
-                  <Button key={size} variant="surface" size="2" color="blue">
-                    {size} cm
-                  </Button>
-                ))}
-                {showAll === true
-                  ? sizes.slice(5).map((size) => (
-                      <Button
-                        key={size}
-                        variant="surface"
-                        size="2"
-                        color="blue"
-                      >
-                        {size} cm
-                      </Button>
-                    ))
-                  : undefined}
-                |
-                <Button variant="outline" size="2" color="blue">
-                  Na mieru
-                </Button>
-              </Flex>
-
-              <Button
-                variant="ghost"
-                size="2"
-                color="gray"
-                onClick={() => setShowAll(!showAll)}
-                className="w-fit"
-              >
-                Zobraziť {showAll === true ? "menej" : "viac"}
-              </Button>
-            </Flex>
+            <Sizes />
           </Flex>
 
           <Flex

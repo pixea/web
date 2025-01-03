@@ -1,0 +1,1 @@
+ALTER TABLE "product" ADD COLUMN "slug" jsonb DEFAULT '{"en":"","sk":""}'::jsonb NOT NULL;

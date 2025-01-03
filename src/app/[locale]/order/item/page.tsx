@@ -1,24 +1,16 @@
 "use client";
 
 import { useState } from "react";
-import { Link } from "@/i18n/routing";
-import { PlusIcon, ArrowUturnLeftIcon } from "@heroicons/react/24/solid";
-import {
-  Box,
-  Button,
-  Flex,
-  Grid,
-  Heading,
-  Text,
-  VisuallyHidden,
-  Container,
-} from "@radix-ui/themes";
+import { ArrowUturnLeftIcon } from "@heroicons/react/24/solid";
+import { Button, Flex, Heading, Text, Container } from "@radix-ui/themes";
 import { useFormatter, useLocale, useTranslations } from "next-intl";
-import Image from "next/image";
+import dynamic from "next/dynamic";
+
+import { Link } from "@/i18n/routing";
+import BottomBar from "@/components/bottomBar";
+
 import RadioCardRenderer, { RadioCardConfiguration } from "./radio-card";
 import TextAreaRenderer from "./textarea";
-import SizeRenderer from "./size";
-import BottomBar from "@/components/bottomBar";
 
 export type BaseProductConfiguration = {
   id: string;
@@ -114,9 +106,12 @@ const configuration = [
   },
 ] as ProductConfiguration[];
 
+const Files = dynamic(() => import("./files"), {
+  ssr: false,
+});
+
 const renderers = {
   "radio-card": RadioCardRenderer,
-  size: SizeRenderer,
   textarea: TextAreaRenderer,
 };
 
@@ -145,43 +140,7 @@ const OrderItem = () => {
           {t("files")}
         </Heading>
 
-        <Grid
-          columns={{
-            initial: "2",
-            xs: "3",
-            sm: "4",
-            md: "5",
-            lg: "6",
-            xl: "7",
-          }}
-          gap="3"
-          width="full"
-        >
-          <Button className="bg-gray-2 rounded-3 h-[8rem] p-0">
-            <VisuallyHidden>{t("add")}</VisuallyHidden>
-            <PlusIcon className="size-10 text-gray-10" />
-          </Button>
-          <Button className="bg-gray-2 rounded-3 h-[8rem] relative text-left p-0 overflow-hidden">
-            <Image
-              src={`/family.jpg`}
-              alt=""
-              width={256}
-              height={256}
-              className="object-cover size-full"
-            />
-            <Box
-              position="absolute"
-              bottom="0"
-              left="0"
-              right="0"
-              py="1"
-              px="2"
-              className="bg-gray-surface text-gray-12 text-sm"
-            >
-              DSC020320.JPEG
-            </Box>
-          </Button>
-        </Grid>
+        <Files />
       </Flex>
 
       <Flex direction="column" gap="3" width="full" mt="4">

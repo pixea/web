@@ -1,0 +1,29 @@
+[
+  {
+    "corsRuleName": "s3UploadDownload",
+    "allowedHeaders": [
+      "authorization",
+      "content-type",
+      "etag",
+      "location",
+      "x-bz-file-name",
+      "x-bz-content-sha1"
+    ],
+    "exposeHeaders": [
+      "content-type",
+      "etag",
+      "location",
+      "x-bz-file-name",
+      "x-bz-content-sha1"
+    ],
+    "allowedOperations": ["s3_head", "s3_get", "s3_put"],
+    "allowedOrigins": [
+      "http://localhost:8080",
+      "http://localhost:3000",
+      "https://nova.pixea.sk",
+      "https://pixea.sk",
+      "https://www.pixea.sk"
+    ],
+    "maxAgeSeconds": 3600
+  }
+]
