@@ -49,7 +49,7 @@ export default async function ProductPage({
   const decodedSlug = decodeURIComponent(slug);
 
   const product = await db.query.products.findFirst({
-    where: sql`slug->>'${sql.raw(locale)}' = ${decodedSlug}`,
+    where: sql`slug->>'${sql.raw(locale)}' = ${decodedSlug} AND "status" = 'active'`,
   });
 
   if (!product) {
