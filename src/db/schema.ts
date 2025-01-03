@@ -13,8 +13,8 @@ import {
   pgEnum,
 } from "drizzle-orm/pg-core";
 import { AdapterAccountType } from "next-auth/adapters";
-import { Address } from "./address";
-import { ProductPayload } from "./validation";
+import { Address, InvoiceAddress } from "./address";
+import { OrderItemPayload, OrderPayload, ProductPayload } from "./validation";
 
 const timestamps = () => ({
   created: timestamp({ mode: "string" })
@@ -155,15 +155,21 @@ export const orders = pgTable("order", {
   status: orderStatus().notNull().default("new"),
   paid: boolean().notNull().default(false),
 
-  // items: jsonb().notNull().default([]).$type<OrderItemPayload>(),
+  items: jsonb().notNull().default([]).$type<OrderItemPayload>(),
   itemsSummary: text(),
 
-  // sum: jsonb().notNull().default([]).$type<OrderPayload["sum"]>(),
+  userId: uuid()
+    .notNull()
+    .references(() => users.id, { onDelete: "set null" }),
+  email: varchar().notNull(),
+  phone: varchar(),
 
   deliveryAddress: jsonb().notNull().default({}).$type<Address>(),
-  invoiceAddress: jsonb().notNull().default({}).$type<Address>(),
+  invoiceAddress: jsonb().notNull().default({}).$type<InvoiceAddress>(),
 
-  // delivery:
+  delivery: jsonb().notNull().default({}).$type<OrderPayload["delivery"]>(),
+
+  sum: jsonb().notNull().default([]).$type<OrderPayload["sum"]>(),
 
   ...timestamps(),
 });

@@ -7,8 +7,8 @@ export type Address = {
 };
 
 export type InvoiceAddress = Address & {
-  company: string;
-  companyId: string;
-  taxId: string;
-  vatId: string;
+  company?: string;
+  companyId?: string;
+  taxId?: string;
+  vatId?: string;
 };

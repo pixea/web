@@ -89,11 +89,77 @@ export const userSchema = z.object({
   image: z.string().optional().nullable(),
 });
 
-export const orderSchema = z.object({
-  role: z.enum(["customer", "admin"]).default("customer"),
+export const orderItemSchema = z.object({
+  id: z.string(),
+  files: z.object({
+    pieces: z.number().optional(),
+    items: z.array(
+      z.object({
+        id: z.string(),
+        name: z.string(),
+        size: z.number(),
+        pieces: z.number().optional(),
+      })
+    ),
+  }),
+  size: z.object({
+    dimensions: z.tuple([z.number(), z.number()]),
+  }),
+  configuration: z.array(
+    z.object({
+      id: z.string(),
+      option: z.string(),
+    })
+  ),
+});
 
-  image: z.string().optional().nullable(),
+export const orderSchema = z.object({
+  status: z
+    .enum(["new", "processed", "prepared", "delivery", "delivered"])
+    .default("new"),
+  paid: z.boolean().default(false),
+
+  items: z.array(orderItemSchema),
+  itemsSummary: z.string().optional().nullable(),
+
+  userId: z.string().uuid().optional().nullable(),
+  email: z.string().email(),
+  phone: z.string().optional().nullable(),
+
+  deliveryAddress: z.object({
+    street: z.string(),
+    additional: z.string().optional(),
+    zip: z.string(),
+    city: z.string(),
+    country: z.string(),
+  }),
+  invoiceAddress: z.object({
+    company: z.string().optional(),
+    companyId: z.string().optional(),
+    taxId: z.string().optional(),
+    vatId: z.string().optional(),
+    street: z.string(),
+    additional: z.string().optional(),
+    zip: z.string(),
+    city: z.string(),
+    country: z.string(),
+  }),
+
+  delivery: z.object({
+    type: z.enum(["courier", "pickup"]),
+    tracking: z.string().optional().nullable(),
+  }),
+
+  sum: z.object({
+    cost: z.number(),
+    originalMargin: z.number().optional(),
+    margin: z.number(),
+    delivery: z.number(),
+    vat: z.number(),
+  }),
 });
 
 export type UserPayload = z.infer<typeof userSchema>;
 export type ProductPayload = z.infer<typeof productSchema>;
+export type OrderItemPayload = z.infer<typeof orderItemSchema>;
+export type OrderPayload = z.infer<typeof orderSchema>;

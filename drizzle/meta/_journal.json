@@ -15,6 +15,13 @@
       "when": 1735594614495,
       "tag": "0001_dusty_microbe",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1735850976286,
+      "tag": "0002_lovely_spirit",
+      "breakpoints": true
     }
   ]
 }
