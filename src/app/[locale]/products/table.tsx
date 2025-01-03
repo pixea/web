@@ -39,15 +39,19 @@ const ProductsTable = ({ products }: { products: Product[] }) => {
 
         <Table.Body>
           {products.map((product) => (
-            <Table.Row key={product.id} align="center">
+            <Table.Row key={product.id}>
               <Table.Cell>{product.name[locale]}</Table.Cell>
               <Table.Cell>{product.description[locale]}</Table.Cell>
               <Table.Cell>
                 {product.status === "active" && (
-                  <Badge color="green">{t("active")}</Badge>
+                  <Badge size="2" color="green">
+                    {t("active")}
+                  </Badge>
                 )}
                 {product.status === "draft" && (
-                  <Badge color="gray">{t("draft")}</Badge>
+                  <Badge size="2" color="gray">
+                    {t("draft")}
+                  </Badge>
                 )}
               </Table.Cell>
               <Table.Cell>
@@ -62,7 +66,7 @@ const ProductsTable = ({ products }: { products: Product[] }) => {
               </Table.Cell>
               <Table.Cell>
                 <Flex gap="2">
-                  <Button asChild>
+                  <Button variant="soft" asChild>
                     <Link href={`/${locale}/products/${product.id}`}>
                       <PencilIcon className="size-4" /> {t("edit")}
                     </Link>
@@ -71,7 +75,12 @@ const ProductsTable = ({ products }: { products: Product[] }) => {
                   <form action={deleteAction}>
                     <input type="hidden" name="id" value={product.id} />
 
-                    <Button type="submit" color="red" loading={deletePending}>
+                    <Button
+                      variant="surface"
+                      type="submit"
+                      color="red"
+                      loading={deletePending}
+                    >
                       <TrashIcon className="size-3" /> {t("delete")}
                     </Button>
                   </form>
