@@ -1,6 +1,14 @@
 import { Link } from "@/i18n/routing";
 import { XMarkIcon } from "@heroicons/react/24/solid";
-import { Box, Button, Card, Flex, Separator, Text } from "@radix-ui/themes";
+import {
+  Box,
+  Button,
+  Card,
+  Flex,
+  Separator,
+  Text,
+  Tooltip,
+} from "@radix-ui/themes";
 import { useFormatter, useTranslations } from "next-intl";
 
 const OrderItems = () => {
@@ -119,15 +127,18 @@ const OrderItems = () => {
               </Flex>
             </Link>
           </Card>
-          <Button
-            variant="ghost"
-            color="red"
-            size="2"
-            asChild
-            className="p-2 rounded-full"
-          >
-            <XMarkIcon className="size-6" />
-          </Button>
+
+          <Tooltip content={t("remove")}>
+            <Button
+              variant="ghost"
+              color="red"
+              size="2"
+              asChild
+              className="p-2 rounded-full hover:cursor-pointer"
+            >
+              <XMarkIcon className="size-6" />
+            </Button>
+          </Tooltip>
         </Flex>
       ))}
     </Flex>

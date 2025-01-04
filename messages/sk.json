@@ -24,6 +24,7 @@
       "contact": "Kontakt"
     },
     "login": "Prihlásiť sa",
+    "manageAccount": "Spravovať účet",
     "accountItems": {
       "account": "Účet",
       "orders": "Objednávky",
@@ -46,7 +47,8 @@
     "dimensions": "Rozmer",
     "quantity": "Počet",
     "quantityUnit": "ks",
-    "price": "Cena"
+    "price": "Cena",
+    "remove": "Odstrániť položku"
   },
   "OrderItemSelection": {
     "title": "Výber produktu",

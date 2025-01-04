@@ -5,7 +5,7 @@ import {
   ArrowLeftEndOnRectangleIcon,
   UserCircleIcon,
 } from "@heroicons/react/24/outline";
-import { Button, DropdownMenu } from "@radix-ui/themes";
+import { Button, DropdownMenu, Tooltip } from "@radix-ui/themes";
 import { Session } from "next-auth";
 import { useTranslations } from "next-intl";
 import { logoutAction } from "@/app/[locale]/auth/actions";
@@ -20,35 +20,39 @@ const Personalized = ({ session }: { session?: Session | null }) => {
   const role = session?.user.role;
 
   const accountButton = (
-    <Button
-      variant="ghost"
-      color="gray"
-      size="3"
-      className="py-2.5"
-      title={t("accountItems.account")}
-      asChild
-    >
-      <Link href={authUrl}>
-        <UserCircleIcon className="size-5" />
-      </Link>
-    </Button>
+    <Tooltip content={t("login")}>
+      <Button
+        variant="ghost"
+        color="gray"
+        size="3"
+        className="py-2.5"
+        title={t("accountItems.account")}
+        asChild
+      >
+        <Link href={authUrl}>
+          <UserCircleIcon className="size-5" />
+        </Link>
+      </Button>
+    </Tooltip>
   );
 
   const accountMenuIconSize = 4;
 
   const accountDropdown = (
     <DropdownMenu.Root>
-      <DropdownMenu.Trigger>
-        <Button
-          variant="ghost"
-          color={role === "admin" ? "yellow" : "gray"}
-          size="3"
-          className="py-2.5"
-          title={t("accountItems.account")}
-        >
-          <UserCircleIcon className="size-5" />
-        </Button>
-      </DropdownMenu.Trigger>
+      <Tooltip content={t("manageAccount")}>
+        <DropdownMenu.Trigger>
+          <Button
+            variant="ghost"
+            color={role === "admin" ? "yellow" : "gray"}
+            size="3"
+            className="py-2.5"
+            title={t("accountItems.account")}
+          >
+            <UserCircleIcon className="size-5" />
+          </Button>
+        </DropdownMenu.Trigger>
+      </Tooltip>
       <DropdownMenu.Content>
         {items.map((item, index) =>
           item === "SEPARATOR" ? (

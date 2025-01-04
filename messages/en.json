@@ -24,6 +24,7 @@
       "contact": "Contact"
     },
     "login": "Log in",
+    "manageAccount": "Manage account",
     "accountItems": {
       "account": "Account",
       "orders": "Orders",
@@ -46,7 +47,8 @@
     "dimensions": "Dimensions",
     "quantity": "Quantity",
     "quantityUnit": "pcs",
-    "price": "Price"
+    "price": "Price",
+    "remove": "Remove item"
   },
   "OrderItemSelection": {
     "title": "Product selection",
