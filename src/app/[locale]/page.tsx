@@ -1,6 +1,7 @@
 import { Link } from "@/i18n/routing";
 import { Flex, Heading, Button, Container } from "@radix-ui/themes";
 import { useTranslations } from "next-intl";
+import MoreProducts from "./product/[slug]/more-products";
 
 export default function Home() {
   const t = useTranslations("Home");
@@ -8,28 +9,23 @@ export default function Home() {
   return (
     <>
       <Container>
-        <Flex direction="column" gap="5" align="center" justify="center" mt="8">
-          <Heading size="9" align="center" className="font-semibold">
+        <Flex
+          direction="column"
+          gap="6"
+          align="center"
+          justify="center"
+          className="mt-24 mb-6"
+        >
+          <Heading align="center" className="font-semibold text-8xl">
             {t("title")}
           </Heading>
 
-          <Flex direction="row" gap="2">
-            <Button variant="solid">
-              <Link href="/order">{t("button1")}</Link>
-            </Button>
-            <Button variant="soft">{t("button2")}</Button>
-          </Flex>
+          <Button variant="solid" size="4">
+            <Link href="/order">{t("button1")}</Link>
+          </Button>
         </Flex>
-        <video
-          className="mt-8 w-full rounded-6"
-          autoPlay
-          muted
-          loop
-          playsInline
-        >
-          <source src="/xmas.mp4" type="video/mp4" />
-          {t("video")}
-        </video>
+
+        <MoreProducts showHeading={false} columns="4" />
       </Container>
     </>
   );
