@@ -14,9 +14,12 @@ export default function Home() {
           gap="6"
           align="center"
           justify="center"
-          className="mt-24 mb-6"
+          className="mt-16 md:mt-24 mb-6"
         >
-          <Heading align="center" className="font-semibold text-8xl">
+          <Heading
+            align="center"
+            className="font-semibold text-5xl xs:text-7xl md:text-8xl"
+          >
             {t("title")}
           </Heading>
 
@@ -24,9 +27,9 @@ export default function Home() {
             <Link href="/order">{t("button1")}</Link>
           </Button>
         </Flex>
-
-        <MoreProducts showHeading={false} columns="4" />
       </Container>
+
+      <MoreProducts showHeading={false} columns="4" />
     </>
   );
 }
