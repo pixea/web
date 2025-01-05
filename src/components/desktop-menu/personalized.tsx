@@ -27,14 +27,7 @@ const Personalized = ({
 
   const accountButton = (
     <Tooltip content={t("login")}>
-      <Button
-        variant="ghost"
-        color="gray"
-        size="3"
-        className="py-2.5"
-        title={t("accountItems.account")}
-        asChild
-      >
+      <Button variant="ghost" color="gray" size="3" className="py-2.5" asChild>
         <Link href={authUrl}>
           <UserCircleIcon className="size-5" />
         </Link>
