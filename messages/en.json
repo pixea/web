@@ -48,7 +48,7 @@
     "quantity": "Quantity",
     "quantityUnit": "pcs",
     "price": "Price",
-    "remove": "Remove item"
+    "removeItem": "Remove item"
   },
   "OrderItemSelection": {
     "title": "Product selection",

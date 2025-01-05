@@ -128,7 +128,7 @@ const OrderItems = () => {
             </Link>
           </Card>
 
-          <Tooltip content={t("remove")}>
+          <Tooltip content={t("removeItem")}>
             <Button
               variant="ghost"
               color="red"
