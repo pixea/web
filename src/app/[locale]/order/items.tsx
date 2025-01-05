@@ -37,7 +37,9 @@ const OrderItems = ({ items }: { items?: ShoppingCartItem[] }) => {
           className="w-full"
         >
           <Card size="2" className="flex-1" asChild>
-            <Link href="/">
+            <Link
+              href={{ pathname: "/order/item/[id]", params: { id: item.id! } }}
+            >
               <Flex justify="between">
                 <Flex justify="center" gap="2">
                   <Box>
