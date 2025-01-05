@@ -58,8 +58,6 @@ export default async function ProductPage({
     return notFound();
   }
 
-  console.log(product);
-
   return (
     <Container className="w-full" mt={{ initial: "0", sm: "6", md: "8" }}>
       <Flex

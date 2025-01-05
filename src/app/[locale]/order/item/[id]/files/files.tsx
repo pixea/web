@@ -74,7 +74,6 @@ const Files = ({
   const uploadingFiles = useUppyState(uppy, (state) => state.files);
 
   useUppyEvent(uppy, "upload-success", async (file, response) => {
-    console.log("Upload success", { file, response });
     // TODO: Add error handling
     if (!file) return;
 
@@ -164,6 +163,8 @@ const Files = ({
           lastDotIndex === -1 ? fileName : fileName.substring(0, lastDotIndex);
         const extension =
           lastDotIndex === -1 ? "" : fileName.substring(lastDotIndex);
+        const isUploading = "uppyFile" in file;
+        const hasThumbnail = "hasThumbnail" in file && file.hasThumbnail;
 
         return (
           <Box
@@ -172,21 +173,35 @@ const Files = ({
           >
             <Tooltip content={file.name}>
               <Button
-                title={"uppyFile" in file ? t("uploading") : t("open")}
-                disabled={"uppyFile" in file}
-                className="relative size-full text-accent-contrast"
+                color="gray"
+                title={isUploading ? t("uploading") : t("open")}
+                disabled={isUploading}
+                className="relative size-full text-accent-contrast p-0 bg-gray-3"
               >
-                {"hasThumbnail" in file && file.hasThumbnail && (
+                {!isUploading && !hasThumbnail && (
+                  <Text
+                    color="gray"
+                    className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-lg"
+                  >
+                    {file.name.split(".").pop()?.toUpperCase()}
+                  </Text>
+                )}
+
+                {hasThumbnail && (
                   <Image
                     unoptimized
-                    src={file.s3Key}
-                    alt={file.name}
+                    src={`/api/s3/thumbnail/${file.s3Key}`}
+                    alt=""
                     width={256}
                     height={256}
                     className="object-cover size-full"
+                    onError={(event) =>
+                      ((event.target as HTMLImageElement).style.display =
+                        "none")
+                    }
                   />
                 )}
-                {"uppyFile" in file && (
+                {isUploading && (
                   <>
                     <Progress
                       value={file.uppyFile.progress?.percentage || 0}
@@ -227,7 +242,7 @@ const Files = ({
                 className="absolute top-0 right-0 p-2 bg-gray-a4 rounded-tl-none rounded-br-none hover:bg-red-8 m-0"
                 // TODO: Add removing of uploaded files
                 onClick={() =>
-                  "uppyFile" in file ? uppy.removeFile(file.id) : () => {}
+                  isUploading ? uppy.removeFile(file.id) : () => {}
                 }
               >
                 <XMarkIcon className="size-5" />

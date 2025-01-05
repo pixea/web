@@ -123,18 +123,12 @@ export async function POST(
     };
 
     if (typeof key !== "string") {
-      console.log("Missing object key");
-
       return new Response("Missing object key", { status: 400 });
     }
     if (typeof uploadId !== "string") {
-      console.log("Missing upload ID");
-
       return new Response("Missing upload ID", { status: 400 });
     }
     if (!Array.isArray(parts) || !parts.every(isValidPart)) {
-      console.log("Missing valid parts");
-
       return new Response("Invalid parts", { status: 400 });
     }
 

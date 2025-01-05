@@ -30,18 +30,12 @@ export const getCurrentCartItemCountAction = async () => {
 };
 
 export const getCurrentCartContentAction = async () => {
-  console.log("Going to get cart");
-
   try {
     const newestCart = await getNewestCartAction();
 
     if (newestCart) {
-      console.log("Already has cart", newestCart);
-
       return newestCart;
     }
-
-    console.log("Starting new cart");
 
     return startNewCartAction();
   } catch (e) {

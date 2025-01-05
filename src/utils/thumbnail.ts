@@ -34,8 +34,6 @@ export const createThumbnail = async (
     );
   }
 
-  console.log({ type: object.ContentType });
-
   if (
     !object.ContentType ||
     !SUPPORTED_THUMBNAIL_TYPES.includes(object.ContentType)
