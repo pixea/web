@@ -8,14 +8,15 @@ const combineFiles = (
   uploadedFiles?: OrderItemFilePayload[]
 ) => {
   const uploadingFilesById = new Map(
-    uploadingFiles.map((file) => [file.meta.id, file])
+    uploadingFiles.map((file) => [file.meta.fileId, file])
   );
   const uploadedFilesById = new Map(
     uploadedFiles?.map((file) => [file.id, file]) || []
   );
 
   return [
-    ...(uploadedFiles?.filter((file) => !uploadingFilesById.has(file)) || []),
+    ...(uploadedFiles?.filter((file) => !uploadingFilesById.has(file.id)) ||
+      []),
     ...uploadingFiles.map(
       (file) =>
         uploadedFilesById.get(file.meta.fileId) || {

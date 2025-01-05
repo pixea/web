@@ -65,7 +65,7 @@ export const addFileToCartItemAction = async (
     const newestCart = await getNewestCartAction();
 
     if (!newestCart?.content) {
-      return Response.json({ error: "No cart found" }, { status: 404 });
+      throw new Error("No cart found");
     }
 
     const cart = await db.transaction(async (tx) => {
@@ -87,7 +87,7 @@ export const addFileToCartItemAction = async (
             )[0].cart;
 
       if (!cart) {
-        throw Response.json({ error: "No cart found" }, { status: 404 });
+        throw new Error("No cart found");
       }
 
       const existingItem = cart.items?.find((item) => item.id === cartItemId);
@@ -130,10 +130,7 @@ export const addFileToCartItemAction = async (
   } catch (e) {
     console.error(e);
 
-    throw Response.json(
-      { error: "Unknown error occurred when adding file to cart item" },
-      { status: 500 }
-    );
+    throw new Error("Unknown error occurred when adding file to cart item");
   }
 };
 
