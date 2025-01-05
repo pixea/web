@@ -37,15 +37,15 @@ const Footer = () => {
                 <Image
                   src="/brand/icon-light.svg"
                   alt=""
-                  width={102}
-                  height={40}
+                  width={80}
+                  height={98}
                   className="block dark:hidden"
                 />
                 <Image
                   src="/brand/icon-dark.svg"
                   alt=""
-                  width={102}
-                  height={40}
+                  width={80}
+                  height={98}
                   className="hidden dark:block"
                 />
               </Link>
