@@ -3,12 +3,14 @@
 import { useState } from "react";
 import {
   Box,
+  Flex,
   Button,
   Grid,
   IconButton,
   Progress,
   Text,
   VisuallyHidden,
+  Tooltip,
 } from "@radix-ui/themes";
 import Uppy, { Meta } from "@uppy/core";
 import { useUppyState, useUppyEvent } from "@uppy/react";
@@ -155,71 +157,85 @@ const Files = ({
         />
       </Text>
 
-      {combinedFiles.map((file) => (
-        <Box
-          key={file.id}
-          className="bg-gray-2 rounded-3 h-[8rem] relative text-left p-0 overflow-hidden"
-        >
-          <Button
-            title={"uppyFile" in file ? t("uploading") : t("open")}
-            disabled={"uppyFile" in file}
-            className="relative size-full text-accent-contrast"
-          >
-            {"hasThumbnail" in file && file.hasThumbnail && (
-              <Image
-                unoptimized
-                src={file.s3Key}
-                alt={file.name}
-                width={256}
-                height={256}
-                className="object-cover size-full"
-              />
-            )}
-            {"uppyFile" in file && (
-              <>
-                <Progress
-                  value={file.uppyFile.progress?.percentage || 0}
-                  variant="soft"
-                  radius="none"
-                  className="absolute top-0 left-0 size-full"
-                />
-                <Box
-                  position="absolute"
-                  top="50%"
-                  left="50%"
-                  className="transform -translate-x-1/2 -translate-y-1/2 text-lg"
-                >
-                  {file.uppyFile.progress?.percentage || 0} %
-                </Box>
-              </>
-            )}
-            <Box
-              position="absolute"
-              bottom="0"
-              left="0"
-              right="0"
-              py="1"
-              px="2"
-              className="bg-gray-surface text-gray-12 text-sm"
-            >
-              {file.name}
-            </Box>
-          </Button>
+      {combinedFiles.map((file) => {
+        const fileName = file.name || "";
+        const lastDotIndex = fileName.lastIndexOf(".");
+        const name =
+          lastDotIndex === -1 ? fileName : fileName.substring(0, lastDotIndex);
+        const extension =
+          lastDotIndex === -1 ? "" : fileName.substring(lastDotIndex);
 
-          <IconButton
-            color="gray"
-            variant="ghost"
-            className="absolute top-0 right-0 p-2 bg-gray-a4 rounded-tl-none rounded-br-none hover:bg-red-8 m-0"
-            title={t("removeFile")}
-            // TODO: Add removing of uploaded files
-            onClick={() =>
-              "uppyFile" in file ? uppy.removeFile(file.id) : () => {}
-            }
+        return (
+          <Box
+            key={file.id}
+            className="bg-gray-2 rounded-3 h-[8rem] relative text-left p-0 overflow-hidden"
           >
-            <XMarkIcon className="size-5" />
-          </IconButton>
-        </Box>
-      ))}
+            <Tooltip content={file.name}>
+              <Button
+                title={"uppyFile" in file ? t("uploading") : t("open")}
+                disabled={"uppyFile" in file}
+                className="relative size-full text-accent-contrast"
+              >
+                {"hasThumbnail" in file && file.hasThumbnail && (
+                  <Image
+                    unoptimized
+                    src={file.s3Key}
+                    alt={file.name}
+                    width={256}
+                    height={256}
+                    className="object-cover size-full"
+                  />
+                )}
+                {"uppyFile" in file && (
+                  <>
+                    <Progress
+                      value={file.uppyFile.progress?.percentage || 0}
+                      variant="soft"
+                      radius="none"
+                      className="absolute top-0 left-0 size-full"
+                    />
+                    <Box
+                      position="absolute"
+                      top="50%"
+                      left="50%"
+                      className="transform -translate-x-1/2 -translate-y-1/2 text-lg"
+                    >
+                      {file.uppyFile.progress?.percentage || 0} %
+                    </Box>
+                  </>
+                )}
+                <Flex
+                  position="absolute"
+                  align="center"
+                  bottom="0"
+                  left="0"
+                  right="0"
+                  py="1"
+                  px="2"
+                  className="bg-gray-surface text-gray-12 text-sm"
+                >
+                  <Text className="truncate">{name}</Text>
+                  <Text>{extension}</Text>
+                </Flex>
+              </Button>
+            </Tooltip>
+
+            <Tooltip content={t("removeFile")}>
+              <IconButton
+                color="gray"
+                variant="ghost"
+                className="absolute top-0 right-0 p-2 bg-gray-a4 rounded-tl-none rounded-br-none hover:bg-red-8 m-0"
+                // TODO: Add removing of uploaded files
+                onClick={() =>
+                  "uppyFile" in file ? uppy.removeFile(file.id) : () => {}
+                }
+              >
+                <XMarkIcon className="size-5" />
+              </IconButton>
+            </Tooltip>
+          </Box>
+        );
+      })}
     </Grid>
   );
 };
