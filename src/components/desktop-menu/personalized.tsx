@@ -46,7 +46,6 @@ const Personalized = ({
             color={role === "admin" ? "yellow" : "gray"}
             size="3"
             className="py-2.5"
-            title={t("accountItems.account")}
           >
             <UserCircleIcon className="size-5" />
           </Button>
