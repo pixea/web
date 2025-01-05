@@ -12,7 +12,7 @@ import {
   ArrowLeftEndOnRectangleIcon,
   UserCircleIcon,
 } from "@heroicons/react/24/outline";
-import useAccountItems from "@/hooks/accountItems";
+import useAccountItems from "@/hooks/useAccountItems";
 import { Session } from "next-auth";
 
 const MobileAccountMenu = ({

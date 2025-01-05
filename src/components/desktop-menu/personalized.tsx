@@ -9,10 +9,16 @@ import { Button, DropdownMenu, Tooltip } from "@radix-ui/themes";
 import { Session } from "next-auth";
 import { useTranslations } from "next-intl";
 import { logoutAction } from "@/app/[locale]/auth/actions";
-import useAccountItems from "@/hooks/accountItems";
-import useAuthUrl from "@/hooks/authUrl";
+import useAccountItems from "@/hooks/useAccountItems";
+import useAuthUrl from "@/hooks/useAuthUrl";
 
-const Personalized = ({ session }: { session?: Session | null }) => {
+const Personalized = ({
+  session,
+  cartItemCount,
+}: {
+  session?: Session | null;
+  cartItemCount: number;
+}) => {
   const t = useTranslations("Header");
   const items = useAccountItems(session);
   const authUrl = useAuthUrl();

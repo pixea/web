@@ -195,6 +195,9 @@ export default {
         panel: {
           solid: "var(--color-panel-solid)",
         },
+        accent: {
+          contrast: "var(--accent-contrast)",
+        },
       },
       borderRadius: {
         1: "var(--radius-1)",

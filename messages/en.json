@@ -48,7 +48,10 @@
     "quantity": "Quantity",
     "quantityUnit": "pcs",
     "price": "Price",
-    "removeItem": "Remove item"
+    "removeItem": "Remove item",
+    "uploading": "Uploading...",
+    "open": "Open",
+    "removeFile": "Remove file"
   },
   "OrderItemSelection": {
     "title": "Product selection",

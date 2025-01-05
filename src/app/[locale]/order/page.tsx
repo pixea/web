@@ -1,11 +1,13 @@
 import { Link } from "@/i18n/routing";
 import { Button, Flex, Heading, Text, Container } from "@radix-ui/themes";
-import { useTranslations } from "next-intl";
 import OrderItems from "./items";
 import { PlusIcon } from "@heroicons/react/24/solid";
+import { getTranslations } from "next-intl/server";
+import { getCurrentCartContentAction } from "@/hooks/useCart/actions";
 
-export default function OrderPage() {
-  const t = useTranslations("Order");
+export default async function OrderPage() {
+  const t = await getTranslations("Order");
+  const cart = await getCurrentCartContentAction();
 
   return (
     <Container className="w-full" mt="6">
@@ -27,7 +29,7 @@ export default function OrderPage() {
       </Flex>
 
       <Flex direction="column" gap="6" align="center" width="full" mt="6">
-        <OrderItems />
+        <OrderItems items={cart.content.items} />
       </Flex>
     </Container>
   );

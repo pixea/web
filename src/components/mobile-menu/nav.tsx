@@ -13,9 +13,11 @@ import MobileMenu from "./menu";
 const MobileNavigation = ({
   session,
   items,
+  cartItemCount,
 }: {
   session?: Session | null;
   items: readonly MenuItem[];
+  cartItemCount: number;
 }) => {
   const t = useTranslations("Header");
 

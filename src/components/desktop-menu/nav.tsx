@@ -18,9 +18,11 @@ import Personalized from "./personalized";
 const DesktopNavigation = ({
   session,
   items,
+  cartItemCount,
 }: {
   session?: Session | null;
   items: readonly MenuItem[];
+  cartItemCount: number;
 }) => {
   const t = useTranslations("Header");
 
@@ -115,7 +117,7 @@ const DesktopNavigation = ({
       </NavigationMenu.Root>
 
       <Flex direction="row" align="center" gap="4">
-        <Personalized session={session} />
+        <Personalized session={session} cartItemCount={cartItemCount} />
       </Flex>
     </Flex>
   );

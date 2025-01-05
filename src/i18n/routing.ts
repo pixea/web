@@ -24,9 +24,9 @@ export const routing = defineRouting({
       en: "/order/selection",
       sk: "/objednavka/vyber",
     },
-    "/order/item": {
-      en: "/order/item",
-      sk: "/objednavka/polozka",
+    "/order/item/[id]": {
+      en: "/order/item/[id]",
+      sk: "/objednavka/polozka/[id]",
     },
     "/products": {
       en: "/products",

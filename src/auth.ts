@@ -11,6 +11,7 @@ import {
   verificationTokens,
 } from "./db/schema";
 import { Address } from "./db/address";
+import { ShoppingCart } from "./db/validation";
 
 declare module "next-auth" {
   interface Session {
@@ -22,6 +23,7 @@ declare module "next-auth" {
       vatId?: string;
       phone?: string;
       address?: Partial<Address>;
+      cart?: ShoppingCart;
     } & DefaultSession["user"];
   }
 
@@ -33,6 +35,7 @@ declare module "next-auth" {
     vatId?: string;
     phone?: string;
     address?: Partial<Address>;
+    cart?: ShoppingCart;
   }
 }
 
@@ -60,6 +63,7 @@ export const { handlers, signIn, signOut, auth, unstable_update } = NextAuth({
       session.user.vatId = user.vatId;
       session.user.phone = user.phone;
       session.user.address = user.address;
+      session.user.cart = user.cart;
       return session;
     },
   },

@@ -1,30 +1,19 @@
 import { auth } from "@/auth";
+import { getCurrentCartContentAction } from "@/hooks/useCart/actions";
+import { MAX_FILE_SIZE, MAX_UNAUTHENTICATED_FILE_SIZE } from "@/utils/file";
+import { getS3Client } from "@/utils/s3";
 import {
-  S3Client,
   AbortMultipartUploadCommand,
   CompleteMultipartUploadCommand,
   CreateMultipartUploadCommand,
   ListPartsCommand,
   PutObjectCommand,
   UploadPartCommand,
+  ListPartsOutput,
 } from "@aws-sdk/client-s3";
 import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
 
 const SIGNATURE_EXPIRATION = 60 * 60 * 12; // Define how long until an S3 signature expires.
-
-let s3Client: S3Client;
-function getS3Client() {
-  s3Client ??= new S3Client({
-    credentials: {
-      accessKeyId: process.env.S3_KEY_ID!,
-      secretAccessKey: process.env.S3_KEY!,
-    },
-    endpoint: process.env.S3_ENDPOINT!,
-    region: process.env.S3_REGION!,
-  });
-
-  return s3Client;
-}
 
 export async function POST(
   request: Request,
@@ -35,247 +24,279 @@ export async function POST(
   const session = await auth();
   const isAuthenticated = !!session?.user;
 
+  const cart = await getCurrentCartContentAction();
+  const cartId = cart.content.id;
+
   // Unauthenticated users are able to get only a single-part signature on up to 100MB files.
   if (segment === "single-part") {
-    const { contentType, fileSize, fileName } = request.body as unknown as {
+    const { contentType, fileSize, fileName } = (await request.json()) as {
       fileName: string;
       fileSize: number;
       contentType: string;
     };
 
-    if (!isAuthenticated && fileSize > 100 * 1024 * 1024) {
-      return new Response("File too large", { status: 403 });
+    if (typeof fileName !== "string" || !fileName) {
+      return new Response("Missing file name", { status: 400 });
     }
 
-    const key = `original/${session?.user.id || "public"}/${crypto.randomUUID()}/${fileName}`;
+    const maxSize = isAuthenticated
+      ? MAX_FILE_SIZE
+      : MAX_UNAUTHENTICATED_FILE_SIZE;
+    if (!isAuthenticated && fileSize > maxSize) {
+      return new Response("File too large", { status: 400 });
+    }
+
+    const baseKey = `${session?.user.id || "public"}/${cartId}/${crypto.randomUUID()}/${fileName}`;
 
     const signedUrl = await getSignedUrl(
       getS3Client(),
       new PutObjectCommand({
         Bucket: process.env.S3_BUCKET!,
-        Key: key,
+        Key: `original/${baseKey}`,
         ContentType: contentType,
       }),
       { expiresIn: SIGNATURE_EXPIRATION }
     );
 
-    return new Response(JSON.stringify({ url: signedUrl, method: "PUT" }), {
+    return Response.json(
+      { url: signedUrl, key: baseKey, method: "PUT" },
+      {
+        headers: { "Content-Type": "application/json" },
+      }
+    );
+  }
+
+  if (segment === "multipart") {
+    // Multipart uploads are allowed for authenticated users only.
+    // They technically allow unlimited file sizes.
+    if (!isAuthenticated) {
+      return new Response("Unauthorized", { status: 401 });
+    }
+
+    const { contentType, fileSize, fileName, metadata } =
+      (await request.json()) as {
+        fileName: string;
+        fileSize: number;
+        contentType: string;
+        metadata: Record<string, string>;
+      };
+
+    if (typeof fileName !== "string" || !fileName) {
+      return new Response("Missing file name", { status: 400 });
+    }
+
+    if (!isAuthenticated && fileSize > MAX_FILE_SIZE) {
+      return new Response("File too large", { status: 400 });
+    }
+
+    const baseKey = `${session?.user.id || "public"}/${cartId}/${crypto.randomUUID()}/${fileName}`;
+
+    const params = {
+      Bucket: process.env.S3_BUCKET!,
+      Key: `original/${baseKey}`,
+      ContentType: contentType,
+      Metadata: metadata,
+    };
+
+    const command = new CreateMultipartUploadCommand(params);
+
+    try {
+      const data = await getS3Client().send(command);
+
+      return Response.json(
+        { key: baseKey, uploadId: data.UploadId },
+        {
+          headers: { "Content-Type": "application/json" },
+        }
+      );
+    } catch (e) {
+      console.error(e);
+      return new Response("Failed to create multipart upload", { status: 500 });
+    }
+  }
+
+  if (segment === "multipart-completion") {
+    const { key, uploadId, parts } = (await request.json()) as {
+      key: string;
+      uploadId: string;
+      parts: { ETag: string; PartNumber: number }[];
+    };
+
+    if (typeof key !== "string") {
+      console.log("Missing object key");
+
+      return new Response("Missing object key", { status: 400 });
+    }
+    if (typeof uploadId !== "string") {
+      console.log("Missing upload ID");
+
+      return new Response("Missing upload ID", { status: 400 });
+    }
+    if (!Array.isArray(parts) || !parts.every(isValidPart)) {
+      console.log("Missing valid parts");
+
+      return new Response("Invalid parts", { status: 400 });
+    }
+
+    try {
+      await getS3Client().send(
+        new CompleteMultipartUploadCommand({
+          Bucket: process.env.S3_BUCKET!,
+          Key: key,
+          UploadId: uploadId,
+          MultipartUpload: {
+            Parts: parts,
+          },
+        })
+      );
+
+      return Response.json(
+        { message: "Multipart upload completed" },
+        { status: 200 }
+      );
+    } catch (e) {
+      console.error(e);
+      return new Response("Failed to complete multipart upload", {
+        status: 500,
+      });
+    }
+  }
+}
+
+const validatePartNumber = (partNumber: number) =>
+  Number.isInteger(partNumber) && partNumber >= 1 && partNumber <= 10_000;
+
+export async function GET(
+  request: Request,
+  { params }: { params: Promise<{ segment: string }> }
+) {
+  const { segment } = await params;
+
+  if (segment === "multipart") {
+    const searchParams: URLSearchParams = new URL(request.url).searchParams;
+    const key = searchParams.get("key");
+    const uploadId = searchParams.get("uploadId");
+    const partNumber = searchParams.get("partNumber");
+
+    if (!key || !uploadId) {
+      return new Response("key and uploadId are required", { status: 400 });
+    }
+
+    if (!validatePartNumber(Number(partNumber))) {
+      return new Response("Invalid part number", { status: 400 });
+    }
+
+    const signedUrl = await getSignedUrl(
+      getS3Client(),
+      new UploadPartCommand({
+        Bucket: process.env.S3_BUCKET!,
+        Key: key,
+        UploadId: uploadId,
+        PartNumber: Number(partNumber),
+        Body: "",
+      }),
+      { expiresIn: SIGNATURE_EXPIRATION }
+    );
+
+    return Response.json(
+      { url: signedUrl, expires: SIGNATURE_EXPIRATION },
+      {
+        headers: { "Content-Type": "application/json" },
+      }
+    );
+  }
+
+  if (segment === "multipart-list") {
+    const searchParams: URLSearchParams = new URL(request.url).searchParams;
+    const key = searchParams.get("key") as string;
+    const uploadId = searchParams.get("uploadId") as string;
+
+    if (!key || !uploadId) {
+      return new Response("key and uploadId are required", { status: 400 });
+    }
+
+    const parts: NonNullable<ListPartsOutput["Parts"]> = [];
+
+    async function listPartsPage(startsAt?: string) {
+      try {
+        const data = await getS3Client().send(
+          new ListPartsCommand({
+            Bucket: process.env.S3_BUCKET!,
+            Key: key,
+            UploadId: uploadId,
+            PartNumberMarker: startsAt,
+          })
+        );
+
+        parts.push(...(data.Parts || []));
+
+        if (data.IsTruncated) {
+          await listPartsPage(data.NextPartNumberMarker);
+        }
+      } catch (e) {
+        console.error(e);
+        return new Response("Failed to list parts", { status: 500 });
+      }
+    }
+
+    await listPartsPage();
+
+    return Response.json(parts, {
       headers: { "Content-Type": "application/json" },
     });
   }
 }
 
-// export async function POST(
-//   request: Request,
-//   { params }: { params: Promise<{ segment: string }> }
-// ) {
-//   const { segment } = await params;
+function isValidPart(part: { ETag: string; PartNumber: number }) {
+  return (
+    part &&
+    typeof part === "object" &&
+    Number(part.PartNumber) &&
+    typeof part.ETag === "string"
+  );
+}
 
-//   const session = await auth();
-//   const isAuthenticated = !!session?.user;
+export async function DELETE(
+  request: Request,
+  { params }: { params: Promise<{ segment: string }> }
+) {
+  const { segment } = await params;
 
-//   const { type, metadata, filename } = req.body;
-//   if (typeof filename !== "string") {
-//     return res
-//       .status(400)
-//       .json({ error: "s3: content filename must be a string" });
-//   }
-//   if (typeof type !== "string") {
-//     return res.status(400).json({ error: "s3: content type must be a string" });
-//   }
-//   const Key = `${crypto.randomUUID()}-${filename}`;
+  const session = await auth();
 
-//   const params = {
-//     Bucket: "pixea-upload",
-//     Key,
-//     ContentType: type,
-//     Metadata: metadata,
-//   };
+  if (!session?.user) {
+    return new Response("Unauthorized", { status: 401 });
+  }
 
-//   const command = new CreateMultipartUploadCommand(params);
+  const searchParams = new URL(request.url).searchParams;
 
-//   return client.send(command, (err, data) => {
-//     if (err) {
-//       next(err);
-//       return;
-//     }
-//     res.setHeader("Access-Control-Allow-Origin", accessControlAllowOrigin);
-//     res.json({
-//       key: data.Key,
-//       uploadId: data.UploadId,
-//     });
-//   });
-// }
+  if (segment === "multipart") {
+    const uploadId = searchParams.get("uploadId");
+    const key = searchParams.get("key");
 
-// app.post("/s3/multipart", (req, res, next) => {});
+    if (typeof uploadId !== "string") {
+      return new Response("Missing upload ID", { status: 400 });
+    }
+    if (typeof key !== "string") {
+      return new Response("Missing object key", { status: 400 });
+    }
 
-// function validatePartNumber(partNumber) {
-//   // eslint-disable-next-line no-param-reassign
-//   partNumber = Number(partNumber);
-//   return (
-//     Number.isInteger(partNumber) && partNumber >= 1 && partNumber <= 10_000
-//   );
-// }
-// app.get("/s3/multipart/:uploadId/:partNumber", (req, res, next) => {
-//   const { uploadId, partNumber } = req.params;
-//   const { key } = req.query;
+    try {
+      await getS3Client().send(
+        new AbortMultipartUploadCommand({
+          Bucket: "pixea-upload",
+          Key: key,
+          UploadId: uploadId,
+        })
+      );
 
-//   if (!validatePartNumber(partNumber)) {
-//     return res.status(400).json({
-//       error: "s3: the part number must be an integer between 1 and 10000.",
-//     });
-//   }
-//   if (typeof key !== "string") {
-//     return res.status(400).json({
-//       error:
-//         's3: the object key must be passed as a query parameter. For example: "?key=abc.jpg"',
-//     });
-//   }
-
-//   return getSignedUrl(
-//     getS3Client(),
-//     new UploadPartCommand({
-//       Bucket: "pixea-upload",
-//       Key: key,
-//       UploadId: uploadId,
-//       PartNumber: partNumber,
-//       Body: "",
-//     }),
-//     { expiresIn }
-//   ).then((url) => {
-//     res.setHeader("Access-Control-Allow-Origin", accessControlAllowOrigin);
-//     res.json({ url, expires: expiresIn });
-//   }, next);
-// });
-
-// app.get("/s3/multipart/:uploadId", (req, res, next) => {
-//   const client = getS3Client();
-//   const { uploadId } = req.params;
-//   const { key } = req.query;
-
-//   if (typeof key !== "string") {
-//     res.status(400).json({
-//       error:
-//         's3: the object key must be passed as a query parameter. For example: "?key=abc.jpg"',
-//     });
-//     return;
-//   }
-
-//   const parts = [];
-
-//   function listPartsPage(startsAt = undefined) {
-//     client.send(
-//       new ListPartsCommand({
-//         Bucket: "pixea-upload",
-//         Key: key,
-//         UploadId: uploadId,
-//         PartNumberMarker: startsAt,
-//       }),
-//       (err, data) => {
-//         if (err) {
-//           next(err);
-//           return;
-//         }
-
-//         parts.push(...data.Parts);
-
-//         // continue to get list of all uploaded parts until the IsTruncated flag is false
-//         if (data.IsTruncated) {
-//           listPartsPage(data.NextPartNumberMarker);
-//         } else {
-//           res.json(parts);
-//         }
-//       }
-//     );
-//   }
-//   listPartsPage();
-// });
-
-// function isValidPart(part) {
-//   return (
-//     part &&
-//     typeof part === "object" &&
-//     Number(part.PartNumber) &&
-//     typeof part.ETag === "string"
-//   );
-// }
-// app.post("/s3/multipart/:uploadId/complete", (req, res, next) => {
-//   const client = getS3Client();
-//   const { uploadId } = req.params;
-//   const { key } = req.query;
-//   const { parts } = req.body;
-
-//   console.log("Hmmm");
-
-//   if (typeof key !== "string") {
-//     console.log("Hmmmm1");
-
-//     return res.status(400).json({
-//       error:
-//         's3: the object key must be passed as a query parameter. For example: "?key=abc.jpg"',
-//     });
-//   }
-//   if (!Array.isArray(parts) || !parts.every(isValidPart)) {
-//     console.log("Hmmmm2", parts);
-
-//     return res.status(400).json({
-//       error: "s3: `parts` must be an array of {ETag, PartNumber} objects.",
-//     });
-//   }
-
-//   return client.send(
-//     new CompleteMultipartUploadCommand({
-//       Bucket: "pixea-upload",
-//       Key: key,
-//       UploadId: uploadId,
-//       MultipartUpload: {
-//         Parts: parts,
-//       },
-//     }),
-//     (err, data) => {
-//       console.log("Hmmmm3");
-//       console.error(err);
-
-//       if (err) {
-//         next(err);
-//         return;
-//       }
-//       res.setHeader("Access-Control-Allow-Origin", accessControlAllowOrigin);
-//       res.json({
-//         location: data.Location,
-//       });
-//     }
-//   );
-// });
-
-// export async function DELETE(request: Request) {}
-
-// app.delete("/s3/multipart/:uploadId", (req, res, next) => {
-//   const client = getS3Client();
-//   const { uploadId } = req.params;
-//   const { key } = req.query;
-
-//   if (typeof key !== "string") {
-//     return res.status(400).json({
-//       error:
-//         's3: the object key must be passed as a query parameter. For example: "?key=abc.jpg"',
-//     });
-//   }
-
-//   return client.send(
-//     new AbortMultipartUploadCommand({
-//       Bucket: "pixea-upload",
-//       Key: key,
-//       UploadId: uploadId,
-//     }),
-//     (err) => {
-//       if (err) {
-//         next(err);
-//         return;
-//       }
-//       res.json({});
-//     }
-//   );
-// });
-
-// === </S3 MULTIPART> ===
+      return Response.json(
+        { message: "Aborted multipart upload." },
+        { status: 200 }
+      );
+    } catch (e) {
+      console.error(e);
+      return new Response("Failed to abort multipart upload", { status: 500 });
+    }
+  }
+}

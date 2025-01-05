@@ -21,7 +21,7 @@ import themeConfig from "@/app/_themes/config";
 
 import MobileSubMenu from "./submenu";
 import MobileAccountMenu from "./account";
-import useAuthUrl from "@/hooks/authUrl";
+import useAuthUrl from "@/hooks/useAuthUrl";
 
 const MobileMenu = ({
   session,

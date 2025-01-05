@@ -1,6 +1,6 @@
 "use client";
 
-import { redirect } from "@/i18n/routing";
+import { useRouter } from "@/i18n/routing";
 import { Button, Flex, Inset, Text } from "@radix-ui/themes";
 import { useLocale } from "next-intl";
 import Image from "next/image";
@@ -14,13 +14,19 @@ export interface Product {
 
 const ProductPreview = ({ product }: { product: Product }) => {
   const locale = useLocale();
+  const router = useRouter();
 
   return (
     <Button
       variant="outline"
       color="gray"
       className="relative h-auto flex-col text-left items-start p-0 gap-0 overflow-hidden"
-      onClick={() => redirect({ href: "/order/item", locale })}
+      onClick={() =>
+        router.push({
+          pathname: `/order/item/[id]`,
+          params: { id: crypto.randomUUID() },
+        })
+      }
     >
       <Inset clip="padding-box" side="top" pb="current" className="h-48 w-full">
         <Image

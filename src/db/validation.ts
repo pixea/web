@@ -96,18 +96,21 @@ export const userSchema = z.object({
   image: z.string().optional().nullable(),
 });
 
+export const orderItemFileSchema = z.object({
+  id: z.string(),
+  name: z.string(),
+  size: z.number(),
+  s3Key: z.string(),
+  metadata: z.record(z.string(), z.unknown()).optional(),
+  hasThumbnail: z.boolean(),
+  pieces: z.number().optional(),
+});
+
 export const orderItemSchema = z.object({
   id: z.string(),
   files: z.object({
     pieces: z.number().optional(),
-    items: z.array(
-      z.object({
-        id: z.string(),
-        name: z.string(),
-        size: z.number(),
-        pieces: z.number().optional(),
-      })
-    ),
+    items: z.array(orderItemFileSchema),
   }),
   size: z.object({
     dimensions: z.tuple([z.number(), z.number()]),
@@ -168,5 +171,16 @@ export const orderSchema = z.object({
 
 export type UserPayload = z.infer<typeof userSchema>;
 export type ProductPayload = z.infer<typeof productSchema>;
+export type OrderItemFilePayload = z.infer<typeof orderItemFileSchema>;
 export type OrderItemPayload = z.infer<typeof orderItemSchema>;
 export type OrderPayload = z.infer<typeof orderSchema>;
+
+export type ShoppingCartItem = Partial<OrderItemPayload>;
+export type ShoppingCart = Partial<Omit<OrderPayload, "items">> & {
+  id: string;
+  /**
+   * ISO 8601 date time string
+   */
+  saved: string;
+  items?: ShoppingCartItem[];
+};

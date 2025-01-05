@@ -14,7 +14,12 @@ import {
 } from "drizzle-orm/pg-core";
 import { AdapterAccountType } from "next-auth/adapters";
 import { Address, InvoiceAddress } from "./address";
-import { OrderItemPayload, OrderPayload, ProductPayload } from "./validation";
+import {
+  OrderItemPayload,
+  OrderPayload,
+  ProductPayload,
+  ShoppingCart,
+} from "./validation";
 
 const timestamps = () => ({
   created: timestamp({ mode: "string" })
@@ -56,6 +61,7 @@ export const users = pgTable("user", {
   emailVerified: timestamp("emailVerified", { mode: "date" }),
   phone: varchar(),
   address: jsonb().$type<Partial<Address>>(),
+  cart: jsonb().$type<ShoppingCart>(),
   image: text(),
   ...timestamps(),
 });
@@ -130,6 +136,12 @@ export const authenticators = pgTable(
   })
 );
 
+export const guestCarts = pgTable("guest-cart", {
+  id: uuid().primaryKey().defaultRandom(),
+  content: jsonb().$type<ShoppingCart>().notNull(),
+  ...timestamps(),
+});
+
 export const products = pgTable("product", {
   id: uuid().primaryKey().defaultRandom(),
 
@@ -159,7 +171,7 @@ export const orders = pgTable("order", {
   status: orderStatus().notNull().default("new"),
   paid: boolean().notNull().default(false),
 
-  items: jsonb().notNull().default([]).$type<OrderItemPayload>(),
+  items: jsonb().notNull().default([]).$type<OrderItemPayload[]>(),
   itemsSummary: text(),
 
   userId: uuid()

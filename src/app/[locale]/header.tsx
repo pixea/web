@@ -5,6 +5,7 @@ import { auth } from "@/auth";
 // Mobile and desktop navigation
 import MobileNavigation from "@/components/mobile-menu/nav";
 import DesktopNavigation from "@/components/desktop-menu/nav";
+import { getCurrentCartItemCountAction } from "@/hooks/useCart/actions";
 
 // Navigation menu items
 const menu = [
@@ -23,6 +24,7 @@ export type MenuItem = (typeof menu)[number];
 
 const Header = async () => {
   const session = await auth();
+  const cartItemCount = await getCurrentCartItemCountAction();
 
   return (
     <Flex
@@ -38,9 +40,17 @@ const Header = async () => {
     >
       <header>
         <Container className="w-full">
-          <MobileNavigation items={menu} session={session} />
+          <MobileNavigation
+            items={menu}
+            session={session}
+            cartItemCount={cartItemCount}
+          />
 
-          <DesktopNavigation items={menu} session={session} />
+          <DesktopNavigation
+            items={menu}
+            session={session}
+            cartItemCount={cartItemCount}
+          />
         </Container>
       </header>
     </Flex>

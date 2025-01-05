@@ -48,7 +48,10 @@
     "quantity": "Počet",
     "quantityUnit": "ks",
     "price": "Cena",
-    "removeItem": "Odstrániť položku"
+    "removeItem": "Odstrániť položku",
+    "uploading": "Nahrávam...",
+    "open": "Otvoriť",
+    "removeFile": "Odstrániť súbor"
   },
   "OrderItemSelection": {
     "title": "Výber produktu",
