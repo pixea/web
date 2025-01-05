@@ -8,7 +8,7 @@ export default function OrderPage() {
   const t = useTranslations("Order");
 
   return (
-    <Container className="w-full" mt="4">
+    <Container className="w-full" mt="6">
       <Flex
         direction="row"
         justify="between"

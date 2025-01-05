@@ -22,7 +22,7 @@ const UsersPage = async () => {
     .orderBy(desc(usersSchema.created));
 
   return (
-    <Container className="w-full" mt="4">
+    <Container className="w-full" mt="5">
       <Flex direction="column" gap="4" mt="4">
         <Heading size="7">{t("title")}</Heading>
 

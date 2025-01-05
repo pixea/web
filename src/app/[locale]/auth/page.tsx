@@ -21,7 +21,7 @@ const AuthPage = async () => {
   return (
     <Container
       size={session ? undefined : "1"}
-      className={cn("w-full", session ? "mt-4" : "justify-center")}
+      className={cn("w-full", session ? "mt-7" : "justify-center")}
     >
       {session ? (
         <Flex direction="column">

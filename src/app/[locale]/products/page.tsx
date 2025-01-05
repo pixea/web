@@ -25,7 +25,7 @@ const ProductsPage = async () => {
 
   return (
     <Container className="w-full" mt="4">
-      <Flex direction="column" gap="4" mt="4">
+      <Flex direction="column" gap="4" mt="5">
         <Flex
           direction="row"
           justify="between"
