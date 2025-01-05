@@ -35,15 +35,15 @@ const DesktopNavigation = ({
         <Image
           src="/brand/icon-light.svg"
           alt=""
-          width={32}
-          height={40}
+          width={39}
+          height={48}
           className="block dark:hidden"
         />
         <Image
           src="/brand/icon-dark.svg"
           alt=""
-          width={32}
-          height={40}
+          width={39}
+          height={48}
           className="hidden dark:block"
         />
       </Link>
@@ -52,15 +52,15 @@ const DesktopNavigation = ({
         <Image
           src="/brand/logo-light.svg"
           alt=""
-          width={100}
-          height={40}
+          width={112}
+          height={44}
           className="block dark:hidden"
         />
         <Image
           src="/brand/logo-dark.svg"
           alt=""
-          width={100}
-          height={40}
+          width={112}
+          height={44}
           className="hidden dark:block"
         />
       </Link>
