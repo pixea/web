@@ -193,6 +193,7 @@ export default {
           contrast: "var(--green-contrast)",
         },
         panel: {
+          translucent: "var(--color-panel-translucent)",
           solid: "var(--color-panel-solid)",
         },
         accent: {
