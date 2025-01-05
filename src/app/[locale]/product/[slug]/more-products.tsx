@@ -27,18 +27,20 @@ const products = [
 interface MoreProductsProps {
   showHeading: boolean;
   columns: "3" | "4";
+  background: boolean;
 }
 
 export default function MoreProducts({
   showHeading,
   columns,
+  background,
 }: MoreProductsProps) {
   const [color, setColor] = useState("bg-blue-9");
 
   return (
     <>
       <Container>
-        <Flex direction="column" mb="8">
+        <Flex direction="column" className="mb-16">
           {showHeading && (
             <Heading size="9" className="font-semibold">
               Other
@@ -163,12 +165,14 @@ export default function MoreProducts({
         </Flex>
       </Container>
 
-      <Box
-        className={cn(
-          "hidden md:block absolute -z-50 top-[580] w-full h-[360] transition-all",
-          color
-        )}
-      />
+      {background && (
+        <Box
+          className={cn(
+            "hidden md:block absolute -z-50 top-[580] w-full h-[360] transition-all",
+            color
+          )}
+        />
+      )}
     </>
   );
 }

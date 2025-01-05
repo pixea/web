@@ -14,7 +14,7 @@ export default function Home() {
           gap="6"
           align="center"
           justify="center"
-          className="mt-16 md:mt-24 mb-6"
+          className="mt-16 md:mt-28 mb-6"
         >
           <Heading
             align="center"
@@ -29,7 +29,7 @@ export default function Home() {
         </Flex>
       </Container>
 
-      <MoreProducts showHeading={false} columns="4" />
+      <MoreProducts showHeading={false} columns="4" background={true} />
     </>
   );
 }

@@ -345,7 +345,7 @@ export default async function ProductPage({
 
       <Features />
 
-      <MoreProducts showHeading={true} columns="3" />
+      <MoreProducts showHeading={true} columns="3" background={false} />
     </Container>
   );
 }
