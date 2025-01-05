@@ -163,92 +163,92 @@ const Files = ({
           lastDotIndex === -1 ? fileName : fileName.substring(0, lastDotIndex);
         const extension =
           lastDotIndex === -1 ? "" : fileName.substring(lastDotIndex);
+
         const isUploading = "uppyFile" in file;
         const hasThumbnail = "hasThumbnail" in file && file.hasThumbnail;
 
         return (
-          <Box
+          <Flex
             key={file.id}
-            className="bg-gray-2 rounded-3 h-[8rem] relative text-left p-0 overflow-hidden"
+            direction="column"
+            className="ring-1 ring-gray-6 rounded-3"
           >
-            <Tooltip content={file.name}>
-              <Button
-                color="gray"
-                title={isUploading ? t("uploading") : t("open")}
-                disabled={isUploading}
-                className="relative size-full text-accent-contrast p-0 bg-gray-3"
-              >
-                {!isUploading && !hasThumbnail && (
-                  <Text
-                    color="gray"
-                    className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-lg"
-                  >
-                    {file.name.split(".").pop()?.toUpperCase()}
-                  </Text>
-                )}
-
-                {hasThumbnail && (
-                  <Image
-                    unoptimized
-                    src={`/api/s3/thumbnail/${file.s3Key}`}
-                    alt=""
-                    width={256}
-                    height={256}
-                    className="object-cover size-full"
-                    onError={(event) =>
-                      ((event.target as HTMLImageElement).style.display =
-                        "none")
-                    }
-                  />
-                )}
-                {isUploading && (
-                  <>
-                    <Progress
-                      value={file.uppyFile.progress?.percentage || 0}
-                      variant="soft"
-                      radius="none"
-                      className="absolute top-0 left-0 size-full"
-                    />
-                    <Box
-                      position="absolute"
-                      top="50%"
-                      left="50%"
-                      className="transform -translate-x-1/2 -translate-y-1/2 text-lg"
-                    >
-                      {file.uppyFile.progress?.percentage || 0} %
-                    </Box>
-                  </>
-                )}
-                <Flex
-                  position="absolute"
-                  align="center"
-                  bottom="0"
-                  left="0"
-                  right="0"
-                  py="1"
-                  px="2"
-                  className="bg-gray-surface text-gray-12 text-sm"
+            <Box className="bg-gray-2 rounded-t-3 h-[8rem] relative text-left p-0 overflow-hidden">
+              <Tooltip content={isUploading ? t("uploading") : t("open")}>
+                <Button
+                  color="gray"
+                  disabled={isUploading}
+                  className="relative size-full text-accent-contrast p-0 bg-gray-3 hover:opacity-60 transition-all"
                 >
-                  <Text className="truncate">{name}</Text>
-                  <Text>{extension}</Text>
-                </Flex>
-              </Button>
-            </Tooltip>
+                  {!isUploading && !hasThumbnail && (
+                    <Text
+                      color="gray"
+                      className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-lg mt-1"
+                    >
+                      {extension.replace(/\./g, "").toUpperCase()}
+                    </Text>
+                  )}
 
-            <Tooltip content={t("removeFile")}>
-              <IconButton
-                color="gray"
-                variant="ghost"
-                className="absolute top-0 right-0 p-2 bg-gray-a4 rounded-tl-none rounded-br-none hover:bg-red-8 m-0"
-                // TODO: Add removing of uploaded files
-                onClick={() =>
-                  isUploading ? uppy.removeFile(file.id) : () => {}
-                }
+                  {hasThumbnail && (
+                    <Image
+                      unoptimized
+                      src={`/api/s3/thumbnail/${file.s3Key}`}
+                      alt=""
+                      width={256}
+                      height={256}
+                      className="object-cover size-full"
+                      onError={(event) =>
+                        ((event.target as HTMLImageElement).style.display =
+                          "none")
+                      }
+                    />
+                  )}
+                  {isUploading && (
+                    <>
+                      <Progress
+                        value={file.uppyFile.progress?.percentage || 0}
+                        variant="soft"
+                        radius="none"
+                        className="absolute top-0 left-0 size-full"
+                      />
+                      <Box
+                        position="absolute"
+                        top="50%"
+                        left="50%"
+                        className="transform -translate-x-1/2 -translate-y-1/2 text-lg"
+                      >
+                        {file.uppyFile.progress?.percentage || 0} %
+                      </Box>
+                    </>
+                  )}
+                </Button>
+              </Tooltip>
+
+              <Tooltip content={t("removeFile")}>
+                <IconButton
+                  className="absolute top-0 right-0 ring-1 ring-gray-6 bg-panel-solid text-gray-11 rounded-tl-none rounded-br-none hover:bg-red-9 hover:text-white hover:ring-red-6 m-0"
+                  // TODO: Add removing of uploaded files
+                  onClick={() =>
+                    isUploading ? uppy.removeFile(file.id) : () => {}
+                  }
+                >
+                  <XMarkIcon className="size-5" />
+                </IconButton>
+              </Tooltip>
+            </Box>
+
+            <Tooltip content={file.name}>
+              <Flex
+                align="center"
+                py="1"
+                px="2"
+                className="bg-panel-solid border-t border-gray-6 rounded-b-3 text-gray-12 text-sm"
               >
-                <XMarkIcon className="size-5" />
-              </IconButton>
+                <Text className="truncate">{name}</Text>
+                <Text>{extension}</Text>
+              </Flex>
             </Tooltip>
-          </Box>
+          </Flex>
         );
       })}
     </Grid>
