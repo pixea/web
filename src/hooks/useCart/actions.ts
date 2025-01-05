@@ -30,12 +30,18 @@ export const getCurrentCartItemCountAction = async () => {
 };
 
 export const getCurrentCartContentAction = async () => {
+  console.log("Going to get cart");
+
   try {
     const newestCart = await getNewestCartAction();
 
     if (newestCart) {
+      console.log("Already has cart", newestCart);
+
       return newestCart;
     }
+
+    console.log("Starting new cart");
 
     return startNewCartAction();
   } catch (e) {
@@ -153,12 +159,10 @@ const getNewestCartAction = async () => {
       )?.content
     : undefined;
 
-  const userCartTime = userCart?.saved
-    ? DateTime.fromISO(userCart.saved)
-    : DateTime.fromISO("1970-01-01T00:00:00.000Z");
+  const userCartTime = userCart?.saved ? DateTime.fromISO(userCart.saved) : 0;
   const guestCartTime = guestCart?.saved
     ? DateTime.fromISO(guestCart.saved)
-    : DateTime.fromISO("1970-01-01T00:00:00.000Z");
+    : 0;
 
   if (userCartTime && userCartTime > guestCartTime) {
     return { content: userCart!, source: "user" as const };
