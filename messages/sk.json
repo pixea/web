@@ -206,8 +206,20 @@
   },
   "Footer": {
     "home": "Domov",
+    "products": "Produkty",
+    "shopping": {
+      "title": "Nakupovanie",
+      "delivery": "Dodanie a platba",
+      "help": "Pomoc a kontakt",
+      "account": "Môj účet"
+    },
+    "contact": {
+      "title": "Kontakt",
+      "description": "Veľmi radi zodpovieme akékoľvek vaše otázky, či pomôžeme alebo poradíme."
+    },
+    "partners": "Partneri",
     "privacy": "Ochrana osobných údajov",
-    "conditions": "Obchodné podmienky",
+    "terms": "Obchodné podmienky",
     "rights": "Všetky práva vyhradené."
   },
   "404": {
