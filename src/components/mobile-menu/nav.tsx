@@ -13,7 +13,7 @@ import MobileMenu from "./menu";
 const MobileNavigation = ({
   session,
   items,
-  cartItemCount,
+  // cartItemCount,
 }: {
   session?: Session | null;
   items: readonly MenuItem[];

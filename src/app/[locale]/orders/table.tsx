@@ -2,7 +2,7 @@
 
 import { useActionState } from "react";
 import { PencilIcon, TrashIcon } from "@heroicons/react/24/solid";
-import { Badge, Button, Flex, Table } from "@radix-ui/themes";
+import { Button, Flex, Table } from "@radix-ui/themes";
 import { useLocale, useTranslations } from "next-intl";
 import Link from "next/link";
 import { DateTime } from "luxon";
@@ -41,16 +41,16 @@ const OrderTable = ({ orders }: { orders: Order[] }) => {
         <Table.Body>
           {orders.map((order) => (
             <Table.Row key={order.id} align="center">
-              <Table.Cell>{order.name}</Table.Cell>
-              <Table.Cell>{order.company}</Table.Cell>
+              {/* <Table.Cell>{order.name}</Table.Cell>
+              <Table.Cell>{order.company}</Table.Cell> */}
               <Table.Cell>{order.email}</Table.Cell>
               <Table.Cell>
-                {order.role === "admin" && (
+                {/* {order.role === "admin" && (
                   <Badge color="yellow">{t("admin")}</Badge>
                 )}
                 {order.role === "customer" && (
                   <Badge color="gray">{t("customer")}</Badge>
-                )}
+                )} */}
               </Table.Cell>
               <Table.Cell>
                 {DateTime.fromSQL(order.created, {

@@ -64,6 +64,7 @@ const MobileAccountMenu = ({
                   asChild
                 >
                   <Link
+                    // @ts-expect-error Dynamic path - one day...
                     href={subItem.href}
                     onClick={onInteraction}
                     className="gap-1.5"

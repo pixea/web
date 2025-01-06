@@ -1,5 +1,5 @@
 import { TextArea } from "@radix-ui/themes";
-import { BaseProductConfiguration } from "./page";
+import { BaseProductConfiguration } from "./form";
 
 export type TextAreaConfiguration = BaseProductConfiguration & {
   type: "textarea";

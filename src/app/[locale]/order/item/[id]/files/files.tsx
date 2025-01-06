@@ -5,7 +5,6 @@ import { Flex, Grid, Text, VisuallyHidden } from "@radix-ui/themes";
 import Uppy, { Meta } from "@uppy/core";
 import { useUppyState, useUppyEvent } from "@uppy/react";
 import AwsS3, { type AwsBody } from "@uppy/aws-s3";
-import { PlusIcon } from "@heroicons/react/24/solid";
 import { useLocale, useTranslations } from "next-intl";
 import type { Locale as UppyLocale } from "@uppy/utils/lib/Translator";
 

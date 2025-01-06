@@ -1,6 +1,6 @@
 import { Flex, RadioCards, Text } from "@radix-ui/themes";
-import { BaseProductConfiguration } from "./page";
 import { useFormatter } from "next-intl";
+import { BaseProductConfiguration } from "./form";
 
 export type SizeConfiguration = BaseProductConfiguration & {
   type: "size";

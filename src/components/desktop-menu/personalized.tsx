@@ -14,7 +14,7 @@ import useAuthUrl from "@/hooks/useAuthUrl";
 
 const Personalized = ({
   session,
-  cartItemCount,
+  // cartItemCount,
 }: {
   session?: Session | null;
   cartItemCount: number;

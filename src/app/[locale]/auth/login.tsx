@@ -8,13 +8,14 @@ import ErrorAlert from "./error-alert";
 import { useTranslations } from "next-intl";
 import { useActionState } from "react";
 import { useSearchParams } from "next/navigation";
+import { ActionState } from "@/lib/utils";
 
 const LogIn = ({ email }: { email?: string }) => {
   const t = useTranslations("Auth");
-  const [state, formAction, pending] = useActionState(sendCodeAction, {
-    result: "",
-    message: "",
-  });
+  const [state, formAction, pending] = useActionState(
+    sendCodeAction,
+    {} as ActionState
+  );
   const params = useSearchParams();
   const redirectUrl = params.get("redirect");
 

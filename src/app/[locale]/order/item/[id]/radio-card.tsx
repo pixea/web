@@ -1,6 +1,6 @@
 import { Flex, RadioCards, Text } from "@radix-ui/themes";
-import { BaseProductConfiguration } from "./page";
 import { useFormatter, useLocale } from "next-intl";
+import { BaseProductConfiguration } from "./form";
 
 export type RadioCardConfiguration = BaseProductConfiguration & {
   type: "radio-card";

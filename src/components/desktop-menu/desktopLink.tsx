@@ -14,6 +14,7 @@ const DesktopLink = forwardRef<
   return (
     <NavigationMenu.Link asChild active={isActive}>
       <RoutingLink
+        // @ts-expect-error Dynamic path - one day...
         href={href}
         className={cn("NavigationMenuLink", className)}
         {...props}

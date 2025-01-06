@@ -1,12 +1,11 @@
 "use client";
 
-import { Button, Flex, Grid, Heading, Text } from "@radix-ui/themes";
+import { Button, Flex, Heading, Text } from "@radix-ui/themes";
 import BottomBar from "@/components/bottomBar";
 import { useFormatter, useTranslations } from "next-intl";
 import { useState } from "react";
-import RadioCardRenderer, { RadioCardConfiguration } from "./radio-card";
+import { RadioCardConfiguration } from "./radio-card";
 import dynamic from "next/dynamic";
-import TextAreaRenderer from "./textarea";
 import { Session } from "next-auth";
 import { ShoppingCart } from "@/db/validation";
 import useCart from "@/hooks/useCart/useCart";
@@ -14,7 +13,6 @@ import FilesSkeleton from "./files/skeleton";
 import {
   AdjustmentsHorizontalIcon,
   CloudArrowUpIcon,
-  DocumentArrowUpIcon,
 } from "@heroicons/react/24/outline";
 
 export type BaseProductConfiguration = {
@@ -116,10 +114,10 @@ const Files = dynamic(() => import("./files/files"), {
   loading: () => <FilesSkeleton />,
 });
 
-const renderers = {
-  "radio-card": RadioCardRenderer,
-  textarea: TextAreaRenderer,
-};
+// const renderers = {
+//   "radio-card": RadioCardRenderer,
+//   textarea: TextAreaRenderer,
+// };
 
 interface Props {
   session?: Session | null;
@@ -133,7 +131,7 @@ const Form = ({ session, initialCart, itemId }: Props) => {
 
   const { cart, addFileToCartItem, isPending } = useCart(initialCart);
 
-  const [price, setPrice] = useState(0);
+  const [price] = useState(0);
 
   const item = cart.items?.find((item) => item.id === itemId);
 
