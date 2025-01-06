@@ -62,6 +62,8 @@
     "title": "Photo",
     "back": "Back",
     "files": "Upload files",
+    "upload": "Drag & drop or click to add files",
+    "size": "Maximum file size",
     "add": "Add",
     "configuration": "Choose options",
     "total": "Total",

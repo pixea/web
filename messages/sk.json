@@ -62,6 +62,8 @@
     "title": "Fotografia",
     "back": "Späť",
     "files": "Nahrajte súbory",
+    "upload": "Pridajte súbory kliknutím alebo pretiahnutím sem",
+    "size": "Maximálna veľkosť súboru",
     "add": "Pridať",
     "configuration": "Zvoľte možnosti",
     "total": "Celkom",

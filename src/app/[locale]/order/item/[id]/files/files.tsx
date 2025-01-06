@@ -1,7 +1,7 @@
 "use client";
 
 import { useCallback, useState } from "react";
-import { Flex, Grid, Text, VisuallyHidden } from "@radix-ui/themes";
+import { Flex, Grid, Separator, Text, VisuallyHidden } from "@radix-ui/themes";
 import Uppy, { Meta } from "@uppy/core";
 import { useUppyState, useUppyEvent } from "@uppy/react";
 import AwsS3, { type AwsBody } from "@uppy/aws-s3";
@@ -9,6 +9,7 @@ import { useLocale, useTranslations } from "next-intl";
 import type { Locale as UppyLocale } from "@uppy/utils/lib/Translator";
 
 import {
+  formatFileSize,
   MAX_FILE_SIZE,
   MAX_UNAUTHENTICATED_FILE_SIZE,
   SUPPORTED_FILE_TYPES,
@@ -23,6 +24,7 @@ import { OrderItemFilePayload, ShoppingCartItem } from "@/db/validation";
 import combineFiles from "./combineFiles";
 import FileItem from "./fileItem";
 import { PlusCircleIcon } from "@heroicons/react/24/outline";
+import { InformationCircleIcon } from "@heroicons/react/24/solid";
 
 const uppyLocales: Record<Locales, UppyLocale | undefined> = {
   en: undefined,
@@ -44,7 +46,7 @@ const Files = ({
   isAuthenticated,
   addFileToCartItem,
 }: Props) => {
-  const t = useTranslations("Order");
+  const t = useTranslations("OrderItem");
   const locale = useLocale() as Locales;
 
   const [uppy] = useState<Uppy<UppyMetadata, AwsBody>>(() =>
@@ -139,11 +141,26 @@ const Files = ({
         className="flex items-center justify-center border border-dashed border-gray-8 p-6 rounded-3 text-gray-11 cursor-pointer hover:bg-gray-3"
         as="label"
       >
-        <Flex direction="column" align="center" gap="2">
+        <Flex
+          direction="column"
+          align="center"
+          gap="4"
+          className="max-w-sm text-center"
+        >
           <PlusCircleIcon className="size-10" />
-          <Text color="gray" align="center" className="max-w-xs">
-            Pridajte súbory kliknutím alebo ich pretiahnite hocikde na stránku
-          </Text>
+          <Text color="gray">{t("upload")}</Text>
+
+          <Flex direction="column" align="center" gap="1">
+            <Text color="gray" size="1" className="flex items-center gap-1.5">
+              <InformationCircleIcon className="size-4" /> {t("size")}:{" "}
+              {formatFileSize(
+                isAuthenticated ? MAX_FILE_SIZE : MAX_UNAUTHENTICATED_FILE_SIZE
+              )}
+            </Text>
+            <Text color="gray" size="1">
+              {SUPPORTED_FILE_TYPES.slice(1).join(", ")}
+            </Text>
+          </Flex>
         </Flex>
 
         <VisuallyHidden>{t("add")}</VisuallyHidden>
