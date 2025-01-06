@@ -10,7 +10,7 @@ const AuthVerifyPage = async () => {
   const cookieStore = await cookies();
 
   return (
-    <Container size="1" className="w-full justify-center">
+    <Container size="1" className="w-full justify-center" mt="8">
       <Card>
         <Flex direction="column" gap="4" className="p-6 px-2.5 xs:px-4 sm:px-6">
           <Heading size="7">{t("title")}</Heading>
