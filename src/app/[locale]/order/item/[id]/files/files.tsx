@@ -79,8 +79,6 @@ const Files = ({
     // TODO: Add error handling
     if (!file) return;
 
-    console.log("Got", { file, response });
-
     const s3KeyOriginal =
       (response.body?.key as string) ||
       decodeURI(new URL(response.uploadURL!).pathname);

@@ -58,7 +58,7 @@ export const addFileToCartItemAction = async (
   try {
     metadata = await createThumbnail(file, !!session?.user?.id);
   } catch (e) {
-    console.warn(`Could not generate thumbnail for /original/${file.s3Key}`, e);
+    console.warn(`Could not generate thumbnail for original/${file.s3Key}`, e);
   }
 
   try {

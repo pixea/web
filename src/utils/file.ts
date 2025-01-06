@@ -1,12 +1,12 @@
 import type { Meta } from "@uppy/core";
 
-export const MAX_UNAUTHENTICATED_FILE_SIZE = 1024 * 1024 * 100; // 100MB
+export const MAX_UNAUTHENTICATED_FILE_SIZE = 1024 * 1024 * 32; // 32MB
 export const MAX_FILE_SIZE = 1024 * 1024 * 1024 * 10; // 10GB
 
-export const MAX_UNAUTHENTICATED_THUMBNAIL_SIZE = 1024 * 1024 * 16; // 16MB
-export const MAX_THUMBNAIL_SIZE = 1024 * 1024 * 128; // 128MB
+export const MAX_UNAUTHENTICATED_THUMBNAIL_SIZE = 1024 * 1024 * 12; // 16MB
+export const MAX_THUMBNAIL_SIZE = 1024 * 1024 * 64; // 64MB
 
-export const MULTIPART_THRESHOLD = 1024 * 1024 * 128; // 128MB
+export const MULTIPART_THRESHOLD = 1024 * 1024 * 48; // 48MB
 
 export interface UppyMetadata extends Meta {
   cartId: string;

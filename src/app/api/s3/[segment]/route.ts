@@ -268,8 +268,6 @@ export async function DELETE(
     const uploadId = searchParams.get("uploadId");
     const key = searchParams.get("key");
 
-    console.log({ uploadId, key });
-
     if (typeof uploadId !== "string") {
       return new Response("Missing upload ID", { status: 400 });
     }
