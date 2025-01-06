@@ -1,7 +1,7 @@
 "use client";
 
 import { useCallback, useState } from "react";
-import { Grid, Text, VisuallyHidden } from "@radix-ui/themes";
+import { Flex, Grid, Text, VisuallyHidden } from "@radix-ui/themes";
 import Uppy, { Meta } from "@uppy/core";
 import { useUppyState, useUppyEvent } from "@uppy/react";
 import AwsS3, { type AwsBody } from "@uppy/aws-s3";
@@ -23,6 +23,7 @@ import { RestrictionError } from "@uppy/core/lib/Restricter";
 import { OrderItemFilePayload, ShoppingCartItem } from "@/db/validation";
 import combineFiles from "./combineFiles";
 import FileItem from "./fileItem";
+import { PlusCircleIcon } from "@heroicons/react/24/outline";
 
 const uppyLocales: Record<Locales, UppyLocale | undefined> = {
   en: undefined,
@@ -134,19 +135,30 @@ const Files = ({
   );
 
   return (
-    <Grid
-      columns={{
-        initial: "2",
-        xs: "3",
-        sm: "4",
-        md: "5",
-        lg: "6",
-        xl: "7",
-      }}
-      gap="4"
-      width="full"
-    >
+    <Flex direction="column" gap="4">
       <Text
+        className="flex items-center justify-center border border-dashed border-gray-8 p-6 rounded-3 text-gray-11 cursor-pointer hover:bg-gray-3"
+        as="label"
+      >
+        <Flex direction="column" align="center" gap="2">
+          <PlusCircleIcon className="size-10" />
+          <Text color="gray" align="center" className="max-w-xs">
+            Pridajte súbory kliknutím alebo ich pretiahnite hocikde na stránku
+          </Text>
+        </Flex>
+
+        <VisuallyHidden>{t("add")}</VisuallyHidden>
+
+        <input
+          type="file"
+          multiple
+          accept={SUPPORTED_FILE_TYPES.join(",")}
+          onChange={onFileInputChange}
+          className="hidden"
+        />
+      </Text>
+
+      {/* <Text
         as="label"
         className="flex justify-center items-center bg-gray-3 rounded-3 h-[8rem] p-0 cursor-pointer hover:bg-gray-6"
       >
@@ -159,30 +171,41 @@ const Files = ({
           onChange={onFileInputChange}
           className="hidden"
         />
-      </Text>
-
-      {combinedFiles.map((file) => (
-        <FileItem
-          key={file.id}
-          id={file.id}
-          uppyFileId={"uppyFile" in file ? file.uppyFile?.id : undefined}
-          fullName={file.name}
-          size={file.size}
-          s3Key={"s3Key" in file ? file.s3Key : undefined}
-          progressPercentage={
-            "uppyFile" in file ? file.uppyFile.progress.percentage : undefined
-          }
-          progressBytes={
-            "uppyFile" in file
-              ? file.uppyFile.progress.bytesUploaded || 0
-              : undefined
-          }
-          isUploading={"uppyFile" in file}
-          hasThumbnail={"hasThumbnail" in file && file.hasThumbnail}
-          onRemoveFile={onRemoveFile}
-        />
-      ))}
-    </Grid>
+      </Text> */}
+      <Grid
+        columns={{
+          initial: "2",
+          xs: "3",
+          sm: "5",
+          md: "3",
+          lg: "4",
+        }}
+        gap="4"
+        width="full"
+      >
+        {combinedFiles.map((file) => (
+          <FileItem
+            key={file.id}
+            id={file.id}
+            uppyFileId={"uppyFile" in file ? file.uppyFile?.id : undefined}
+            fullName={file.name}
+            size={file.size}
+            s3Key={"s3Key" in file ? file.s3Key : undefined}
+            progressPercentage={
+              "uppyFile" in file ? file.uppyFile.progress.percentage : undefined
+            }
+            progressBytes={
+              "uppyFile" in file
+                ? file.uppyFile.progress.bytesUploaded || 0
+                : undefined
+            }
+            isUploading={"uppyFile" in file}
+            hasThumbnail={"hasThumbnail" in file && file.hasThumbnail}
+            onRemoveFile={onRemoveFile}
+          />
+        ))}
+      </Grid>
+    </Flex>
   );
 };
 

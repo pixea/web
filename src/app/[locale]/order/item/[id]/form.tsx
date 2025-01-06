@@ -140,16 +140,11 @@ const Form = ({ session, initialCart, itemId }: Props) => {
   return (
     <>
       <Flex direction={{ initial: "column", md: "row" }} gap="8">
-        <Flex direction="column" gap="4" mt="5" className="w-full md:w-2/3">
+        <Flex direction="column" gap="4" mt="5" className="w-full">
           <Flex direction="column">
             <Heading as="h2" size="5" className="flex items-center gap-2">
               <CloudArrowUpIcon className="size-6" /> {t("files")}
             </Heading>
-
-            <Text color="gray">
-              Nahrajte súbory stlačením tlačidla "+" alebo ich pustite hocikde
-              na stránke.
-            </Text>
           </Flex>
 
           <Files
@@ -161,7 +156,7 @@ const Form = ({ session, initialCart, itemId }: Props) => {
           />
         </Flex>
 
-        <Flex direction="column" gap="4" mt="5" className="w-full">
+        <Flex direction="column" gap="4" mt="5" className="w-full md:w-2/3">
           <Heading as="h2" size="5" className="flex items-center gap-2">
             <AdjustmentsHorizontalIcon className="size-6" />{" "}
             {t("configuration")}
