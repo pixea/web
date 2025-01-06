@@ -18,7 +18,7 @@ export default async function OrderPage() {
         gap="4"
         wrap="wrap"
       >
-        <Heading size="7">{t("title")}</Heading>
+        <Heading size="8">{t("title")}</Heading>
 
         <Button asChild color="blue" variant="solid" size="3">
           <Link href="/order/selection" className="flex items-center gap-1.5">
