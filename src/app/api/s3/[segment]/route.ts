@@ -46,20 +46,20 @@ export async function POST(
       return new Response("File too large", { status: 400 });
     }
 
-    const baseKey = `${session?.user.id || "public"}/${cartId}/${crypto.randomUUID()}/${fileName}`;
+    const key = `original/${session?.user.id || "public"}/${cartId}/${crypto.randomUUID()}/${fileName}`;
 
     const signedUrl = await getSignedUrl(
       getS3Client(),
       new PutObjectCommand({
         Bucket: process.env.S3_BUCKET!,
-        Key: `original/${baseKey}`,
+        Key: key,
         ContentType: contentType,
       }),
       { expiresIn: SIGNATURE_EXPIRATION }
     );
 
     return Response.json(
-      { url: signedUrl, key: baseKey, method: "PUT" },
+      { url: signedUrl, key, method: "PUT" },
       {
         headers: { "Content-Type": "application/json" },
       }
@@ -89,11 +89,11 @@ export async function POST(
       return new Response("File too large", { status: 400 });
     }
 
-    const baseKey = `${session?.user.id || "public"}/${cartId}/${crypto.randomUUID()}/${fileName}`;
+    const key = `original/${session?.user.id || "public"}/${cartId}/${crypto.randomUUID()}/${fileName}`;
 
     const params = {
       Bucket: process.env.S3_BUCKET!,
-      Key: `original/${baseKey}`,
+      Key: key,
       ContentType: contentType,
       Metadata: metadata,
     };
@@ -104,7 +104,7 @@ export async function POST(
       const data = await getS3Client().send(command);
 
       return Response.json(
-        { key: baseKey, uploadId: data.UploadId },
+        { key, uploadId: data.UploadId },
         {
           headers: { "Content-Type": "application/json" },
         }
@@ -145,7 +145,7 @@ export async function POST(
       );
 
       return Response.json(
-        { message: "Multipart upload completed" },
+        { message: "Multipart upload completed", key },
         { status: 200 }
       );
     } catch (e) {
@@ -267,6 +267,8 @@ export async function DELETE(
   if (segment === "multipart") {
     const uploadId = searchParams.get("uploadId");
     const key = searchParams.get("key");
+
+    console.log({ uploadId, key });
 
     if (typeof uploadId !== "string") {
       return new Response("Missing upload ID", { status: 400 });

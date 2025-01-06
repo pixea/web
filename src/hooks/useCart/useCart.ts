@@ -4,13 +4,13 @@ import { addFileToCartItemAction } from "./actions";
 
 const useCart = (initialCartState: ShoppingCart) => {
   const [cart, setCart] = useState<ShoppingCart>(initialCartState);
-  const [isPending, setIsPending] = useState(false);
+  const [pendingActions, setPendingActions] = useState(0);
 
   const addFileToCartItem = async (
     cartItemId: string,
     file: OrderItemFilePayload
   ) => {
-    setIsPending(true);
+    setPendingActions((actions) => actions + 1);
     try {
       const updatedCart = await addFileToCartItemAction(cartItemId, file);
 
@@ -22,14 +22,14 @@ const useCart = (initialCartState: ShoppingCart) => {
       console.error("Failed to update cart:", error);
       // Handle error appropriately (rollback optimistic update if necessary)
     } finally {
-      setIsPending(false);
+      setPendingActions((actions) => actions - 1);
     }
   };
 
   return {
     cart,
     addFileToCartItem,
-    isPending,
+    isPending: pendingActions > 0,
   };
 };
 

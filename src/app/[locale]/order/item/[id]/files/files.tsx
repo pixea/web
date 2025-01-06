@@ -79,10 +79,13 @@ const Files = ({
     // TODO: Add error handling
     if (!file) return;
 
-    const s3Key = new URL(response.uploadURL!).pathname.replace(
-      "/original/",
-      ""
-    );
+    console.log("Got", { file, response });
+
+    const s3KeyOriginal =
+      (response.body?.key as string) ||
+      decodeURI(new URL(response.uploadURL!).pathname);
+
+    const s3Key = s3KeyOriginal.replace("original/", "");
 
     // TODO: Add error handling
     addFileToCartItem(itemId, {

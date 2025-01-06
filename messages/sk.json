@@ -65,8 +65,7 @@
     "add": "Pridať",
     "configuration": "Konfigurácia",
     "total": "Celkom",
-    "cancel": "Zrušiť",
-    "confirm": "Potvrdiť"
+    "save": "Uložiť"
   },
   "Products": {
     "title": "Administrácia produktov",

@@ -126,7 +126,7 @@ const Form = ({ session, initialCart, itemId }: Props) => {
   const t = useTranslations("OrderItem");
   const format = useFormatter();
 
-  const { cart, addFileToCartItem } = useCart(initialCart);
+  const { cart, addFileToCartItem, isPending } = useCart(initialCart);
 
   const [price, setPrice] = useState(0);
 
@@ -179,20 +179,13 @@ const Form = ({ session, initialCart, itemId }: Props) => {
 
         <Flex direction="row" gap="2">
           <Button
-            variant="solid"
-            color="gray"
-            size="3"
-            className="bg-gray-4 text-gray-11"
-          >
-            {t("cancel")}
-          </Button>
-          <Button
             type="submit"
             variant="solid"
             size="3"
             className="font-semibold"
+            disabled={isPending}
           >
-            {t("confirm")}
+            {t("save")}
           </Button>
         </Flex>
       </BottomBar>

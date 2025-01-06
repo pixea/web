@@ -65,8 +65,7 @@
     "add": "Add",
     "configuration": "Configuration",
     "total": "Total",
-    "cancel": "Cancel",
-    "confirm": "Confirm"
+    "save": "Save"
   },
   "Products": {
     "title": "Product administration",

@@ -77,10 +77,11 @@ export const s3PluginOptions = {
   },
 
   async abortMultipartUpload(_file, { key, uploadId, signal }) {
-    const filename = encodeURIComponent(key);
-    const uploadIdEnc = encodeURIComponent(uploadId);
     const response = await fetch(
-      `/api/s3/multipart/?uploadId=${uploadIdEnc}&key=${filename}`,
+      `/api/s3/multipart?${new URLSearchParams({
+        key,
+        uploadId,
+      })}`,
       {
         method: "DELETE",
         signal,
@@ -102,35 +103,36 @@ export const s3PluginOptions = {
       );
     }
 
-    const filename = encodeURIComponent(key);
     const response = await fetch(
-      `/api/s3/multipart?uploadId=${uploadId}&partNumber=${partNumber}&key=${filename}`,
+      `/api/s3/multipart?${new URLSearchParams({
+        key,
+        uploadId,
+        partNumber: partNumber.toString(),
+      })}`,
       { signal }
     );
 
     if (!response.ok)
       throw new Error("Unsuccessful request", { cause: response });
 
-    const data = await response.json();
-
-    return data;
+    return response.json();
   },
 
   async listParts(_file, { key, uploadId, signal }) {
     signal?.throwIfAborted();
 
-    const filename = encodeURIComponent(key);
     const response = await fetch(
-      `/api/s3/multipart-list?uploadId=${uploadId}&key=${filename}`,
+      `/api/s3/multipart-list?${new URLSearchParams({
+        key,
+        uploadId,
+      })}`,
       { signal }
     );
 
     if (!response.ok)
       throw new Error("Unsuccessful request", { cause: response });
 
-    const data = await response.json();
-
-    return data;
+    return response.json();
   },
 
   async completeMultipartUpload(_file, { key, uploadId, parts, signal }) {
@@ -153,8 +155,6 @@ export const s3PluginOptions = {
     if (!response.ok)
       throw new Error("Unsuccessful request", { cause: response });
 
-    const data = await response.json();
-
-    return data;
+    return response.json();
   },
 } satisfies AwsS3MultipartOptions<Meta, Record<string, unknown>>;
