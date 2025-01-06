@@ -144,11 +144,14 @@ const Files = ({
         <Flex
           direction="column"
           align="center"
-          gap="4"
+          gap="5"
           className="max-w-sm text-center"
+          my="2"
         >
-          <PlusCircleIcon className="size-10" />
-          <Text color="gray">{t("upload")}</Text>
+          <Flex direction="column" align="center" gap="3">
+            <PlusCircleIcon className="size-10" />
+            <Text color="gray">{t("upload")}</Text>
+          </Flex>
 
           <Flex direction="column" align="center" gap="1">
             <Text color="gray" size="1" className="flex items-center gap-1.5">
