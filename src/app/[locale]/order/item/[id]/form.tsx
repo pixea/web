@@ -161,7 +161,7 @@ const Form = ({ session, initialCart, itemId }: Props) => {
           />
         </Flex>
 
-        <Flex direction="column" gap="4" mt="7" className="w-full">
+        <Flex direction="column" gap="4" mt="5" className="w-full">
           <Heading as="h2" size="5" className="flex items-center gap-2">
             <AdjustmentsHorizontalIcon className="size-6" />{" "}
             {t("configuration")}
