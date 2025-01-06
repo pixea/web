@@ -20,9 +20,9 @@ const OrderItemPage = async ({
   const cart = await getCurrentCartContentAction();
 
   return (
-    <Container className="w-full gap-4" mt="4">
+    <Container className="w-full gap-4" mt="6">
       <Flex direction="row" justify="between" align="center">
-        <Heading size="7">{t("title")}</Heading>
+        <Heading size="8">{t("title")}</Heading>
 
         <Button asChild color="gray" variant="ghost">
           <Link href="/order" className="flex items-center">

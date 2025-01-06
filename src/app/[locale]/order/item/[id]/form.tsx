@@ -1,6 +1,6 @@
 "use client";
 
-import { Button, Flex, Heading, Text } from "@radix-ui/themes";
+import { Button, Flex, Grid, Heading, Text } from "@radix-ui/themes";
 import BottomBar from "@/components/bottomBar";
 import { useFormatter, useTranslations } from "next-intl";
 import { useState } from "react";
@@ -11,6 +11,11 @@ import { Session } from "next-auth";
 import { ShoppingCart } from "@/db/validation";
 import useCart from "@/hooks/useCart/useCart";
 import FilesSkeleton from "./files/skeleton";
+import {
+  AdjustmentsHorizontalIcon,
+  CloudArrowUpIcon,
+  DocumentArrowUpIcon,
+} from "@heroicons/react/24/outline";
 
 export type BaseProductConfiguration = {
   id: string;
@@ -134,27 +139,36 @@ const Form = ({ session, initialCart, itemId }: Props) => {
 
   return (
     <>
-      <Flex direction="column" gap="3" width="full" mt="4">
-        <Heading as="h2" size="5">
-          {t("files")}
-        </Heading>
+      <Flex direction={{ initial: "column", md: "row" }} gap="8">
+        <Flex direction="column" gap="4" mt="5" className="w-full md:w-2/3">
+          <Flex direction="column">
+            <Heading as="h2" size="5" className="flex items-center gap-2">
+              <CloudArrowUpIcon className="size-6" /> {t("files")}
+            </Heading>
 
-        <Files
-          cartId={cart.id}
-          itemId={itemId}
-          files={item?.files}
-          isAuthenticated={!!session?.user}
-          addFileToCartItem={addFileToCartItem}
-        />
-      </Flex>
+            <Text color="gray">
+              Nahrajte súbory stlačením tlačidla "+" alebo ich pustite hocikde
+              na stránke.
+            </Text>
+          </Flex>
 
-      <Flex direction="column" gap="3" width="full" mt="4">
-        <Heading as="h2" size="5">
-          {t("configuration")}
-        </Heading>
+          <Files
+            cartId={cart.id}
+            itemId={itemId}
+            files={item?.files}
+            isAuthenticated={!!session?.user}
+            addFileToCartItem={addFileToCartItem}
+          />
+        </Flex>
 
-        <Flex direction="column" gap="4" width="full">
-          {/* {configuration.map((config) => (
+        <Flex direction="column" gap="4" mt="7" className="w-full">
+          <Heading as="h2" size="5" className="flex items-center gap-2">
+            <AdjustmentsHorizontalIcon className="size-6" />{" "}
+            {t("configuration")}
+          </Heading>
+
+          <Flex direction="column" gap="4" width="full">
+            {/* {configuration.map((config) => (
             <Flex direction="column" gap="2" key={config.id}>
               <Heading as="h3" size="3">
                 {config.name[locale]}
@@ -166,6 +180,7 @@ const Form = ({ session, initialCart, itemId }: Props) => {
               })}
             </Flex>
           ))} */}
+          </Flex>
         </Flex>
       </Flex>
 

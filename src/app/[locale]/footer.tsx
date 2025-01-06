@@ -149,12 +149,18 @@ const Footer = () => {
                   gap="7"
                 >
                   {/* Packeta */}
-                  <Image
-                    src="/other/delivery/packeta.svg"
-                    width="102"
-                    height="40"
-                    alt="Packeta logo"
-                  />
+                  <RadixLink
+                    href="https://www.packeta.sk/"
+                    target="_blank"
+                    className="hover:opacity-75 transition-all"
+                  >
+                    <Image
+                      src="/other/delivery/packeta.svg"
+                      width="102"
+                      height="40"
+                      alt="Packeta logo"
+                    />
+                  </RadixLink>
 
                   <Separator
                     orientation={{ initial: "horizontal", sm: "vertical" }}
@@ -162,29 +168,41 @@ const Footer = () => {
                   />
 
                   {/* DPD */}
-                  <Flex direction="row" gap="5">
-                    <Image
-                      src="/other/delivery/dpd_light.svg"
-                      width="80"
-                      height="40"
-                      alt="DPD logo"
-                      className="dark:hidden"
-                    />
+                  <Flex direction="row" align="center" gap="5">
+                    <RadixLink
+                      href="https://www.dpd.com/"
+                      target="_blank"
+                      className="hover:opacity-75 transition-all"
+                    >
+                      <Image
+                        src="/other/delivery/dpd_light.svg"
+                        width="80"
+                        height="40"
+                        alt="DPD logo"
+                        className="dark:hidden"
+                      />
 
-                    <Image
-                      src="/other/delivery/dpd_dark.svg"
-                      width="80"
-                      height="40"
-                      alt="DPD logo"
-                      className="hidden dark:block"
-                    />
+                      <Image
+                        src="/other/delivery/dpd_dark.svg"
+                        width="80"
+                        height="40"
+                        alt="DPD logo"
+                        className="hidden dark:block"
+                      />
+                    </RadixLink>
 
-                    <Image
-                      src="/other/delivery/dpd-pickup.svg"
-                      width="40"
-                      height="40"
-                      alt="DPD Pickup logo"
-                    />
+                    <RadixLink
+                      href="https://www.dpd.com/sk/sk/pickup/"
+                      target="_blank"
+                      className="hover:opacity-75 transition-all"
+                    >
+                      <Image
+                        src="/other/delivery/dpd-pickup.svg"
+                        width="40"
+                        height="40"
+                        alt="DPD Pickup logo"
+                      />
+                    </RadixLink>
                   </Flex>
 
                   <Separator
@@ -193,29 +211,41 @@ const Footer = () => {
                   />
 
                   {/* SPS */}
-                  <Flex direction="row" gap="5">
-                    <Image
-                      src="/other/delivery/sps_light.svg"
-                      width="80"
-                      height="40"
-                      alt="SPS logo"
-                      className="dark:hidden"
-                    />
+                  <Flex direction="row" align="center" gap="5">
+                    <RadixLink
+                      href="https://www.sps-sro.sk/"
+                      target="_blank"
+                      className="hover:opacity-75 transition-all"
+                    >
+                      <Image
+                        src="/other/delivery/sps_light.svg"
+                        width="86"
+                        height="40"
+                        alt="SPS logo"
+                        className="dark:hidden"
+                      />
 
-                    <Image
-                      src="/other/delivery/sps_dark.svg"
-                      width="80"
-                      height="40"
-                      alt="SPS logo"
-                      className="hidden dark:block"
-                    />
+                      <Image
+                        src="/other/delivery/sps_dark.svg"
+                        width="86"
+                        height="40"
+                        alt="SPS logo"
+                        className="hidden dark:block"
+                      />
+                    </RadixLink>
 
-                    <Image
-                      src="/other/delivery/balikovo.svg"
-                      width="40"
-                      height="40"
-                      alt="SPS balikovo logo"
-                    />
+                    <RadixLink
+                      href="https://www.sps-sro.sk/co-je-balikovo/"
+                      target="_blank"
+                      className="hover:opacity-75 transition-all"
+                    >
+                      <Image
+                        src="/other/delivery/balikovo.svg"
+                        width="40"
+                        height="40"
+                        alt="SPS balikovo logo"
+                      />
+                    </RadixLink>
                   </Flex>
                 </Flex>
               </Flex>
