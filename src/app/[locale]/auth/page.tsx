@@ -41,7 +41,7 @@ const AuthPage = async () => {
         </Flex>
       ) : undefined}
 
-      <Card className="w-full mt-4" style={{ contain: "none" }}>
+      <Card className="w-full mt-10" style={{ contain: "none" }}>
         <Flex
           direction="column"
           gap="4"
