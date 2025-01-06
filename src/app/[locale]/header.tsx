@@ -35,7 +35,7 @@ const Header = async () => {
       align="center"
       gap="3"
       p="4"
-      className="bg-gray-1 z-10"
+      className="bg-gray-2 z-10"
       asChild
     >
       <header>
