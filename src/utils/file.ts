@@ -48,3 +48,11 @@ export const SUPPORTED_THUMBNAIL_TYPES = [
   "application/svg+xml",
   ...HEIC_TYPES,
 ];
+
+export function formatFileSize(bytes: number): string {
+  if (bytes === 0) return "0 B"; // Handle 0 bytes case
+  const sizes = ["B", "KB", "MB", "GB", "TB"];
+  const i = Math.floor(Math.log(bytes) / Math.log(1024)); // Calculate size index
+  const size = bytes / Math.pow(1024, i); // Divide by the appropriate unit
+  return `${size.toFixed(1)} ${sizes[i]}`; // Format to 2 decimal places
+}

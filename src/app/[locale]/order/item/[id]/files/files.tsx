@@ -11,6 +11,7 @@ import {
   Text,
   VisuallyHidden,
   Tooltip,
+  Spinner,
 } from "@radix-ui/themes";
 import Uppy, { Meta } from "@uppy/core";
 import { useUppyState, useUppyEvent } from "@uppy/react";
@@ -20,6 +21,7 @@ import { useLocale, useTranslations } from "next-intl";
 import type { Locale as UppyLocale } from "@uppy/utils/lib/Translator";
 
 import {
+  formatFileSize,
   MAX_FILE_SIZE,
   MAX_UNAUTHENTICATED_FILE_SIZE,
   SUPPORTED_FILE_TYPES,
@@ -162,7 +164,9 @@ const Files = ({
         const name =
           lastDotIndex === -1 ? fileName : fileName.substring(0, lastDotIndex);
         const extension =
-          lastDotIndex === -1 ? "" : fileName.substring(lastDotIndex);
+          lastDotIndex === -1
+            ? ""
+            : fileName.substring(lastDotIndex).replace(/\./g, "").toUpperCase();
 
         const isUploading = "uppyFile" in file;
         const hasThumbnail = "hasThumbnail" in file && file.hasThumbnail;
@@ -185,7 +189,7 @@ const Files = ({
                       color="gray"
                       className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-lg mt-1"
                     >
-                      {extension.replace(/\./g, "").toUpperCase()}
+                      {extension}
                     </Text>
                   )}
 
@@ -207,17 +211,22 @@ const Files = ({
                     <>
                       <Progress
                         value={file.uppyFile.progress?.percentage || 0}
+                        color="blue"
                         variant="soft"
                         radius="none"
-                        className="absolute top-0 left-0 size-full"
+                        className="absolute top-0 left-0 size-full bg-blue-5"
                       />
                       <Box
                         position="absolute"
                         top="50%"
                         left="50%"
-                        className="transform -translate-x-1/2 -translate-y-1/2 text-lg"
+                        className="transform -translate-x-1/2 -translate-y-1/2 text-3xl mt-1"
                       >
-                        {file.uppyFile.progress?.percentage || 0} %
+                        {file.uppyFile.progress?.percentage === 100 ? (
+                          <Spinner size="3" />
+                        ) : (
+                          (file.uppyFile.progress?.percentage || 0) + "%"
+                        )}
                       </Box>
                     </>
                   )}
@@ -239,13 +248,26 @@ const Files = ({
 
             <Tooltip content={file.name}>
               <Flex
-                align="center"
+                direction="column"
                 py="1"
                 px="2"
                 className="bg-panel-solid border-t border-gray-6 rounded-b-3 text-gray-12 text-sm"
               >
                 <Text className="truncate">{name}</Text>
-                <Text>{extension}</Text>
+
+                <Flex direction="row" align="center" justify="between">
+                  <Text color="gray" size="1">
+                    {isUploading
+                      ? formatFileSize(
+                          file.uppyFile.progress.bytesUploaded || 0
+                        ) + " / "
+                      : undefined}{" "}
+                    {formatFileSize(file.size)}
+                  </Text>
+                  <Text color="gray" size="1">
+                    {!isUploading ? extension : undefined}
+                  </Text>
+                </Flex>
               </Flex>
             </Tooltip>
           </Flex>
