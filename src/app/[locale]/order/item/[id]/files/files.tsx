@@ -143,7 +143,7 @@ const Files = ({
         lg: "6",
         xl: "7",
       }}
-      gap="3"
+      gap="4"
       width="full"
     >
       <Text
@@ -190,7 +190,7 @@ const Files = ({
                   {!isUploading && !hasThumbnail && (
                     <Text
                       color="gray"
-                      className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-lg mt-1"
+                      className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-2xl mt-1"
                     >
                       {extension}
                     </Text>
