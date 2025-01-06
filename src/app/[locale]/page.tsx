@@ -1,5 +1,5 @@
 import { Link } from "@/i18n/routing";
-import { Flex, Heading, Button, Container } from "@radix-ui/themes";
+import { Flex, Heading, Button, Container, Box } from "@radix-ui/themes";
 import { useTranslations } from "next-intl";
 import MoreProducts from "./product/[slug]/more-products";
 
@@ -30,6 +30,20 @@ export default function Home() {
       </Container>
 
       <MoreProducts showHeading={false} columns="4" background={true} />
+
+      <Box>
+        Featury co chceme spomenut:
+        <ul>
+          <li>Jednoducha a rychla objednavka (jednoduchy/rychly system)</li>
+          <li>Oblubene prepravne spolocnosti... vlastne odberne miesto...</li>
+          <li>
+            Bezpecnost: vase sukromne fotky mazeme po 30 dnoch a nahlady fotiek
+            po polroku?
+          </li>
+          <li>10+ rokov skusenosti...</li>
+          <li>...</li>
+        </ul>
+      </Box>
     </>
   );
 }
