@@ -61,9 +61,9 @@
   "OrderItem": {
     "title": "Fotografia",
     "back": "Späť",
-    "files": "Súbory",
+    "files": "Nahrajte súbory",
     "add": "Pridať",
-    "configuration": "Konfigurácia",
+    "configuration": "Zvoľte konfiguráciu",
     "total": "Celkom",
     "save": "Uložiť"
   },

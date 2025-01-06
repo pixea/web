@@ -61,9 +61,9 @@
   "OrderItem": {
     "title": "Photo",
     "back": "Back",
-    "files": "Files",
+    "files": "Upload files",
     "add": "Add",
-    "configuration": "Configuration",
+    "configuration": "Choose configuration",
     "total": "Total",
     "save": "Save"
   },
