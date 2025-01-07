@@ -4,8 +4,10 @@ import NextLink from "next/link";
 import {
   ArrowLeftEndOnRectangleIcon,
   UserCircleIcon,
+  ShoppingBagIcon as EmptyShoppingBagIcon,
 } from "@heroicons/react/24/outline";
-import { Button, DropdownMenu, Tooltip } from "@radix-ui/themes";
+import { ShoppingBagIcon as FullShoppingBagIcon } from "@heroicons/react/24/solid";
+import { Button, DropdownMenu, Tooltip, Badge } from "@radix-ui/themes";
 import { Session } from "next-auth";
 import { useTranslations } from "next-intl";
 import { logoutAction } from "@/app/[locale]/auth/actions";
@@ -14,7 +16,7 @@ import useAuthUrl from "@/hooks/useAuthUrl";
 
 const Personalized = ({
   session,
-  // cartItemCount,
+  cartItemCount,
 }: {
   session?: Session | null;
   cartItemCount: number;
@@ -88,21 +90,30 @@ const Personalized = ({
 
       <Button
         variant="soft"
+        color="blue"
         size="3"
         className="relative font-semibold"
         asChild
       >
-        <Link href="/order">
-          {t("order")}
-
-          {/* <Box
-            position="absolute"
-            top="0"
-            right="0"
-            className="bg-blue-solid"
-          >
-            1
-          </Box> */}
+        <Link href="/order" className="flex items-center gap-1.5">
+          {cartItemCount === 0 ? (
+            <>
+              <EmptyShoppingBagIcon className="size-5" /> {t("order")}
+            </>
+          ) : (
+            <>
+              <FullShoppingBagIcon className="size-5" />
+              {t("openOrder")}
+              <Badge
+                variant="solid"
+                radius="full"
+                color="blue"
+                className="absolute -top-1.5 -right-1"
+              >
+                {cartItemCount}
+              </Badge>
+            </>
+          )}
         </Link>
       </Button>
     </>

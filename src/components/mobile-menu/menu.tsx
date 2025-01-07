@@ -1,8 +1,20 @@
 "use client";
 
 import { useCallback, useState } from "react";
-import { Flex, Box, Button, Text, Theme, Separator } from "@radix-ui/themes";
-import { Bars3Icon } from "@heroicons/react/24/solid";
+import {
+  Flex,
+  Box,
+  Button,
+  Text,
+  Theme,
+  Separator,
+  Badge,
+} from "@radix-ui/themes";
+import { ShoppingBagIcon as EmptyShoppingBagIcon } from "@heroicons/react/24/outline";
+import {
+  Bars3Icon,
+  ShoppingBagIcon as FullShoppingBagIcon,
+} from "@heroicons/react/24/solid";
 import { useTranslations } from "next-intl";
 import Image from "next/image";
 
@@ -26,9 +38,11 @@ import useAuthUrl from "@/hooks/useAuthUrl";
 const MobileMenu = ({
   session,
   items,
+  cartItemCount,
 }: {
   session?: Session | null;
   items: readonly MenuItem[];
+  cartItemCount: number;
 }) => {
   const t = useTranslations("Header");
   const authUrl = useAuthUrl();
@@ -109,17 +123,30 @@ const MobileMenu = ({
                 <Button
                   variant="soft"
                   color="blue"
-                  className="py-6 w-full"
+                  size="4"
+                  className="relative w-full font-semibold"
                   asChild
                 >
-                  <Link
-                    href="/order"
-                    className="rounded-3"
-                    onClick={onInteraction}
-                  >
-                    <Text size="4" className="font-semibold">
-                      {t("order")}
-                    </Text>
+                  <Link href="/order" className="flex items-center gap-1.5">
+                    {cartItemCount === 0 ? (
+                      <>
+                        <EmptyShoppingBagIcon className="size-5" /> {t("order")}
+                      </>
+                    ) : (
+                      <>
+                        <FullShoppingBagIcon className="size-5" />
+                        {t("openOrder")}
+                        <Badge
+                          variant="solid"
+                          radius="full"
+                          color="blue"
+                          size="2"
+                          className="absolute -top-1.5 -right-1"
+                        >
+                          {cartItemCount}
+                        </Badge>
+                      </>
+                    )}
                   </Link>
                 </Button>
               </li>
@@ -138,17 +165,12 @@ const MobileMenu = ({
                   <Button
                     variant="soft"
                     color="gray"
-                    className="py-6 w-full"
+                    className="w-full font-semibold"
+                    size="4"
                     asChild
                   >
-                    <Link
-                      href={authUrl}
-                      className="rounded-3"
-                      onClick={onInteraction}
-                    >
-                      <Text size="4" className="font-semibold">
-                        {t("login")}
-                      </Text>
+                    <Link href={authUrl} onClick={onInteraction}>
+                      {t("login")}
                     </Link>
                   </Button>
                 </li>

@@ -31,7 +31,7 @@ const DesktopNavigation = ({
       direction="row"
       align="center"
       justify="between"
-      className="hidden sm:flex w-full"
+      className="hidden md:flex w-full"
     >
       <Link href="/" title={t("home")} className="lg:hidden">
         <Image
