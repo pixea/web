@@ -37,8 +37,9 @@ const MobileAccountMenu = ({
       <Collapsible.Trigger asChild>
         <Button
           variant="soft"
+          size="4"
           color={role === "admin" ? "yellow" : "gray"}
-          className="py-6 gap-1.5 w-full"
+          className="gap-1.5 w-full"
         >
           <UserCircleIcon className="size-6" />
           <Text size="4" className="font-semibold">
