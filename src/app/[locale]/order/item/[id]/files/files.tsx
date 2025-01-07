@@ -1,7 +1,7 @@
 "use client";
 
 import { useCallback, useState } from "react";
-import { Flex, Grid, Separator, Text, VisuallyHidden } from "@radix-ui/themes";
+import { Flex, Grid, Text, VisuallyHidden } from "@radix-ui/themes";
 import Uppy, { Meta } from "@uppy/core";
 import { useUppyState, useUppyEvent } from "@uppy/react";
 import AwsS3, { type AwsBody } from "@uppy/aws-s3";
