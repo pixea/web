@@ -1,4 +1,7 @@
-import { ShoppingCartItem } from "@/db/validation";
+"use client";
+
+import { ShoppingCart } from "@/db/validation";
+import useCart from "@/hooks/useCart/useCart";
 import { Link } from "@/i18n/routing";
 import { XMarkIcon } from "@heroicons/react/24/solid";
 import {
@@ -12,13 +15,14 @@ import {
 } from "@radix-ui/themes";
 import { useFormatter, useTranslations } from "next-intl";
 
-const OrderItems = ({ items }: { items?: ShoppingCartItem[] }) => {
+const OrderItems = ({ cart: initialCart }: { cart: ShoppingCart }) => {
   const t = useTranslations("Order");
   const format = useFormatter();
+  const { cart, removeCartItem } = useCart(initialCart);
 
   return (
     <Flex direction="column" gap="5" mb="2" className="w-full">
-      {!items?.length && (
+      {!cart.items?.length && (
         <Flex
           justify="center"
           align="center"
@@ -28,7 +32,7 @@ const OrderItems = ({ items }: { items?: ShoppingCartItem[] }) => {
         </Flex>
       )}
 
-      {items?.map((item, index) => (
+      {cart.items?.map((item, index) => (
         <Flex
           key={item.id}
           direction="row"
@@ -102,6 +106,7 @@ const OrderItems = ({ items }: { items?: ShoppingCartItem[] }) => {
               size="2"
               asChild
               className="p-2 rounded-full hover:cursor-pointer"
+              onClick={() => removeCartItem(item.id!)}
             >
               <XMarkIcon className="size-6" />
             </Button>

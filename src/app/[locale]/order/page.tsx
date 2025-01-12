@@ -29,7 +29,7 @@ export default async function OrderPage() {
       </Flex>
 
       <Flex direction="column" gap="6" align="center" width="full" mt="6">
-        <OrderItems items={cart.content.items} />
+        <OrderItems cart={cart.content} />
       </Flex>
     </Container>
   );

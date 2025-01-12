@@ -217,6 +217,69 @@ export const removeFileFromCartItemAction = async (
   }
 };
 
+export const removeCartItemAction = async (cartItemId: string) => {
+  const session = await auth();
+
+  try {
+    const newestCart = await getNewestCartAction();
+
+    if (!newestCart?.content) {
+      throw new Error("No cart found");
+    }
+
+    const cart = await db.transaction(async (tx) => {
+      const cart =
+        newestCart.source === "user"
+          ? (
+              await tx
+                .select({ cart: users.cart })
+                .from(users)
+                .for("update")
+                .where(eq(users.id, session?.user.id as string))
+            )[0].cart
+          : (
+              await tx
+                .select({ cart: guestCarts.content })
+                .from(guestCarts)
+                .for("update")
+                .where(eq(guestCarts.id, newestCart?.content?.id as string))
+            )[0].cart;
+
+      if (!cart) {
+        throw new Error("No cart found");
+      }
+
+      if (!cart.items) {
+        return cart;
+      }
+
+      cart.items = cart.items!.filter((item) => item.id !== cartItemId);
+
+      cart.saved = DateTime.utc().toISO();
+
+      if (newestCart.source === "user") {
+        await tx
+          .update(users)
+          .set({ cart })
+          .where(eq(users.id, session?.user.id as string));
+      } else {
+        await tx
+          .update(guestCarts)
+          .set({ content: cart })
+          .where(eq(guestCarts.id, cart.id));
+      }
+
+      return cart;
+    });
+
+    return cart;
+  } catch (e) {
+    console.error(e);
+
+    throw new Error("Unknown error occurred when removing file from cart item");
+  }
+};
+
 const getNewestCartAction = async () => {
   const session = await auth();
 

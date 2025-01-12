@@ -3,6 +3,7 @@ import { useCallback, useState } from "react";
 import {
   addFileToCartItemAction,
   removeFileFromCartItemAction,
+  removeCartItemAction,
 } from "./actions";
 
 const useCart = (initialCartState: ShoppingCart) => {
@@ -46,10 +47,25 @@ const useCart = (initialCartState: ShoppingCart) => {
     []
   );
 
+  const removeCartItem = useCallback(async (cartItemId: string) => {
+    setPendingActions((actions) => actions + 1);
+    try {
+      const updatedCart = await removeCartItemAction(cartItemId);
+
+      // Replace state with the server response
+      setCart((currentCart) =>
+        updatedCart.saved > currentCart.saved ? updatedCart : currentCart
+      );
+    } finally {
+      setPendingActions((actions) => actions - 1);
+    }
+  }, []);
+
   return {
     cart,
     addFileToCartItem,
     removeFileFromCartItem,
+    removeCartItem,
     isPending: pendingActions > 0,
   };
 };
