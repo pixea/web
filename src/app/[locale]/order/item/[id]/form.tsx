@@ -129,7 +129,8 @@ const Form = ({ session, initialCart, itemId }: Props) => {
   const t = useTranslations("OrderItem");
   const format = useFormatter();
 
-  const { cart, addFileToCartItem, isPending } = useCart(initialCart);
+  const { cart, addFileToCartItem, removeFileFromCartItem, isPending } =
+    useCart(initialCart);
 
   const [price] = useState(0);
 
@@ -151,6 +152,7 @@ const Form = ({ session, initialCart, itemId }: Props) => {
             files={item?.files}
             isAuthenticated={!!session?.user}
             addFileToCartItem={addFileToCartItem}
+            removeFileFromCartItem={removeFileFromCartItem}
           />
         </Flex>
 

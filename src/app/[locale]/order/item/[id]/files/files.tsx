@@ -1,7 +1,7 @@
 "use client";
 
-import { useCallback, useState } from "react";
-import { Flex, Grid, Text, VisuallyHidden } from "@radix-ui/themes";
+import { useCallback, useEffect, useState } from "react";
+import { Flex, Grid, Text } from "@radix-ui/themes";
 import Uppy, { Meta } from "@uppy/core";
 import { useUppyState, useUppyEvent } from "@uppy/react";
 import AwsS3, { type AwsBody } from "@uppy/aws-s3";
@@ -24,6 +24,7 @@ import { OrderItemFilePayload, ShoppingCartItem } from "@/db/validation";
 import combineFiles from "./combineFiles";
 import FileItem from "./fileItem";
 import { PlusCircleIcon } from "@heroicons/react/24/outline";
+import { cn } from "@/lib/utils";
 
 const uppyLocales: Record<Locales, UppyLocale | undefined> = {
   en: undefined,
@@ -36,6 +37,7 @@ interface Props {
   files?: ShoppingCartItem["files"];
   isAuthenticated: boolean;
   addFileToCartItem: (cartItemId: string, file: OrderItemFilePayload) => void;
+  removeFileFromCartItem: (cartItemId: string, fileId: string) => void;
 }
 
 const Files = ({
@@ -44,9 +46,12 @@ const Files = ({
   files,
   isAuthenticated,
   addFileToCartItem,
+  removeFileFromCartItem,
 }: Props) => {
   const t = useTranslations("OrderItem");
   const locale = useLocale() as Locales;
+
+  const [isDragging, setIsDragging] = useState(false);
 
   const [uppy] = useState<Uppy<UppyMetadata, AwsBody>>(() =>
     new Uppy<UppyMetadata, AwsBody>({
@@ -89,32 +94,92 @@ const Files = ({
     console.error("Upload error:", error);
   });
 
+  const addFiles = useCallback(
+    (files: File[]) =>
+      files.forEach((file) => {
+        try {
+          uppy.addFile({
+            source: "file input",
+            name: file.name,
+            type: file.type,
+            data: file,
+            meta: { cartId, itemId, fileId: crypto.randomUUID() },
+          });
+        } catch (err) {
+          if (
+            (err as RestrictionError<Meta, Record<string, unknown>>)
+              .isRestriction
+          ) {
+            // TODO: handle restrictions
+            console.log("Restriction error:", err);
+          } else {
+            // TODO: handle other errors
+            console.error(err);
+          }
+        }
+      }),
+    [uppy, cartId, itemId]
+  );
+
+  useEffect(() => {
+    let dragCount = 0;
+    const onDragEnterLeave = (e: DragEvent) => {
+      e.preventDefault();
+      dragCount += e.type === "dragenter" ? 1 : -1;
+      if (dragCount === 1) {
+        setIsDragging(true);
+      } else if (dragCount === 0) {
+        setIsDragging(false);
+      }
+    };
+
+    const onDrop = (e: DragEvent) => {
+      e.preventDefault();
+
+      setIsDragging(false);
+
+      if (!e.dataTransfer) return;
+
+      let files: File[] = [];
+      if (e.dataTransfer.items) {
+        // Use DataTransferItemList interface to access the file(s)
+        files = [...e.dataTransfer.items]
+          .map((item) =>
+            // If dropped items aren't files, ignore them
+            item.kind === "file" ? item.getAsFile() : undefined
+          )
+          .filter((item) => !!item);
+      } else {
+        // Use DataTransfer interface to access the file(s)
+        files = [...e.dataTransfer.files];
+      }
+
+      addFiles(files);
+    };
+
+    const onDragOver = (e: DragEvent) => {
+      e.preventDefault();
+    };
+
+    document.addEventListener("dragover", onDragOver);
+    document.addEventListener("dragenter", onDragEnterLeave);
+    document.addEventListener("dragleave", onDragEnterLeave);
+    document.addEventListener("drop", onDrop);
+
+    return () => {
+      document.removeEventListener("dragover", onDragOver);
+      document.removeEventListener("dragenter", onDragEnterLeave);
+      document.removeEventListener("dragleave", onDragEnterLeave);
+      document.removeEventListener("drop", onDrop);
+    };
+  }, [addFiles]);
+
   const onFileInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (!event?.target?.files?.length) return;
 
     const files = Array.from(event.target.files);
 
-    files.forEach((file) => {
-      try {
-        uppy.addFile({
-          source: "file input",
-          name: file.name,
-          type: file.type,
-          data: file,
-          meta: { cartId, itemId, fileId: crypto.randomUUID() },
-        });
-      } catch (err) {
-        if (
-          (err as RestrictionError<Meta, Record<string, unknown>>).isRestriction
-        ) {
-          // TODO: handle restrictions
-          console.log("Restriction error:", err);
-        } else {
-          // TODO: handle other errors
-          console.error(err);
-        }
-      }
-    });
+    addFiles(files);
 
     event.target.value = "";
   };
@@ -128,18 +193,25 @@ const Files = ({
     (fileId?: string, uppyFileId?: string) => {
       if (uppyFileId) uppy.removeFile(uppyFileId);
 
-      // TODO: Remove file from cart item
-      if (fileId) console.log("Removing file from cart item");
+      if (fileId) {
+        // TODO: Add error handling
+        removeFileFromCartItem(itemId, fileId);
+      }
     },
-    [uppy]
+    [itemId, removeFileFromCartItem, uppy]
+  );
+
+  const dropZoneClasses = cn(
+    "flex items-center justify-center border border-dashed p-6 rounded-3 cursor-pointer",
+    {
+      "text-gray-11 hover:bg-gray-3": !isDragging,
+      "text-blue-11 bg-blue-3": isDragging,
+    }
   );
 
   return (
     <Flex direction="column" gap="4">
-      <Text
-        className="flex items-center justify-center border border-dashed border-gray-8 p-6 rounded-3 text-gray-11 cursor-pointer hover:bg-gray-3"
-        as="label"
-      >
+      <Text className={dropZoneClasses} as="label">
         <Flex
           direction="column"
           align="center"
@@ -167,8 +239,6 @@ const Files = ({
           </Flex>
         </Flex>
 
-        <VisuallyHidden>{t("add")}</VisuallyHidden>
-
         <input
           type="file"
           multiple
@@ -177,21 +247,6 @@ const Files = ({
           className="hidden"
         />
       </Text>
-
-      {/* <Text
-        as="label"
-        className="flex justify-center items-center bg-gray-3 rounded-3 h-[8rem] p-0 cursor-pointer hover:bg-gray-6"
-      >
-        <PlusIcon className="size-10 text-gray-10" />
-        <VisuallyHidden>{t("add")}</VisuallyHidden>
-        <input
-          type="file"
-          multiple
-          accept={SUPPORTED_FILE_TYPES.join(",")}
-          onChange={onFileInputChange}
-          className="hidden"
-        />
-      </Text> */}
       <Grid
         columns={{
           initial: "2",
