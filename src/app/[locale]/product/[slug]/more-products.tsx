@@ -48,7 +48,7 @@ export default function MoreProducts({
           )}
 
           <Grid
-            columns={{ initial: "1", sm: "2", md: columns }}
+            columns={{ initial: "1", xs: "2", sm: "3", md: columns }}
             className="gap-12 mt-8"
           >
             {products.map((product, index) => (

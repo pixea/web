@@ -5,6 +5,7 @@ import {
   Link as RadixLink,
   Container,
   Separator,
+  Grid,
 } from "@radix-ui/themes";
 import { useTranslations } from "next-intl";
 import Image from "next/image";
@@ -28,25 +29,24 @@ const Footer = () => {
           <Flex
             direction={{ initial: "column", md: "row" }}
             justify="between"
-            align={{ initial: "center", sm: "start" }}
-            gap="8"
-            className="text-center sm:text-left"
+            align={{ initial: "center", xs: "start" }}
+            className="text-center xs:text-left gap-8"
           >
             <Flex direction="column" gap="2" mb="4">
               <Link href="/" title={t("home")}>
                 <Image
                   src="/brand/icon-light.svg"
                   alt=""
-                  width={80}
-                  height={98}
-                  className="block dark:hidden"
+                  width={64}
+                  height={78}
+                  className="block dark:hidden w-12 sm:w-14 md:w-16"
                 />
                 <Image
                   src="/brand/icon-dark.svg"
                   alt=""
-                  width={80}
-                  height={98}
-                  className="hidden dark:block"
+                  width={64}
+                  height={78}
+                  className="hidden dark:block w-12 sm:w-14 md:w-16"
                 />
               </Link>
 
@@ -57,17 +57,17 @@ const Footer = () => {
 
             <Flex
               direction="column"
-              align={{ initial: "center", sm: "start" }}
+              align={{ initial: "center", xs: "start" }}
               className="gap-12"
             >
-              <Flex
-                direction={{ initial: "column", sm: "row" }}
-                align={{ initial: "center", sm: "start" }}
-                className="gap-12 sm:gap-36"
+              <Grid
+                columns={{ initial: "1", xs: "2", sm: "3" }}
+                align={{ initial: "center", xs: "start" }}
+                className="gap-12"
               >
                 <Flex
                   direction="column"
-                  align={{ initial: "center", sm: "start" }}
+                  align={{ initial: "center", xs: "start" }}
                   gap="1"
                 >
                   <Text weight="medium" size="3" mb="1">
@@ -89,7 +89,7 @@ const Footer = () => {
 
                 <Flex
                   direction="column"
-                  align={{ initial: "center", sm: "start" }}
+                  align={{ initial: "center", xs: "start" }}
                   gap="1"
                 >
                   <Text weight="medium" size="3" mb="1">
@@ -118,7 +118,7 @@ const Footer = () => {
 
                 <Flex
                   direction="column"
-                  align={{ initial: "center", sm: "start" }}
+                  align={{ initial: "center", xs: "start" }}
                   gap="1"
                 >
                   <Text weight="medium" size="3" mb="1">
@@ -136,7 +136,7 @@ const Footer = () => {
                     {t("contact.description")}
                   </Text>
                 </Flex>
-              </Flex>
+              </Grid>
 
               <Flex direction="column" gap="2">
                 <Text weight="medium" size="3" mb="1">
@@ -144,9 +144,9 @@ const Footer = () => {
                 </Text>
 
                 <Flex
-                  direction={{ initial: "column", sm: "row" }}
+                  direction={{ initial: "column", xs: "row" }}
                   align="center"
-                  gap="7"
+                  gap={{ initial: "6", sm: "7" }}
                 >
                   {/* Packeta */}
                   <RadixLink
@@ -163,8 +163,8 @@ const Footer = () => {
                   </RadixLink>
 
                   <Separator
-                    orientation={{ initial: "horizontal", sm: "vertical" }}
-                    size={{ initial: "3", sm: "2" }}
+                    orientation={{ initial: "horizontal", xs: "vertical" }}
+                    size={{ initial: "3", xs: "2" }}
                   />
 
                   {/* DPD */}
@@ -206,8 +206,8 @@ const Footer = () => {
                   </Flex>
 
                   <Separator
-                    orientation={{ initial: "horizontal", sm: "vertical" }}
-                    size={{ initial: "3", sm: "2" }}
+                    orientation={{ initial: "horizontal", xs: "vertical" }}
+                    size={{ initial: "3", xs: "2" }}
                   />
 
                   {/* SPS */}
