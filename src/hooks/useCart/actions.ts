@@ -120,7 +120,10 @@ export const addFileToCartItemAction = async (
           .set({ cart })
           .where(eq(users.id, session?.user.id as string));
       } else {
-        await tx.update(guestCarts).set({ content: cart });
+        await tx
+          .update(guestCarts)
+          .set({ content: cart })
+          .where(eq(guestCarts.id, cart.id));
       }
 
       return cart;
@@ -164,32 +167,35 @@ const getNewestCartAction = async () => {
   }
 };
 
-const startNewCartAction = async () => {
+const startNewCartAction = async (forceGenerateId = false) => {
   const session = await auth();
   const cookieStore = await cookies();
 
+  const cartId = forceGenerateId
+    ? randomUUID()
+    : cookieStore.get("cartId")?.value;
+  if (forceGenerateId) {
+    cookieStore.set({
+      name: "cartId",
+      value: cartId!,
+      maxAge: 60 * 60 * 24 * 31,
+      httpOnly: true,
+      path: "/",
+      sameSite: "lax",
+    });
+  }
+
   const cart = {
-    id: randomUUID(),
+    id: cartId,
     saved: DateTime.utc().toISO(),
   } as ShoppingCart;
 
   if (session?.user?.id) {
     await db.update(users).set({ cart }).where(eq(users.id, session.user.id));
 
-    cookieStore.delete("cartId");
-
     return { content: cart, source: "user" as const };
   } else {
     await db.insert(guestCarts).values({ id: cart.id, content: cart });
-
-    cookieStore.set({
-      name: "cartId",
-      value: cart.id,
-      maxAge: 60 * 60 * 24 * 31,
-      httpOnly: true,
-      path: "/",
-      sameSite: "lax",
-    });
 
     return { content: cart, source: "guest" as const };
   }
