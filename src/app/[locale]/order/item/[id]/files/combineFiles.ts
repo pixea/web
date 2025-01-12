@@ -17,15 +17,22 @@ const combineFiles = (
   return [
     ...(uploadedFiles?.filter((file) => !uploadingFilesById.has(file.id)) ||
       []),
-    ...uploadingFiles.map(
-      (file) =>
-        uploadedFilesById.get(file.meta.fileId) || {
-          id: file.meta.fileId,
-          name: file.name!,
-          size: file.size!,
-          uppyFile: file,
-        }
-    ),
+    ...uploadingFiles.map((file) => {
+      const isUploaded = uploadedFilesById.has(file.meta.fileId);
+
+      return isUploaded
+        ? {
+            ...uploadedFilesById.get(file.meta.fileId)!,
+            uppyFile: file,
+          }
+        : {
+            id: file.meta.fileId,
+            name: file.name!,
+            size: file.size!,
+            mimeType: file.type!,
+            uppyFile: file,
+          };
+    }),
   ];
 };
 

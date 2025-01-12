@@ -274,7 +274,7 @@ const Files = ({
                 ? file.uppyFile.progress.bytesUploaded || 0
                 : undefined
             }
-            isUploading={"uppyFile" in file}
+            isUploading={"s3Key" in file === false || !file.s3Key}
             hasThumbnail={"hasThumbnail" in file && file.hasThumbnail}
             onRemoveFile={onRemoveFile}
           />
