@@ -20,14 +20,14 @@ export const ToastProvider = ({ children }: { children: React.ReactNode }) => {
   return (
     <RadixToast.Provider swipeDirection="right">
       {children}
-      <RadixToast.Viewport className="fixed bottom-0 right-0 z-[2147483647] m-0 flex w-[400px] max-w-[100vw] list-none flex-col gap-2.5 p-[var(--viewport-padding)] outline-none [--viewport-padding:_25px]" />
+      <RadixToast.Viewport className="fixed bottom-0 right-0 z-[2147483647] m-0 flex w-96 max-w-[100vw] list-none flex-col gap-2.5 p-[var(--viewport-padding)] outline-none [--viewport-padding:_1.5rem]" />
     </RadixToast.Provider>
   );
 };
 
 export const Toast = ({ type, title, children }: ToastProps) => {
   const containerClasses = cn(
-    "grid grid-cols-[auto_max-content] items-center gap-x-[15px] rounded-md p-[15px] ring-1 ring-transparent shadow-lg [grid-template-areas:_'title_action'_'description_action'] data-[swipe=cancel]:translate-x-0 data-[swipe=move]:translate-x-[var(--radix-toast-swipe-move-x)] data-[state=closed]:animate-hide data-[state=open]:animate-slideIn data-[swipe=end]:animate-swipeOut data-[swipe=cancel]:transition-[transform_200ms_ease-out] bg-gray-2",
+    "grid grid-cols-[auto_max-content] items-center gap-x-4 rounded-md p-4 ring-1 ring-transparent shadow-lg [grid-template-areas:_'title_action'_'description_action'] data-[swipe=cancel]:translate-x-0 data-[swipe=move]:translate-x-[var(--radix-toast-swipe-move-x)] data-[state=closed]:animate-hide data-[state=open]:animate-slideIn data-[swipe=end]:animate-swipeOut data-[swipe=cancel]:transition-[transform_200ms_ease-out] bg-gray-2",
     {
       "bg-red-2 ring-red-6 shadow-red-3": type === "error",
       "bg-green-2 ring-green-6 shadow-green-3": type === "success",
@@ -37,7 +37,7 @@ export const Toast = ({ type, title, children }: ToastProps) => {
   );
 
   const titleClasses = cn(
-    "flex items-center gap-1.5 mb-[5px] text-[16px] font-medium text-gray-12 [grid-area:_title]",
+    "flex items-center gap-1.5 mb-1.5 text-base font-medium text-gray-12 [grid-area:_title]",
     {
       "text-red-12": type === "error",
       "text-green-12": type === "success",

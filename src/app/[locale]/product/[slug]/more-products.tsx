@@ -98,7 +98,7 @@ export default function MoreProducts({
                     </Text>
                   </Flex>
 
-                  <Flex className="relative w-full h-[360]">
+                  <Flex className="relative w-full h-[22.6rem]">
                     <Image
                       src={product.image}
                       width="347"
@@ -146,7 +146,7 @@ export default function MoreProducts({
                   </Text>
                 </Flex>
 
-                <Flex className="relative w-full h-[360]">
+                <Flex className="relative w-full h-[22.6rem]">
                   <Image
                     src="/products/custom.jpg"
                     width="347"
@@ -168,7 +168,7 @@ export default function MoreProducts({
       {background && (
         <Box
           className={cn(
-            "hidden md:block absolute -z-50 top-[580] w-full h-[360] transition-all",
+            "hidden md:block absolute -z-50 top-[36rem] w-full h-[22.6rem] transition-all",
             color
           )}
         />

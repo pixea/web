@@ -65,7 +65,7 @@ const MobileMenu = ({
           <Bars3Icon className="size-6" />
         </Button>
       </SheetTrigger>
-      <SheetContent className="w-full xs:w-[360px]">
+      <SheetContent className="w-full xs:w-96">
         <SheetHeader className="text-left">
           <Box className="mb-7">
             <Link href="/" title={"home"} onClick={onInteraction}>

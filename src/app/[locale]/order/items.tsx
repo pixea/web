@@ -79,7 +79,7 @@ const OrderItems = ({ items }: { items?: ShoppingCartItem[] }) => {
                   className="xs:gap-5"
                 >
                   <Separator orientation="vertical" size="4" />
-                  <Box minWidth="70px">
+                  <Box className="min-w-16">
                     <Text as="div" size="2" color="gray">
                       {t("price")}
                     </Text>

@@ -76,7 +76,7 @@ const DesktopNavigation = ({
                   <NavigationMenu.Trigger className="group flex select-none items-center gap-1 py-2.5 leading-none outline-none">
                     {t(item.name)}
                     <ChevronDownIcon
-                      className="size-3 relative top-px transition-transform duration-250 ease-in group-data-[state=open]:-rotate-180"
+                      className="size-3 relative top-[0.065rem] transition-transform duration-250 ease-in group-data-[state=open]:-rotate-180"
                       aria-hidden
                     />
                   </NavigationMenu.Trigger>
@@ -111,7 +111,7 @@ const DesktopNavigation = ({
           </NavigationMenu.Indicator>
         </NavigationMenu.List>
 
-        <div className="perspective-[2000px] absolute left-0 top-full flex w-full justify-center">
+        <div className="perspective-[125rem] absolute left-0 top-full flex w-full justify-center">
           <NavigationMenu.Viewport className="relative mt-2.5 h-[var(--radix-navigation-menu-viewport-height)] w-full origin-[top_center] overflow-hidden rounded-md bg-gray-4 transition-[width,_height] duration-300 data-[state=closed]:animate-scaleOut data-[state=open]:animate-scaleIn sm:w-[var(--radix-navigation-menu-viewport-width)]" />
         </div>
       </NavigationMenu.Root>
@@ -130,16 +130,16 @@ const ListItem = forwardRef<
   <li>
     <DesktopLink
       className={cn(
-        "block select-none rounded-md p-3 text-[15px] leading-none no-underline outline-none transition-colors hover:bg-mauve3 focus:shadow-[0_0_0_2px] focus:shadow-violet7",
+        "block select-none rounded-md p-3 text-base leading-none no-underline outline-none transition-colors hover:bg-gray-2 focus:shadow-[0_0_0_2px] focus:shadow-blue-8",
         className
       )}
       {...props}
       ref={forwardedRef}
     >
-      <div className="mb-[5px] font-medium leading-[1.2] text-violet12">
+      <div className="mb-1.5 font-medium leading-tight text-gray-12">
         {title}
       </div>
-      <p className="leading-[1.4] text-mauve11">{children}</p>
+      <p className="leading-snug text-gray-11">{children}</p>
     </DesktopLink>
   </li>
 ));
