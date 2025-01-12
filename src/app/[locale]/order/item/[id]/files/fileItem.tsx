@@ -51,7 +51,7 @@ const FileItem = ({
 
   return (
     <Flex direction="column" className="ring-1 ring-gray-6 rounded-3">
-      <Box className="bg-gray-2 rounded-t-3 h-[8rem] relative text-left p-0 overflow-hidden">
+      <Box className="bg-gray-2 rounded-t-3 h-32 relative text-left p-0 overflow-hidden">
         <Tooltip content={isUploading ? t("uploading") : t("open")}>
           <Button
             color="gray"

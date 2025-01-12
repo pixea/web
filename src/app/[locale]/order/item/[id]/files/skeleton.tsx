@@ -15,17 +15,17 @@ const FilesSkeleton = () => {
           my="2"
         >
           <Flex direction="column" align="center" gap="3">
-            <Skeleton className="rounded-full w-[40] h-[40] cursor-wait" />
+            <Skeleton className="rounded-full w-10 h-10 cursor-wait" />
 
-            <Skeleton className="rounded-3 w-[352] h-[24] cursor-wait" />
+            <Skeleton className="rounded-3 w-72 h-6 cursor-wait" />
           </Flex>
 
           <Flex direction="column" align="center" gap="1">
             <Text color="gray" size="1" className="flex items-center gap-1.5">
-              <Skeleton className="rounded-3 w-[220] h-[16] cursor-wait" />
+              <Skeleton className="rounded-3 w-40 h-4 cursor-wait" />
             </Text>
             <Text color="gray" size="1">
-              <Skeleton className="rounded-3 w-[312] h-[16] cursor-wait" />
+              <Skeleton className="rounded-3 w-80 h-4 cursor-wait" />
             </Text>
           </Flex>
         </Flex>

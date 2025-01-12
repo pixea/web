@@ -64,8 +64,8 @@ export default async function ProductPage({
         direction={{ initial: "column", sm: "row" }}
         className="gap-10 sm:gap-14 md:gap-16 lg:gap-20"
       >
-        <Flex direction="column" gap="3">
-          <Flex className="w-full sm:w-[360] md:w-[480] h-[320] xs:h-[480] sm:h-[560]">
+        <Flex direction="column" gap="3" className="sm:w-[24rem] md:w-[30rem]">
+          <Flex className="w-full h-[20rem] xs:h-[30rem] sm:h-[36rem]">
             <Image
               src="/products/photo.jpg"
               width="740"
@@ -76,7 +76,7 @@ export default async function ProductPage({
           </Flex>
 
           <Flex direction="row" gap="3">
-            <Flex className="w-full sm:w-[173] md:w-[234] h-[140] xs:h-[234]">
+            <Flex className="w-full h-36 xs:h-60">
               <Image
                 src="/products/photo.jpg"
                 width="740"
@@ -85,7 +85,7 @@ export default async function ProductPage({
                 className="object-cover rounded-2"
               />
             </Flex>
-            <Flex className="w-full sm:w-[173] md:w-[234] h-[140] xs:h-[234]">
+            <Flex className="w-full h-36 xs:h-60">
               <Image
                 src="/products/photo.jpg"
                 width="740"
@@ -167,7 +167,7 @@ export default async function ProductPage({
           </Text>
         </Flex>
 
-        <Flex className="w-full sm:w-[360] md:w-[480] h-[320] xs:h-[480] sm:h-[560]">
+        <Flex className="w-full sm:w-[24rem] md:w-[30rem] h-[20rem] xs:h-[30rem] sm:h-[36rem]">
           <Image
             src="/products/photo.jpg"
             width="740"
@@ -197,7 +197,7 @@ export default async function ProductPage({
           </Text>
         </Flex>
 
-        <Flex className="w-full sm:w-[360] md:w-[480] h-[320] xs:h-[480] sm:h-[560] sm:order-first">
+        <Flex className="w-full sm:w-[24rem] md:w-[30rem] h-[20rem] xs:h-[30rem] sm:h-[36rem] sm:order-first">
           <Image
             src="/products/photo.jpg"
             width="740"
@@ -227,7 +227,7 @@ export default async function ProductPage({
           </Text>
         </Flex>
 
-        <Flex className="w-full sm:w-[360] md:w-[480] h-[320] xs:h-[480] sm:h-[560]">
+        <Flex className="w-full w-full sm:w-[24rem] md:w-[30rem] h-[20rem] xs:h-[30rem] sm:h-[36rem]">
           <Image
             src="/products/photo.jpg"
             width="740"

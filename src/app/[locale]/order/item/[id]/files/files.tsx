@@ -24,7 +24,6 @@ import { OrderItemFilePayload, ShoppingCartItem } from "@/db/validation";
 import combineFiles from "./combineFiles";
 import FileItem from "./fileItem";
 import { PlusCircleIcon } from "@heroicons/react/24/outline";
-import { InformationCircleIcon } from "@heroicons/react/24/solid";
 
 const uppyLocales: Record<Locales, UppyLocale | undefined> = {
   en: undefined,
@@ -150,12 +149,14 @@ const Files = ({
         >
           <Flex direction="column" align="center" gap="3">
             <PlusCircleIcon className="size-10" />
-            <Text color="gray">{t("upload")}</Text>
+            <Text color="gray" weight="medium">
+              {t("upload")}
+            </Text>
           </Flex>
 
           <Flex direction="column" align="center" gap="1">
             <Text color="gray" size="1" className="flex items-center gap-1.5">
-              <InformationCircleIcon className="size-4" /> {t("size")}:{" "}
+              {t("size")}:{" "}
               {formatFileSize(
                 isAuthenticated ? MAX_FILE_SIZE : MAX_UNAUTHENTICATED_FILE_SIZE
               )}
