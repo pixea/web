@@ -64,6 +64,8 @@ const Files = ({
         allowedFileTypes: SUPPORTED_FILE_TYPES,
       },
       locale: uppyLocales[locale],
+      // Allow duplicates
+      onBeforeFileAdded: () => true,
     }).use(AwsS3, s3PluginOptions)
   );
 
@@ -137,6 +139,7 @@ const Files = ({
       e.preventDefault();
 
       setIsDragging(false);
+      dragCount = 0;
 
       if (!e.dataTransfer) return;
 
