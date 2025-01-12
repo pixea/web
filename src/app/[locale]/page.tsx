@@ -40,7 +40,7 @@ export default function Home() {
             Bezpecnost: vase sukromne fotky mazeme po 30 dnoch a nahlady fotiek
             po polroku?
           </li>
-          <li>10+ rokov skusenosti...</li>
+          <li>10+ rokov skusenosti.....</li>
           <li>...</li>
         </ul>
       </Box>
