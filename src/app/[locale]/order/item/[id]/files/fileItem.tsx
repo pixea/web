@@ -11,10 +11,13 @@ import {
   Text,
   Tooltip,
   Dialog,
-  TextField,
+  Inset,
 } from "@radix-ui/themes";
 import { useTranslations } from "next-intl";
 import Image from "next/image";
+
+import { cn } from "@/lib/utils";
+import { ArrowDownTrayIcon } from "@heroicons/react/24/solid";
 
 interface Props {
   id: string;
@@ -50,6 +53,8 @@ const FileItem = ({
     lastDotIndex === -1
       ? ""
       : fullName.substring(lastDotIndex).replace(/\./g, "").toUpperCase();
+
+  const fileTooLarge = size ? size > 20000000 : false;
 
   return (
     <Flex direction="column" className="ring-1 ring-gray-6 rounded-3">
@@ -112,41 +117,72 @@ const FileItem = ({
             </Dialog.Trigger>
           </Tooltip>
 
-          <Dialog.Content maxWidth="450px">
-            <Dialog.Title>Edit profile</Dialog.Title>
-            <Dialog.Description size="2" mb="4">
-              Make changes to your profile.
-            </Dialog.Description>
-
+          <Dialog.Content maxWidth="450px" className="pt-0">
             <Flex direction="column" gap="3">
-              <label>
-                <Text as="div" size="2" mb="1" weight="bold">
-                  Name
+              <Inset side="x" mb="4">
+                <Flex
+                  className={cn(
+                    "relative flex items-center justify-center w-full bg-gray-3",
+                    !hasThumbnail || fileTooLarge ? "h-48" : "h-full"
+                  )}
+                >
+                  {!hasThumbnail && (
+                    <Text
+                      color="gray"
+                      weight="medium"
+                      className="text-2xl"
+                      mx="5"
+                    >
+                      {extension}
+                    </Text>
+                  )}
+
+                  {fileTooLarge && (
+                    <Text
+                      color="gray"
+                      weight="medium"
+                      className="text-xl"
+                      mx="5"
+                    >
+                      {t("fileTooLarge")}
+                    </Text>
+                  )}
+
+                  {hasThumbnail && !fileTooLarge && (
+                    <Image
+                      unoptimized
+                      src={`/api/s3/thumbnail/${s3Key}`}
+                      alt=""
+                      width={256}
+                      height={256}
+                      className="object-cover size-full"
+                      onError={(event) =>
+                        ((event.target as HTMLImageElement).style.display =
+                          "none")
+                      }
+                    />
+                  )}
+                </Flex>
+              </Inset>
+
+              <Dialog.Title mb="-2">{name}</Dialog.Title>
+
+              <Flex direction="row" align="center" gapX="2">
+                <Text color="gray" size="2" weight="medium">
+                  {extension ? extension : undefined}
                 </Text>
-                <TextField.Root
-                  defaultValue="Freja Johnsen"
-                  placeholder="Enter your full name"
-                />
-              </label>
-              <label>
-                <Text as="div" size="2" mb="1" weight="bold">
-                  Email
+                <Text color="gray" size="1">
+                  {size ? formatFileSize(size) : "N/A"}
                 </Text>
-                <TextField.Root
-                  defaultValue="freja@example.com"
-                  placeholder="Enter your email"
-                />
-              </label>
+              </Flex>
             </Flex>
 
             <Flex gap="3" mt="4" justify="end">
+              <Button variant="soft" color="gray">
+                <ArrowDownTrayIcon className="size-4" /> {t("download")}
+              </Button>
               <Dialog.Close>
-                <Button variant="soft" color="gray">
-                  Cancel
-                </Button>
-              </Dialog.Close>
-              <Dialog.Close>
-                <Button>Save</Button>
+                <Button>{t("close")}</Button>
               </Dialog.Close>
             </Flex>
           </Dialog.Content>

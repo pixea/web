@@ -51,7 +51,11 @@
     "removeItem": "Odstrániť položku",
     "uploading": "Nahrávam...",
     "open": "Otvoriť",
-    "removeFile": "Odstrániť súbor"
+    "removeFile": "Odstrániť súbor",
+
+    "fileTooLarge": "Tento súbor je príliš veľký na zobrazenie.",
+    "download": "Stiahnuť",
+    "close": "Zavrieť"
   },
   "OrderItemSelection": {
     "title": "Výber produktu",

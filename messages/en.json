@@ -51,7 +51,11 @@
     "removeItem": "Remove item",
     "uploading": "Uploading...",
     "open": "Open",
-    "removeFile": "Remove file"
+    "removeFile": "Remove file",
+
+    "fileTooLarge": "This file is too large to be displayed.",
+    "download": "Download",
+    "close": "Close"
   },
   "OrderItemSelection": {
     "title": "Product selection",
