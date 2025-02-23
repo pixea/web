@@ -1,6 +1,14 @@
 "use client";
 
-import { Button, Flex, Heading, Text } from "@radix-ui/themes";
+import {
+  Box,
+  Button,
+  Flex,
+  Heading,
+  IconButton,
+  Text,
+  TextField,
+} from "@radix-ui/themes";
 import BottomBar from "@/components/bottomBar";
 import { useFormatter, useTranslations } from "next-intl";
 import dynamic from "next/dynamic";
@@ -11,9 +19,13 @@ import FilesSkeleton from "./files/skeleton";
 import {
   AdjustmentsHorizontalIcon,
   CloudArrowUpIcon,
+  HashtagIcon,
+  RectangleStackIcon,
 } from "@heroicons/react/24/outline";
 import Configuration from "./configuration";
 import { Product } from "@/db/schema";
+import { MinusIcon, PlusIcon } from "@heroicons/react/24/solid";
+import { useState } from "react";
 
 const Files = dynamic(() => import("./files/files"), {
   ssr: false,
@@ -43,6 +55,8 @@ const Form = ({ session, initialCart, itemId, product }: Props) => {
 
   const price = 0;
 
+  const [quantityPerItem, setQuantityPerItem] = useState(1);
+
   return (
     <>
       <Flex direction={{ initial: "column", md: "row" }} gap="8">
@@ -61,6 +75,29 @@ const Form = ({ session, initialCart, itemId, product }: Props) => {
             addFileToCartItem={addFileToCartItem}
             removeFileFromCartItem={removeFileFromCartItem}
           />
+
+          <Flex direction="column" gap="4" mt="5" className="w-full">
+            <Heading as="h2" size="5" className="flex items-center gap-2">
+              <RectangleStackIcon className="size-6" /> {t("quantity")}
+            </Heading>
+
+            <TextField.Root
+              placeholder={quantityPerItem.toString()}
+              size="3"
+              className="text-center"
+            >
+              <TextField.Slot pl="1">
+                <IconButton color="gray" size="2" variant="solid">
+                  <MinusIcon height="16" width="16" />
+                </IconButton>
+              </TextField.Slot>
+              <TextField.Slot pr="1">
+                <IconButton color="gray" size="2" variant="solid">
+                  <PlusIcon height="16" width="16" />
+                </IconButton>
+              </TextField.Slot>
+            </TextField.Root>
+          </Flex>
         </Flex>
 
         <Flex direction="column" gap="4" mt="5" className="w-full md:w-2/3">
