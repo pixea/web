@@ -1,19 +1,10 @@
+import { Product } from "@/db/schema";
 import { Flex, RadioCards, Text } from "@radix-ui/themes";
 import { useFormatter } from "next-intl";
-import { BaseProductConfiguration } from "./form";
-
-export type SizeConfiguration = BaseProductConfiguration & {
-  type: "size";
-  options: {
-    dimensions: [number, number];
-    other?: true;
-    price: number;
-  }[];
-};
 
 interface Props {
-  config: SizeConfiguration;
-  onChange: (option?: SizeConfiguration["options"][0]) => void;
+  config: Product["size"];
+  onChange: (dimensions: [number, number]) => void;
 }
 
 const SizeRenderer = ({ config, onChange }: Props) => {
@@ -22,15 +13,16 @@ const SizeRenderer = ({ config, onChange }: Props) => {
   return (
     <RadioCards.Root
       columns={{ initial: "2", sm: "3", md: "4" }}
-      onValueChange={(selectedId) =>
-        onChange(
-          config.options.find(
-            ({ dimensions }) => dimensions.join("x") === selectedId
-          )
-        )
-      }
+      onValueChange={(selectedId) => {
+        const dimensions = selectedId.split("x").map(Number) as [
+          number,
+          number,
+        ];
+
+        onChange(dimensions);
+      }}
     >
-      {config.options.map(({ dimensions, price }) => (
+      {config.options.map(({ dimensions }) => (
         <RadioCards.Item
           key={dimensions.join("x")}
           value={dimensions.join("x")}
@@ -41,7 +33,7 @@ const SizeRenderer = ({ config, onChange }: Props) => {
             </Text>
             <Text>
               +{" "}
-              {format.number(price, {
+              {format.number(999, {
                 style: "currency",
                 currency: "EUR",
               })}

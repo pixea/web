@@ -50,6 +50,7 @@ export const getCurrentCartContentAction = async () => {
 
 export const addFileToCartItemAction = async (
   cartItemId: string,
+  productId: string,
   file: OrderItemFilePayload
 ) => {
   const session = await auth();
@@ -94,7 +95,7 @@ export const addFileToCartItemAction = async (
 
       const item: Partial<OrderItemPayload> = existingItem || {
         id: cartItemId,
-        files: { pieces: 1, items: [] },
+        productId,
       };
 
       if (!item.files) {
@@ -214,6 +215,98 @@ export const removeFileFromCartItemAction = async (
     console.error(e);
 
     throw new Error("Unknown error occurred when removing file from cart item");
+  }
+};
+
+export const saveCartItemConfigurationAction = async (
+  cartItemId: string,
+  productId: string,
+  configuration: OrderItemPayload["configuration"][0]
+) => {
+  const session = await auth();
+
+  try {
+    const newestCart = await getNewestCartAction();
+
+    if (!newestCart?.content) {
+      throw new Error("No cart found");
+    }
+
+    const cart = await db.transaction(async (tx) => {
+      const cart =
+        newestCart.source === "user"
+          ? (
+              await tx
+                .select({ cart: users.cart })
+                .from(users)
+                .for("update")
+                .where(eq(users.id, session?.user.id as string))
+            )[0].cart
+          : (
+              await tx
+                .select({ cart: guestCarts.content })
+                .from(guestCarts)
+                .for("update")
+                .where(eq(guestCarts.id, newestCart?.content?.id as string))
+            )[0].cart;
+
+      if (!cart) {
+        throw new Error("No cart found");
+      }
+
+      const existingItem = cart.items?.find((item) => item.id === cartItemId);
+
+      const item: Partial<OrderItemPayload> = existingItem || {
+        id: cartItemId,
+        productId,
+      };
+
+      if (!item.configuration) {
+        item.configuration = [];
+      }
+
+      const existingConfiguration = item.configuration.find(
+        (c) => c.id === configuration.id
+      );
+      if (existingConfiguration) {
+        item.configuration = item.configuration.map((c) =>
+          c.id === configuration.id ? configuration : c
+        );
+      } else {
+        item.configuration.push(configuration);
+      }
+
+      if (existingItem) {
+        cart.items = cart.items!.map((i) => (i.id === cartItemId ? item : i));
+      } else {
+        if (!cart.items) {
+          cart.items = [];
+        }
+        cart.items.push(item);
+      }
+
+      cart.saved = DateTime.utc().toISO();
+
+      if (newestCart.source === "user") {
+        await tx
+          .update(users)
+          .set({ cart })
+          .where(eq(users.id, session?.user.id as string));
+      } else {
+        await tx
+          .update(guestCarts)
+          .set({ content: cart })
+          .where(eq(guestCarts.id, cart.id));
+      }
+
+      return cart;
+    });
+
+    return cart;
+  } catch (e) {
+    console.error(e);
+
+    throw new Error("Unknown error occurred when adding file to cart item");
   }
 };
 

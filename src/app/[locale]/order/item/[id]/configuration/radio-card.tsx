@@ -1,31 +1,21 @@
+import { RadioCardConfiguration } from "@/db/validation";
+import { Locales } from "@/i18n/locales";
 import { Flex, RadioCards, Text } from "@radix-ui/themes";
 import { useFormatter, useLocale } from "next-intl";
-import { BaseProductConfiguration } from "./form";
-
-export type RadioCardConfiguration = BaseProductConfiguration & {
-  type: "radio-card";
-  options: {
-    id: string;
-    name: Record<string, string>;
-    price: number;
-  }[];
-};
 
 interface Props {
   config: RadioCardConfiguration;
-  onChange: (option?: RadioCardConfiguration["options"][0]) => void;
+  onChange: (value: string | null) => void;
 }
 
 const RadioCardRenderer = ({ config, onChange }: Props) => {
-  const locale = useLocale();
+  const locale = useLocale() as Locales;
   const format = useFormatter();
 
   return (
     <RadioCards.Root
       columns={{ initial: "2", sm: "3", md: "4" }}
-      onValueChange={(selectedId) =>
-        onChange(config.options.find(({ id }) => id === selectedId))
-      }
+      onValueChange={(selectedId) => onChange(selectedId)}
     >
       {config.options.map((option) => (
         <RadioCards.Item key={option.id} value={option.id}>
@@ -33,7 +23,7 @@ const RadioCardRenderer = ({ config, onChange }: Props) => {
             <Text weight="bold">{option.name[locale]}</Text>
             <Text>
               +{" "}
-              {format.number(option.price, {
+              {format.number(option.price.cost, {
                 style: "currency",
                 currency: "EUR",
               })}
