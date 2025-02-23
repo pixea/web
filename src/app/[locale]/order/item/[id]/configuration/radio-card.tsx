@@ -5,16 +5,20 @@ import { useFormatter, useLocale } from "next-intl";
 
 interface Props {
   config: RadioCardConfiguration;
+  value?: string | null;
   onChange: (value: string | null) => void;
 }
 
-const RadioCardRenderer = ({ config, onChange }: Props) => {
+const RadioCardRenderer = ({ config, value, onChange }: Props) => {
   const locale = useLocale() as Locales;
   const format = useFormatter();
+
+  const defaultValue = value || config.default || undefined;
 
   return (
     <RadioCards.Root
       columns={{ initial: "2", sm: "3", md: "4" }}
+      defaultValue={defaultValue}
       onValueChange={(selectedId) => onChange(selectedId)}
     >
       {config.options.map((option) => (

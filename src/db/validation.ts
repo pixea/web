@@ -6,7 +6,7 @@ export const translatedPropertySchema = z.object({
 });
 
 export const pricePropertySchema = z.object({
-  type: z.enum(["fixed", "per-meter-squared", "per-item"]),
+  type: z.enum(["fixed", "per-meter-squared", "per-file", "per-piece"]),
   cost: z.number(),
   margin: z.number(),
 });
@@ -26,7 +26,7 @@ export const radioCardConfigurationSchema = baseConfigurationSchema.merge(
         z.object({
           id: z.string(),
           name: translatedPropertySchema.required(),
-          description: translatedPropertySchema.required(),
+          description: translatedPropertySchema.optional(),
           price: pricePropertySchema,
         })
       )

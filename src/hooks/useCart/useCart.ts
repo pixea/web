@@ -8,6 +8,7 @@ import {
   addFileToCartItemAction,
   removeFileFromCartItemAction,
   saveCartItemConfigurationAction,
+  saveCartItemSizeAction,
   removeCartItemAction,
 } from "./actions";
 import { Product } from "@/db/schema";
@@ -98,6 +99,31 @@ const useCart = (initialCartState: ShoppingCart, options?: CartOptions) => {
     [productId]
   );
 
+  const saveCartItemSize = useCallback(
+    async (cartItemId: string, size: OrderItemPayload["size"]) => {
+      setPendingActions((actions) => actions + 1);
+      try {
+        if (!productId) {
+          throw new Error("Product not selected");
+        }
+
+        const updatedCart = await saveCartItemSizeAction(
+          cartItemId,
+          productId,
+          size
+        );
+
+        // Replace state with the server response
+        setCart((currentCart) =>
+          updatedCart.saved > currentCart.saved ? updatedCart : currentCart
+        );
+      } finally {
+        setPendingActions((actions) => actions - 1);
+      }
+    },
+    [productId]
+  );
+
   const removeCartItem = useCallback(async (cartItemId: string) => {
     setPendingActions((actions) => actions + 1);
     try {
@@ -117,6 +143,7 @@ const useCart = (initialCartState: ShoppingCart, options?: CartOptions) => {
     addFileToCartItem,
     removeFileFromCartItem,
     saveCartItemConfiguration,
+    saveCartItemSize,
     removeCartItem,
     isPending: pendingActions > 0,
   };

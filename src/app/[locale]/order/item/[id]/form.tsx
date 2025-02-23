@@ -47,6 +47,7 @@ const Form = ({ session, initialCart, itemId, product }: Props) => {
     addFileToCartItem,
     removeFileFromCartItem,
     saveCartItemConfiguration,
+    saveCartItemSize,
     isPending,
   } = useCart(initialCart, { product });
 
@@ -156,6 +157,8 @@ const Form = ({ session, initialCart, itemId, product }: Props) => {
             product={product}
             values={item?.configuration}
             onChange={(change) => saveCartItemConfiguration(itemId, change)}
+            size={item?.size}
+            onSizeChange={(size) => saveCartItemSize(itemId, size)}
           />
         </Flex>
       </Flex>

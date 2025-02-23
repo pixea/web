@@ -4,15 +4,17 @@ import { useFormatter } from "next-intl";
 
 interface Props {
   config: Product["size"];
+  value?: [number, number];
   onChange: (dimensions: [number, number]) => void;
 }
 
-const SizeRenderer = ({ config, onChange }: Props) => {
+const SizeRenderer = ({ config, value, onChange }: Props) => {
   const format = useFormatter();
 
   return (
     <RadioCards.Root
       columns={{ initial: "2", sm: "3", md: "4" }}
+      defaultValue={value?.join("x") || undefined}
       onValueChange={(selectedId) => {
         const dimensions = selectedId.split("x").map(Number) as [
           number,
