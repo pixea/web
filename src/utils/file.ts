@@ -49,6 +49,9 @@ export const SUPPORTED_THUMBNAIL_TYPES = [
   ...HEIC_TYPES,
 ];
 
+// We can preview most types supported for thumbnails with some exceptions
+export const UNSUPPORTED_PREVIEW_EXTENSIONS = ["tif", "tiff", "heic", "heif"];
+
 export function formatFileSize(bytes: number): string {
   if (bytes === 0) return "0 B"; // Handle 0 bytes case
   const sizes = ["B", "KB", "MB", "GB", "TB"];

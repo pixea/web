@@ -51,8 +51,7 @@
     "removeItem": "Remove item",
     "uploading": "Uploading...",
     "open": "Open",
-    "removeFile": "Remove file",
-
+    "remove": "Remove",
     "fileTooLarge": "This file is too large to be displayed.",
     "download": "Download",
     "close": "Close"
@@ -71,7 +70,8 @@
     "add": "Add",
     "configuration": "Choose options",
     "total": "Total",
-    "save": "Save"
+    "save": "Save",
+    "continue": "Continue"
   },
   "Products": {
     "title": "Product administration",

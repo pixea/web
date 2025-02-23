@@ -1,62 +1,20 @@
 import { Link } from "@/i18n/routing";
 import { Button, Flex, Heading, Grid, Container } from "@radix-ui/themes";
 import { ArrowUturnLeftIcon } from "@heroicons/react/24/solid";
-import { useTranslations } from "next-intl";
-import ProductPreview, { Product } from "./product";
+import ProductPreview from "./product";
+import { getTranslations } from "next-intl/server";
+import { desc, eq } from "drizzle-orm";
+import { products as productsSchema } from "@/db/schema";
+import db from "@/db";
 
-const OrderItemSelectionPage = () => {
-  const t = useTranslations("OrderItemSelection");
+const OrderItemSelectionPage = async () => {
+  const t = await getTranslations("OrderItemSelection");
 
-  const options = [
-    {
-      id: "xxx1",
-      name: {
-        en: "Photo",
-        sk: "Fotografia",
-      },
-      desc: {
-        en: "from 9x13cm, $500",
-        sk: "od 9x13cm, 500€",
-      },
-      image: "photo.jpg",
-    },
-    {
-      id: "xxx2",
-      name: {
-        en: "Panel",
-        sk: "Panel",
-      },
-      desc: {
-        en: "from 15x20cm, $1000",
-        sk: "od 15x20cm, 1000€",
-      },
-      image: "panel.jpg",
-    },
-    {
-      id: "xxx3",
-      name: {
-        en: "Canvas",
-        sk: "Plátno",
-      },
-      desc: {
-        en: "from 15x20cm, $2000",
-        sk: "od 15x20cm, 2000€",
-      },
-      image: "canvas.jpg",
-    },
-    {
-      id: "xxx4",
-      name: {
-        en: "Custom",
-        sk: "Na požiadanie",
-      },
-      desc: {
-        en: "pricing will be specified",
-        sk: "cena bude upresnená",
-      },
-      image: "custom.jpg",
-    },
-  ] as Product[];
+  const products = await db
+    .select()
+    .from(productsSchema)
+    .where(eq(productsSchema.status, "active"))
+    .orderBy(desc(productsSchema.created));
 
   return (
     <Container className="w-full" mt="4">
@@ -82,8 +40,8 @@ const OrderItemSelectionPage = () => {
         width="full"
         mt="4"
       >
-        {options.map((option) => (
-          <ProductPreview key={option.id} product={option} />
+        {products.map((product) => (
+          <ProductPreview key={product.id} product={product} />
         ))}
       </Grid>
     </Container>

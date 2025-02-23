@@ -3,7 +3,6 @@
 import { Button, Flex, Heading, Text } from "@radix-ui/themes";
 import BottomBar from "@/components/bottomBar";
 import { useFormatter, useTranslations } from "next-intl";
-import { useState } from "react";
 import { RadioCardConfiguration } from "./radio-card";
 import dynamic from "next/dynamic";
 import { Session } from "next-auth";
@@ -14,6 +13,8 @@ import {
   AdjustmentsHorizontalIcon,
   CloudArrowUpIcon,
 } from "@heroicons/react/24/outline";
+import Configuration from "./configuration";
+import { Product } from "@/db/schema";
 
 export type BaseProductConfiguration = {
   id: string;
@@ -22,119 +23,27 @@ export type BaseProductConfiguration = {
 
 export type ProductConfiguration = RadioCardConfiguration;
 
-// const configuration = [
-//   {
-//     id: "process",
-//     type: "radio-card",
-//     name: {
-//       sk: "Spracovanie",
-//       en: "Process",
-//     },
-//     options: [
-//       {
-//         id: "standard",
-//         name: {
-//           sk: "Štandard",
-//           en: "Standard",
-//         },
-//         description: {
-//           sk: "Zakladne orezanie a spracovanie clovekom.",
-//           en: "Basic cropping and manual processing.",
-//         },
-//         price: 0,
-//       },
-//       {
-//         id: "premium",
-//         name: {
-//           sk: "Premium",
-//           en: "Premium",
-//         },
-//         description: {
-//           sk: "Orezanie, uprava kontrastu a farieb, odstranenie chyb.",
-//           en: "Cropping, contrast and color adjustment, defect removal.",
-//         },
-//         price: 2,
-//       },
-//     ],
-//   },
-//   {
-//     id: "frame",
-//     type: "radio-card",
-//     name: {
-//       sk: "Rám",
-//       en: "Frame",
-//     },
-//     options: [
-//       {
-//         id: "none",
-//         name: {
-//           sk: "Bez rámu",
-//           en: "No frame",
-//         },
-//         price: 0,
-//       },
-//       {
-//         id: "black",
-//         name: {
-//           sk: "Čierna lista",
-//           en: "Black",
-//         },
-//         price: 10,
-//       },
-//       {
-//         id: "white",
-//         name: {
-//           sk: "Biela lista",
-//           en: "White",
-//         },
-//         price: 10,
-//       },
-//       {
-//         id: "wood",
-//         name: {
-//           sk: "Drevena lista",
-//           en: "Wooden frame",
-//         },
-//         price: 20,
-//       },
-//     ],
-//   },
-//   {
-//     id: "note",
-//     type: "textarea",
-//     name: {
-//       sk: "Poznámka",
-//       en: "Note",
-//     },
-//   },
-// ] as ProductConfiguration[];
-
 const Files = dynamic(() => import("./files/files"), {
   ssr: false,
   loading: () => <FilesSkeleton />,
 });
 
-// const renderers = {
-//   "radio-card": RadioCardRenderer,
-//   textarea: TextAreaRenderer,
-// };
-
 interface Props {
   session?: Session | null;
   initialCart: ShoppingCart;
   itemId: string;
+  item?: NonNullable<ShoppingCart["items"]>[0];
+  product: Product;
 }
 
-const Form = ({ session, initialCart, itemId }: Props) => {
+const Form = ({ session, initialCart, itemId, item, product }: Props) => {
   const t = useTranslations("OrderItem");
   const format = useFormatter();
 
   const { cart, addFileToCartItem, removeFileFromCartItem, isPending } =
     useCart(initialCart);
 
-  const [price] = useState(0);
-
-  const item = cart.items?.find((item) => item.id === itemId);
+  const price = 0;
 
   return (
     <>
@@ -162,20 +71,7 @@ const Form = ({ session, initialCart, itemId }: Props) => {
             {t("configuration")}
           </Heading>
 
-          <Flex direction="column" gap="4" width="full">
-            {/* {configuration.map((config) => (
-            <Flex direction="column" gap="2" key={config.id}>
-              <Heading as="h3" size="3">
-                {config.name[locale]}
-              </Heading>
-
-              {renderers[config.type]({
-                config,
-                onChange: (option) => option?.price && setPrice(option.price),
-              })}
-            </Flex>
-          ))} */}
-          </Flex>
+          <Configuration product={product} values={item?.configuration} />
         </Flex>
       </Flex>
 
@@ -195,7 +91,7 @@ const Form = ({ session, initialCart, itemId }: Props) => {
             className="font-semibold"
             disabled={isPending}
           >
-            {t("save")}
+            {t("continue")}
           </Button>
         </Flex>
       </BottomBar>

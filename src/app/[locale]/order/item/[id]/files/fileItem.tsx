@@ -1,5 +1,5 @@
 import { memo } from "react";
-import { formatFileSize } from "@/utils/file";
+import { formatFileSize, UNSUPPORTED_PREVIEW_EXTENSIONS } from "@/utils/file";
 import { XMarkIcon } from "@heroicons/react/24/solid";
 import {
   Box,
@@ -25,6 +25,8 @@ interface Props {
   fullName: string;
   size?: number;
   s3Key?: string;
+  width?: number;
+  height?: number;
   progressPercentage?: number;
   progressBytes?: number;
   isUploading: boolean;
@@ -38,6 +40,8 @@ const FileItem = ({
   fullName,
   size,
   s3Key,
+  width,
+  height,
   progressPercentage,
   progressBytes,
   isUploading,
@@ -54,7 +58,8 @@ const FileItem = ({
       ? ""
       : fullName.substring(lastDotIndex).replace(/\./g, "").toUpperCase();
 
-  const fileTooLarge = size ? size > 20000000 : false;
+  const isPreviewable =
+    hasThumbnail && !UNSUPPORTED_PREVIEW_EXTENSIONS.includes(extension);
 
   return (
     <Flex direction="column" className="ring-1 ring-gray-6 rounded-3">
@@ -117,16 +122,16 @@ const FileItem = ({
             </Dialog.Trigger>
           </Tooltip>
 
-          <Dialog.Content maxWidth="450px" className="pt-0">
+          <Dialog.Content className="pt-0">
             <Flex direction="column" gap="3">
               <Inset side="x" mb="4">
                 <Flex
                   className={cn(
                     "relative flex items-center justify-center w-full bg-gray-3",
-                    !hasThumbnail || fileTooLarge ? "h-48" : "h-full"
+                    !isPreviewable ? "h-48" : "h-full"
                   )}
                 >
-                  {!hasThumbnail && (
+                  {!isPreviewable && (
                     <Text
                       color="gray"
                       weight="medium"
@@ -137,25 +142,14 @@ const FileItem = ({
                     </Text>
                   )}
 
-                  {fileTooLarge && (
-                    <Text
-                      color="gray"
-                      weight="medium"
-                      className="text-xl"
-                      mx="5"
-                    >
-                      {t("fileTooLarge")}
-                    </Text>
-                  )}
-
-                  {hasThumbnail && !fileTooLarge && (
+                  {isPreviewable && s3Key && (
                     <Image
                       unoptimized
-                      src={`/api/s3/thumbnail/${s3Key}`}
+                      src={`/api/s3/download?key=${encodeURIComponent(s3Key)}`}
                       alt=""
-                      width={256}
-                      height={256}
-                      className="object-cover size-full"
+                      width={width || 4000}
+                      height={height || 3000}
+                      className="object-contain w-full h-auto max-h-[calc(90vh-9rem)]"
                       onError={(event) =>
                         ((event.target as HTMLImageElement).style.display =
                           "none")
@@ -177,18 +171,36 @@ const FileItem = ({
               </Flex>
             </Flex>
 
-            <Flex gap="3" mt="4" justify="end">
-              <Button variant="soft" color="gray">
-                <ArrowDownTrayIcon className="size-4" /> {t("download")}
+            <Flex gap="3" mt="4" justify="between">
+              <Button
+                variant="soft"
+                color="red"
+                onClick={() => onRemoveFile(id)}
+              >
+                {t("remove")}
               </Button>
-              <Dialog.Close>
-                <Button>{t("close")}</Button>
-              </Dialog.Close>
+
+              <Flex gap="3">
+                {s3Key && (
+                  <Button asChild variant="soft" color="gray">
+                    <a
+                      href={`/api/s3/download?key=${encodeURIComponent(s3Key)}`}
+                      target="_blank"
+                      download={fullName}
+                    >
+                      <ArrowDownTrayIcon className="size-4" /> {t("download")}
+                    </a>
+                  </Button>
+                )}
+                <Dialog.Close>
+                  <Button>{t("close")}</Button>
+                </Dialog.Close>
+              </Flex>
             </Flex>
           </Dialog.Content>
         </Dialog.Root>
 
-        <Tooltip content={t("removeFile")}>
+        <Tooltip content={t("remove")}>
           <IconButton
             className="absolute top-0 right-0 ring-1 ring-gray-6 bg-panel-solid text-gray-11 rounded-tl-none rounded-br-none hover:bg-red-9 hover:text-white hover:ring-red-6 m-0"
             onClick={() => onRemoveFile(id, uppyFileId)}

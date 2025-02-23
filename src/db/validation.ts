@@ -108,6 +108,7 @@ export const orderItemFileSchema = z.object({
 
 export const orderItemSchema = z.object({
   id: z.string(),
+  productId: z.string(),
   files: z.object({
     pieces: z.number().optional(),
     items: z.array(orderItemFileSchema),

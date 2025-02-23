@@ -269,6 +269,12 @@ const Files = ({
             fullName={file.name}
             size={file.size}
             s3Key={"s3Key" in file ? file.s3Key : undefined}
+            width={
+              "metadata" in file ? (file.metadata?.width as number) : undefined
+            }
+            height={
+              "metadata" in file ? (file.metadata?.height as number) : undefined
+            }
             progressPercentage={
               "uppyFile" in file ? file.uppyFile.progress.percentage : undefined
             }

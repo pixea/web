@@ -1,16 +1,11 @@
 "use client";
 
+import { Product } from "@/db/schema";
+import { Locales } from "@/i18n/locales";
 import { useRouter } from "@/i18n/routing";
 import { Button, Flex, Inset, Text } from "@radix-ui/themes";
 import { useLocale } from "next-intl";
 import Image from "next/image";
-
-export interface Product {
-  id: string;
-  name: Record<string, string>;
-  desc: Record<string, string>;
-  image: string;
-}
 
 const ProductPreview = ({ product }: { product: Product }) => {
   const locale = useLocale();
@@ -25,6 +20,7 @@ const ProductPreview = ({ product }: { product: Product }) => {
         router.push({
           pathname: `/order/item/[id]`,
           params: { id: crypto.randomUUID() },
+          query: { productId: product.id },
         })
       }
     >
@@ -41,9 +37,9 @@ const ProductPreview = ({ product }: { product: Product }) => {
       <Flex direction="row" justify="between" p="4" gap="4" className="w-full">
         <Flex direction="column">
           <Text weight="bold" size="4" className="text-gray-12">
-            {product.name[locale]}
+            {product.name[locale as Locales]}
           </Text>
-          <Text size="2">{product.desc[locale]}</Text>
+          <Text size="2">{product.description[locale as Locales]}</Text>
         </Flex>
       </Flex>
     </Button>

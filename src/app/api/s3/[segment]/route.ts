@@ -10,8 +10,10 @@ import {
   PutObjectCommand,
   UploadPartCommand,
   ListPartsOutput,
+  GetObjectCommand,
 } from "@aws-sdk/client-s3";
 import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
+import { NextResponse } from "next/server";
 
 const SIGNATURE_EXPIRATION = 60 * 60 * 12; // Define how long until an S3 signature expires.
 
@@ -165,6 +167,27 @@ export async function GET(
   { params }: { params: Promise<{ segment: string }> }
 ) {
   const { segment } = await params;
+
+  if (segment === "download") {
+    const searchParams: URLSearchParams = new URL(request.url).searchParams;
+    let key = searchParams.get("key");
+    if (!key) {
+      return new Response("key is required", { status: 400 });
+    }
+    key = `original/${key}`;
+
+    const signedUrl = await getSignedUrl(
+      getS3Client(),
+      new GetObjectCommand({
+        Bucket: process.env.S3_BUCKET!,
+        Key: key,
+        ResponseContentDisposition: "attachment",
+      }),
+      { expiresIn: SIGNATURE_EXPIRATION }
+    );
+
+    return NextResponse.redirect(signedUrl);
+  }
 
   if (segment === "multipart") {
     const searchParams: URLSearchParams = new URL(request.url).searchParams;

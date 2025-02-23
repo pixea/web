@@ -51,9 +51,8 @@
     "removeItem": "Odstrániť položku",
     "uploading": "Nahrávam...",
     "open": "Otvoriť",
-    "removeFile": "Odstrániť súbor",
-
-    "fileTooLarge": "Tento súbor je príliš veľký na zobrazenie.",
+    "remove": "Odstrániť",
+    "noPreview": "Pre tento súbor nie je k dispozícii náhľad.",
     "download": "Stiahnuť",
     "close": "Zavrieť"
   },
@@ -71,7 +70,8 @@
     "add": "Pridať",
     "configuration": "Zvoľte možnosti",
     "total": "Celkom",
-    "save": "Uložiť"
+    "save": "Uložiť",
+    "continue": "Pokračovať"
   },
   "Products": {
     "title": "Administrácia produktov",
