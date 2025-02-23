@@ -94,7 +94,7 @@ const Form = ({ session, initialCart, itemId, product }: Props) => {
               <RectangleStackIcon className="size-6" /> {t("quantity")}
             </Heading>
 
-            <Flex direction="column" gap="2">
+            <Flex direction="row" align="center" wrap="wrap" gapY="3" gapX="4">
               <Box className="max-w-48">
                 <TextField.Root
                   placeholder="0"
