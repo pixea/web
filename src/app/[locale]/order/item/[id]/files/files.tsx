@@ -205,7 +205,7 @@ const Files = ({
   );
 
   const dropZoneClasses = cn(
-    "flex items-center justify-center border border-dashed p-6 rounded-3 cursor-pointer",
+    "flex items-center justify-center border border-dashed border-gray-8 p-6 rounded-3 cursor-pointer",
     {
       "text-gray-11 hover:bg-gray-3": !isDragging,
       "text-blue-11 bg-blue-3": isDragging,
