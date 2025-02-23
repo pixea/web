@@ -1,20 +1,43 @@
-import { OrderItemFilePayload, ShoppingCart } from "@/db/validation";
+import {
+  OrderItemFilePayload,
+  OrderItemPayload,
+  ShoppingCart,
+} from "@/db/validation";
 import { useCallback, useState } from "react";
 import {
   addFileToCartItemAction,
   removeFileFromCartItemAction,
+  saveCartItemConfigurationAction,
   removeCartItemAction,
 } from "./actions";
+import { Product } from "@/db/schema";
 
-const useCart = (initialCartState: ShoppingCart) => {
+type CartOptions = {
+  /**
+   * Currently selected product
+   */
+  product?: Product;
+};
+
+const useCart = (initialCartState: ShoppingCart, options?: CartOptions) => {
   const [cart, setCart] = useState<ShoppingCart>(initialCartState);
   const [pendingActions, setPendingActions] = useState(0);
+
+  const productId = options?.product?.id;
 
   const addFileToCartItem = useCallback(
     async (cartItemId: string, file: OrderItemFilePayload) => {
       setPendingActions((actions) => actions + 1);
       try {
-        const updatedCart = await addFileToCartItemAction(cartItemId, file);
+        if (!productId) {
+          throw new Error("Product not selected");
+        }
+
+        const updatedCart = await addFileToCartItemAction(
+          cartItemId,
+          productId,
+          file
+        );
 
         // Replace state with the server response
         setCart((currentCart) =>
@@ -24,7 +47,7 @@ const useCart = (initialCartState: ShoppingCart) => {
         setPendingActions((actions) => actions - 1);
       }
     },
-    []
+    [productId]
   );
 
   const removeFileFromCartItem = useCallback(
@@ -47,6 +70,34 @@ const useCart = (initialCartState: ShoppingCart) => {
     []
   );
 
+  const saveCartItemConfiguration = useCallback(
+    async (
+      cartItemId: string,
+      configuration: OrderItemPayload["configuration"][0]
+    ) => {
+      setPendingActions((actions) => actions + 1);
+      try {
+        if (!productId) {
+          throw new Error("Product not selected");
+        }
+
+        const updatedCart = await saveCartItemConfigurationAction(
+          cartItemId,
+          productId,
+          configuration
+        );
+
+        // Replace state with the server response
+        setCart((currentCart) =>
+          updatedCart.saved > currentCart.saved ? updatedCart : currentCart
+        );
+      } finally {
+        setPendingActions((actions) => actions - 1);
+      }
+    },
+    [productId]
+  );
+
   const removeCartItem = useCallback(async (cartItemId: string) => {
     setPendingActions((actions) => actions + 1);
     try {
@@ -65,6 +116,7 @@ const useCart = (initialCartState: ShoppingCart) => {
     cart,
     addFileToCartItem,
     removeFileFromCartItem,
+    saveCartItemConfiguration,
     removeCartItem,
     isPending: pendingActions > 0,
   };

@@ -11,7 +11,6 @@ import {
 } from "@radix-ui/themes";
 import BottomBar from "@/components/bottomBar";
 import { useFormatter, useTranslations } from "next-intl";
-import { RadioCardConfiguration } from "./radio-card";
 import dynamic from "next/dynamic";
 import { Session } from "next-auth";
 import { ShoppingCart } from "@/db/validation";
@@ -27,13 +26,6 @@ import Configuration from "./configuration";
 import { Product } from "@/db/schema";
 import { MinusIcon, PlusIcon } from "@heroicons/react/24/solid";
 import { useState } from "react";
-
-export type BaseProductConfiguration = {
-  id: string;
-  name: Record<string, string>;
-};
-
-export type ProductConfiguration = RadioCardConfiguration;
 
 const Files = dynamic(() => import("./files/files"), {
   ssr: false,
@@ -51,8 +43,13 @@ const Form = ({ session, initialCart, itemId, product }: Props) => {
   const t = useTranslations("OrderItem");
   const format = useFormatter();
 
-  const { cart, addFileToCartItem, removeFileFromCartItem, isPending } =
-    useCart(initialCart);
+  const {
+    cart,
+    addFileToCartItem,
+    removeFileFromCartItem,
+    saveCartItemConfiguration,
+    isPending,
+  } = useCart(initialCart, { product });
 
   const item = cart?.items?.find((item) => item.id === itemId);
 
@@ -124,7 +121,11 @@ const Form = ({ session, initialCart, itemId, product }: Props) => {
             {t("configuration")}
           </Heading>
 
-          <Configuration product={product} values={item?.configuration} />
+          <Configuration
+            product={product}
+            values={item?.configuration}
+            onChange={(change) => saveCartItemConfiguration(itemId, change)}
+          />
         </Flex>
       </Flex>
 

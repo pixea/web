@@ -7,8 +7,8 @@ export const translatedPropertySchema = z.object({
 
 export const pricePropertySchema = z.object({
   type: z.enum(["fixed", "per-meter-squared", "per-item"]),
-  cost: z.number().optional(),
-  margin: z.number().optional(),
+  cost: z.number(),
+  margin: z.number(),
 });
 
 export const baseConfigurationSchema = z.object({
@@ -31,6 +31,12 @@ export const radioCardConfigurationSchema = baseConfigurationSchema.merge(
         })
       )
       .min(1),
+  })
+);
+
+export const textareaConfigurationSchema = baseConfigurationSchema.merge(
+  z.object({
+    type: z.literal("textarea"),
   })
 );
 
@@ -70,7 +76,7 @@ export const productSchema = z.object({
   }),
 
   configuration: z.array(
-    baseConfigurationSchema.and(radioCardConfigurationSchema)
+    radioCardConfigurationSchema.or(textareaConfigurationSchema)
   ),
 });
 
@@ -119,7 +125,7 @@ export const orderItemSchema = z.object({
   configuration: z.array(
     z.object({
       id: z.string(),
-      option: z.string(),
+      value: z.string().nullable(),
     })
   ),
 });
@@ -171,7 +177,14 @@ export const orderSchema = z.object({
 });
 
 export type UserPayload = z.infer<typeof userSchema>;
+
+export type BaseConfiguration = z.infer<typeof baseConfigurationSchema>;
+export type RadioCardConfiguration = z.infer<
+  typeof radioCardConfigurationSchema
+>;
+export type TextareaConfiguration = z.infer<typeof textareaConfigurationSchema>;
 export type ProductPayload = z.infer<typeof productSchema>;
+
 export type OrderItemFilePayload = z.infer<typeof orderItemFileSchema>;
 export type OrderItemPayload = z.infer<typeof orderItemSchema>;
 export type OrderPayload = z.infer<typeof orderSchema>;
