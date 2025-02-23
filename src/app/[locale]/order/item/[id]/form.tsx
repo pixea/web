@@ -19,7 +19,6 @@ import FilesSkeleton from "./files/skeleton";
 import {
   AdjustmentsHorizontalIcon,
   CloudArrowUpIcon,
-  HashtagIcon,
   RectangleStackIcon,
 } from "@heroicons/react/24/outline";
 import Configuration from "./configuration";
@@ -55,7 +54,8 @@ const Form = ({ session, initialCart, itemId, product }: Props) => {
 
   const price = 0;
 
-  const [quantityPerItem, setQuantityPerItem] = useState(1);
+  const [quantityPerFile, setquantityPerFile] = useState(1);
+  const uploadedFilesCount = item?.files?.items.length || 0;
 
   return (
     <>
@@ -81,37 +81,68 @@ const Form = ({ session, initialCart, itemId, product }: Props) => {
               <RectangleStackIcon className="size-6" /> {t("quantity")}
             </Heading>
 
-            <TextField.Root
-              placeholder="Počet kusov na každú fotografiu"
-              defaultValue={quantityPerItem.toString()}
-              size="3"
-              className="text-center"
-            >
-              <TextField.Slot pl="1">
-                <IconButton
-                  color="gray"
-                  size="2"
-                  variant="soft"
-                  onClick={() =>
-                    quantityPerItem >= 2
-                      ? setQuantityPerItem(quantityPerItem - 1)
-                      : undefined
+            <Flex direction="column" gap="2">
+              <Box className="max-w-48">
+                <TextField.Root
+                  placeholder="0"
+                  value={quantityPerFile}
+                  onChange={(event) =>
+                    setquantityPerFile(Number(event.target.value || 1))
                   }
+                  type="number"
+                  min="1"
+                  minLength={1}
+                  max="9999"
+                  maxLength={4}
+                  size="3"
                 >
-                  <MinusIcon height="16" width="16" />
-                </IconButton>
-              </TextField.Slot>
-              <TextField.Slot pr="1">
-                <IconButton
-                  color="gray"
-                  size="2"
-                  variant="soft"
-                  onClick={() => setQuantityPerItem(quantityPerItem + 1)}
-                >
-                  <PlusIcon height="16" width="16" />
-                </IconButton>
-              </TextField.Slot>
-            </TextField.Root>
+                  <TextField.Slot pl="1" pr="5">
+                    <IconButton
+                      color="gray"
+                      size="2"
+                      variant="soft"
+                      onClick={() =>
+                        quantityPerFile >= 2
+                          ? setquantityPerFile(quantityPerFile - 1)
+                          : undefined
+                      }
+                    >
+                      <MinusIcon height="16" width="16" />
+                    </IconButton>
+                  </TextField.Slot>
+
+                  <TextField.Slot>
+                    <Text color="gray" size="3">
+                      {t("pieces", { value: quantityPerFile })}
+                    </Text>
+                  </TextField.Slot>
+
+                  <TextField.Slot pr="1">
+                    <IconButton
+                      color="gray"
+                      size="2"
+                      variant="soft"
+                      onClick={() => setquantityPerFile(quantityPerFile + 1)}
+                    >
+                      <PlusIcon height="16" width="16" />
+                    </IconButton>
+                  </TextField.Slot>
+                </TextField.Root>
+              </Box>
+
+              <Text color="gray" size="2">
+                {t("quantityExplanation", {
+                  count: uploadedFilesCount,
+                })}{" "}
+                <Text weight="medium">
+                  (
+                  {t("quantityExplanationTotal", {
+                    total: uploadedFilesCount * quantityPerFile,
+                  })}
+                  )
+                </Text>
+              </Text>
+            </Flex>
           </Flex>
         </Flex>
 
