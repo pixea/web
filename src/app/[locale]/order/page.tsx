@@ -5,10 +5,24 @@ import { PlusIcon } from "@heroicons/react/24/solid";
 import { getTranslations } from "next-intl/server";
 import { getCurrentCartContentAction } from "@/hooks/useCart/actions";
 import Checkout from "./checkout";
+import { inArray } from "drizzle-orm";
+import db from "@/db";
+import { products as productsSchema } from "@/db/schema";
 
 export default async function OrderPage() {
   const t = await getTranslations("Order");
   const cart = await getCurrentCartContentAction();
+
+  const relevantProductIds = cart.content?.items
+    ?.map((item) => item.productId)
+    ?.filter((id) => typeof id === "string");
+
+  const products = relevantProductIds?.length
+    ? await db
+        .select()
+        .from(productsSchema)
+        .where(inArray(productsSchema.id, relevantProductIds))
+    : [];
 
   return (
     <Container className="w-full" mt="6">
@@ -30,7 +44,7 @@ export default async function OrderPage() {
       </Flex>
 
       <Flex direction="column" gap="6" align="center" width="full" mt="6">
-        <OrderItems cart={cart.content} />
+        <OrderItems cart={cart.content} products={products} />
 
         <Checkout />
       </Flex>
