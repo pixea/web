@@ -23,7 +23,7 @@ import { RestrictionError } from "@uppy/core/lib/Restricter";
 import { OrderItemFilePayload, ShoppingCartItem } from "@/db/validation";
 import combineFiles from "./combineFiles";
 import FileItem from "./fileItem";
-import { PlusCircleIcon } from "@heroicons/react/24/outline";
+import { PlusIcon } from "@heroicons/react/24/outline";
 import { cn } from "@/lib/utils";
 
 const uppyLocales: Record<Locales, UppyLocale | undefined> = {
@@ -223,7 +223,7 @@ const Files = ({
           my="2"
         >
           <Flex direction="column" align="center" gap="3">
-            <PlusCircleIcon className="size-10" />
+            <PlusIcon className="size-9" />
             <Text color="gray" weight="medium">
               {t("upload")}
             </Text>

@@ -15,9 +15,9 @@ const FilesSkeleton = () => {
           my="2"
         >
           <Flex direction="column" align="center" gap="3">
-            <Skeleton className="rounded-full w-10 h-10 cursor-wait" />
+            <Skeleton className="rounded-3 w-9 h-9 cursor-wait" />
 
-            <Skeleton className="rounded-3 w-72 h-6 cursor-wait" />
+            <Skeleton className="rounded-3 w-64 h-10 xs:w-72 xs:h-6 cursor-wait" />
           </Flex>
 
           <Flex direction="column" align="center" gap="1">
@@ -25,7 +25,7 @@ const FilesSkeleton = () => {
               <Skeleton className="rounded-3 w-40 h-4 cursor-wait" />
             </Text>
             <Text color="gray" size="1">
-              <Skeleton className="rounded-3 w-80 h-4 cursor-wait" />
+              <Skeleton className="rounded-3 w-64 h-8 xs:w-80 xs:h-4 cursor-wait" />
             </Text>
           </Flex>
         </Flex>
