@@ -17,7 +17,7 @@ const RadioCardRenderer = ({ config, value, onChange }: Props) => {
 
   return (
     <RadioCards.Root
-      columns={{ initial: "2", sm: "3", md: "4" }}
+      columns={{ initial: "2", xs: "3", sm: "4", md: "3" }}
       defaultValue={defaultValue}
       onValueChange={(selectedId) => onChange(selectedId)}
     >

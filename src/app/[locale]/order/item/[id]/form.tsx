@@ -24,7 +24,8 @@ import {
 import Configuration from "./configuration";
 import { Product } from "@/db/schema";
 import { MinusIcon, PlusIcon } from "@heroicons/react/24/solid";
-import { useState } from "react";
+import { useCallback, useState } from "react";
+import { debounce } from "radash";
 
 const Files = dynamic(() => import("./files/files"), {
   ssr: false,
@@ -48,6 +49,7 @@ const Form = ({ session, initialCart, itemId, product }: Props) => {
     removeFileFromCartItem,
     saveCartItemConfiguration,
     saveCartItemSize,
+    savePieces,
     isPending,
   } = useCart(initialCart, { product });
 
@@ -55,7 +57,17 @@ const Form = ({ session, initialCart, itemId, product }: Props) => {
 
   const price = 0;
 
-  const [quantityPerFile, setquantityPerFile] = useState(1);
+  const [quantity, setQuantity] = useState(item?.files?.pieces || 1);
+  const debouncedSavePieces = useCallback(
+    debounce({ delay: 1000 }, savePieces),
+    []
+  );
+  const changeQuantity = (value: number) => {
+    if (value === item?.files?.pieces) return;
+    setQuantity(value);
+    debouncedSavePieces(itemId, value);
+  };
+
   const uploadedFilesCount = item?.files?.items.length || 0;
 
   return (
@@ -86,9 +98,9 @@ const Form = ({ session, initialCart, itemId, product }: Props) => {
               <Box className="max-w-48">
                 <TextField.Root
                   placeholder="0"
-                  value={quantityPerFile}
+                  value={quantity}
                   onChange={(event) =>
-                    setquantityPerFile(Number(event.target.value || 1))
+                    changeQuantity(Number(event.target.value || 1))
                   }
                   type="number"
                   min="1"
@@ -103,9 +115,7 @@ const Form = ({ session, initialCart, itemId, product }: Props) => {
                       size="2"
                       variant="soft"
                       onClick={() =>
-                        quantityPerFile >= 2
-                          ? setquantityPerFile(quantityPerFile - 1)
-                          : undefined
+                        quantity > 1 && changeQuantity(quantity - 1)
                       }
                     >
                       <MinusIcon height="16" width="16" />
@@ -114,7 +124,7 @@ const Form = ({ session, initialCart, itemId, product }: Props) => {
 
                   <TextField.Slot>
                     <Text color="gray" size="3">
-                      {t("pieces", { value: quantityPerFile })}
+                      {t("pieces", { value: quantity })}
                     </Text>
                   </TextField.Slot>
 
@@ -123,7 +133,7 @@ const Form = ({ session, initialCart, itemId, product }: Props) => {
                       color="gray"
                       size="2"
                       variant="soft"
-                      onClick={() => setquantityPerFile(quantityPerFile + 1)}
+                      onClick={() => changeQuantity(quantity + 1)}
                     >
                       <PlusIcon height="16" width="16" />
                     </IconButton>
@@ -138,7 +148,7 @@ const Form = ({ session, initialCart, itemId, product }: Props) => {
                 <Text weight="medium">
                   (
                   {t("quantityExplanationTotal", {
-                    total: uploadedFilesCount * quantityPerFile,
+                    total: uploadedFilesCount * quantity,
                   })}
                   )
                 </Text>

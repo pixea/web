@@ -13,7 +13,7 @@ const SizeRenderer = ({ config, value, onChange }: Props) => {
 
   return (
     <RadioCards.Root
-      columns={{ initial: "2", sm: "3", md: "4" }}
+      columns={{ initial: "2", xs: "3", sm: "4", md: "3" }}
       defaultValue={value?.join("x") || undefined}
       onValueChange={(selectedId) => {
         const dimensions = selectedId.split("x").map(Number) as [
