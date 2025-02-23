@@ -4,6 +4,7 @@ import OrderItems from "./items";
 import { PlusIcon } from "@heroicons/react/24/solid";
 import { getTranslations } from "next-intl/server";
 import { getCurrentCartContentAction } from "@/hooks/useCart/actions";
+import Checkout from "./checkout";
 
 export default async function OrderPage() {
   const t = await getTranslations("Order");
@@ -30,6 +31,8 @@ export default async function OrderPage() {
 
       <Flex direction="column" gap="6" align="center" width="full" mt="6">
         <OrderItems cart={cart.content} />
+
+        <Checkout />
       </Flex>
     </Container>
   );
