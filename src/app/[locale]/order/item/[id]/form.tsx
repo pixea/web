@@ -32,16 +32,17 @@ interface Props {
   session?: Session | null;
   initialCart: ShoppingCart;
   itemId: string;
-  item?: NonNullable<ShoppingCart["items"]>[0];
   product: Product;
 }
 
-const Form = ({ session, initialCart, itemId, item, product }: Props) => {
+const Form = ({ session, initialCart, itemId, product }: Props) => {
   const t = useTranslations("OrderItem");
   const format = useFormatter();
 
   const { cart, addFileToCartItem, removeFileFromCartItem, isPending } =
     useCart(initialCart);
+
+  const item = cart?.items?.find((item) => item.id === itemId);
 
   const price = 0;
 

@@ -53,7 +53,6 @@ const OrderItemPage = async ({
       <Form
         session={session}
         initialCart={cart.content}
-        item={item}
         itemId={id}
         product={product}
       />

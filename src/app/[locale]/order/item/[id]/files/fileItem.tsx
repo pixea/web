@@ -172,13 +172,15 @@ const FileItem = ({
             </Flex>
 
             <Flex gap="3" mt="4" justify="between">
-              <Button
-                variant="soft"
-                color="red"
-                onClick={() => onRemoveFile(id)}
-              >
-                {t("remove")}
-              </Button>
+              <Dialog.Close>
+                <Button
+                  variant="soft"
+                  color="red"
+                  onClick={() => onRemoveFile(id, uppyFileId)}
+                >
+                  {t("remove")}
+                </Button>
+              </Dialog.Close>
 
               <Flex gap="3">
                 {s3Key && (
