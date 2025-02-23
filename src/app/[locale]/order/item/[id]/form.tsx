@@ -85,17 +85,32 @@ const Form = ({ session, initialCart, itemId, product }: Props) => {
             </Heading>
 
             <TextField.Root
-              placeholder={quantityPerItem.toString()}
+              placeholder="Počet kusov na každú fotografiu"
+              defaultValue={quantityPerItem.toString()}
               size="3"
               className="text-center"
             >
               <TextField.Slot pl="1">
-                <IconButton color="gray" size="2" variant="solid">
+                <IconButton
+                  color="gray"
+                  size="2"
+                  variant="soft"
+                  onClick={() =>
+                    quantityPerItem >= 2
+                      ? setQuantityPerItem(quantityPerItem - 1)
+                      : undefined
+                  }
+                >
                   <MinusIcon height="16" width="16" />
                 </IconButton>
               </TextField.Slot>
               <TextField.Slot pr="1">
-                <IconButton color="gray" size="2" variant="solid">
+                <IconButton
+                  color="gray"
+                  size="2"
+                  variant="soft"
+                  onClick={() => setQuantityPerItem(quantityPerItem + 1)}
+                >
                   <PlusIcon height="16" width="16" />
                 </IconButton>
               </TextField.Slot>
