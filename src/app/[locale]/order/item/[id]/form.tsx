@@ -88,13 +88,15 @@ const Form = ({ session, initialCart, itemId, product }: Props) => {
             addFileToCartItem={addFileToCartItem}
             removeFileFromCartItem={removeFileFromCartItem}
           />
+        </Flex>
 
-          <Flex direction="column" gap="4" mt="5" className="w-full">
+        <Flex direction="column" gap="9" mt="5" className="w-full md:w-2/3">
+          <Flex direction="column" gap="4">
             <Heading as="h2" size="5" className="flex items-center gap-2">
               <RectangleStackIcon className="size-6" /> {t("quantity")}
             </Heading>
 
-            <Flex direction="row" align="center" wrap="wrap" gapY="3" gapX="4">
+            <Flex direction="row" align="center" wrap="wrap" gap="3">
               <Box className="max-w-48">
                 <TextField.Root
                   placeholder="0"
@@ -155,21 +157,21 @@ const Form = ({ session, initialCart, itemId, product }: Props) => {
               </Text>
             </Flex>
           </Flex>
-        </Flex>
 
-        <Flex direction="column" gap="4" mt="5" className="w-full md:w-2/3">
-          <Heading as="h2" size="5" className="flex items-center gap-2">
-            <AdjustmentsHorizontalIcon className="size-6" />{" "}
-            {t("configuration")}
-          </Heading>
+          <Flex direction="column" gap="4">
+            <Heading as="h2" size="5" className="flex items-center gap-2">
+              <AdjustmentsHorizontalIcon className="size-6" />{" "}
+              {t("configuration")}
+            </Heading>
 
-          <Configuration
-            product={product}
-            values={item?.configuration}
-            onChange={(change) => saveCartItemConfiguration(itemId, change)}
-            size={item?.size}
-            onSizeChange={(size) => saveCartItemSize(itemId, size)}
-          />
+            <Configuration
+              product={product}
+              values={item?.configuration}
+              onChange={(change) => saveCartItemConfiguration(itemId, change)}
+              size={item?.size}
+              onSizeChange={(size) => saveCartItemSize(itemId, size)}
+            />
+          </Flex>
         </Flex>
       </Flex>
 
