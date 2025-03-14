@@ -107,11 +107,12 @@ const Form = ({ session, initialCart, itemId, product }: Props) => {
                   type="number"
                   min="1"
                   minLength={1}
-                  max="9999"
-                  maxLength={4}
+                  max="999"
+                  maxLength={3}
                   size="3"
+                  className="text-center w-[9.25rem]"
                 >
-                  <TextField.Slot pl="1" pr="5">
+                  <TextField.Slot pl="1">
                     <IconButton
                       color="gray"
                       size="2"
@@ -124,13 +125,13 @@ const Form = ({ session, initialCart, itemId, product }: Props) => {
                     </IconButton>
                   </TextField.Slot>
 
-                  <TextField.Slot>
+                  <TextField.Slot className="pl-0">
                     <Text color="gray" size="3">
                       {t("pieces", { value: quantity })}
                     </Text>
                   </TextField.Slot>
 
-                  <TextField.Slot pr="1">
+                  <TextField.Slot pl="0" pr="1">
                     <IconButton
                       color="gray"
                       size="2"

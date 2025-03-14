@@ -71,7 +71,7 @@
     "add": "Pridať",
     "quantity": "Zadajte počet kusov",
     "pieces": "ks",
-    "quantityExplanation": "z {count, plural, =0 {0 nahraných súborov} =1 {1 nahraného súboru} other {# nahraných súborov}}",
+    "quantityExplanation": "z {count, plural, =0 {0 súborov} =1 {1 súboru} other {# súborov}}",
     "quantityExplanationTotal": "spolu {total} ks",
     "configuration": "Zvoľte možnosti",
     "total": "Celkom",

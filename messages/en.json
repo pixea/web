@@ -71,7 +71,7 @@
     "add": "Add",
     "quantity": "Enter quantity",
     "pieces": "{value, plural, =0 {pcs.} =1 {pc.} other {pcs.}}",
-    "quantityExplanation": "from {count, plural, =0 {0 uploaded files} =1 {1 uploaded file} other {# uploaded files}}",
+    "quantityExplanation": "from {count, plural, =0 {0 files} =1 {1 file} other {# files}}",
     "quantityExplanationTotal": "{total, plural, =0 {0 pcs.} =1 {1 pc.} other {# pcs.}} total",
     "configuration": "Choose options",
     "total": "Total",
