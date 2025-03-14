@@ -275,6 +275,21 @@ const Files = ({
             height={
               "metadata" in file ? (file.metadata?.height as number) : undefined
             }
+            channels={
+              "metadata" in file
+                ? (file.metadata?.channels as number)
+                : undefined
+            }
+            density={
+              "metadata" in file
+                ? (file.metadata?.density as number)
+                : undefined
+            }
+            hasProfile={
+              "metadata" in file
+                ? (file.metadata?.hasProfile as boolean)
+                : undefined
+            }
             progressPercentage={
               "uppyFile" in file ? file.uppyFile.progress.percentage : undefined
             }

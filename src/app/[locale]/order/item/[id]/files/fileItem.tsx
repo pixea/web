@@ -12,6 +12,8 @@ import {
   Tooltip,
   Dialog,
   Inset,
+  Badge,
+  Separator,
 } from "@radix-ui/themes";
 import { useTranslations } from "next-intl";
 import Image from "next/image";
@@ -27,6 +29,9 @@ interface Props {
   s3Key?: string;
   width?: number;
   height?: number;
+  density?: number;
+  channels?: number;
+  hasProfile?: boolean;
   progressPercentage?: number;
   progressBytes?: number;
   isUploading: boolean;
@@ -42,6 +47,9 @@ const FileItem = ({
   s3Key,
   width,
   height,
+  density,
+  channels,
+  hasProfile,
   progressPercentage,
   progressBytes,
   isUploading,
@@ -60,6 +68,8 @@ const FileItem = ({
 
   const isPreviewable =
     hasThumbnail && !UNSUPPORTED_PREVIEW_EXTENSIONS.includes(extension);
+
+  const color = channels === 3 ? "sRGB" : channels === 4 ? "CMYK" : undefined;
 
   return (
     <Flex direction="column" className="ring-1 ring-gray-6 rounded-3">
@@ -159,7 +169,9 @@ const FileItem = ({
                 </Flex>
               </Inset>
 
-              <Dialog.Title mb="-2">{name}</Dialog.Title>
+              <Dialog.Title mb="-1" mt="1">
+                {name}
+              </Dialog.Title>
 
               <Flex direction="row" align="center" gapX="2">
                 <Text color="gray" size="2" weight="medium">
@@ -168,10 +180,42 @@ const FileItem = ({
                 <Text color="gray" size="1">
                   {size ? formatFileSize(size) : "N/A"}
                 </Text>
+
+                {(width && height) || density || color || hasProfile ? (
+                  <>
+                    <Separator orientation="vertical" />
+
+                    <Flex direction="row" align="center" gap="2">
+                      {width && height ? (
+                        <Badge color="gray" size="2" variant="surface">
+                          {width} x {height} px
+                        </Badge>
+                      ) : undefined}
+
+                      {density ? (
+                        <Badge color="gray" size="2" variant="surface">
+                          {density} DPI
+                        </Badge>
+                      ) : undefined}
+
+                      {color ? (
+                        <Badge color="gray" size="2" variant="surface">
+                          {color}
+                        </Badge>
+                      ) : undefined}
+
+                      {hasProfile ? (
+                        <Badge color="gray" size="2" variant="surface">
+                          ICC
+                        </Badge>
+                      ) : undefined}
+                    </Flex>
+                  </>
+                ) : undefined}
               </Flex>
             </Flex>
 
-            <Flex gap="3" mt="4" justify="between">
+            <Flex gap="3" mt="5" justify="between">
               <Dialog.Close>
                 <Button
                   variant="soft"
