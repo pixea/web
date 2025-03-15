@@ -13,7 +13,6 @@ import {
   Dialog,
   Inset,
   Badge,
-  Separator,
 } from "@radix-ui/themes";
 import { useTranslations } from "next-intl";
 import Image from "next/image";
@@ -132,7 +131,7 @@ const FileItem = ({
             </Dialog.Trigger>
           </Tooltip>
 
-          <Dialog.Content className="pt-0">
+          <Dialog.Content className="pt-0 px-4 xs:px-5">
             <Flex direction="column" gap="3">
               <Inset side="x" mb="4">
                 <Flex
@@ -169,11 +168,15 @@ const FileItem = ({
                 </Flex>
               </Inset>
 
-              <Dialog.Title mb="-1" mt="1">
+              <Dialog.Title
+                mb="-1"
+                mt={{ initial: "0", xs: "1" }}
+                className="break-all"
+              >
                 {name}
               </Dialog.Title>
 
-              <Flex direction="row" align="center" gapX="2">
+              <Flex direction="row" align="center" gap="2" wrap="wrap">
                 <Text color="gray" size="2" weight="medium">
                   {extension ? extension : undefined}
                 </Text>
@@ -183,9 +186,13 @@ const FileItem = ({
 
                 {(width && height) || density || color || hasProfile ? (
                   <>
-                    <Separator orientation="vertical" />
-
-                    <Flex direction="row" align="center" gap="2">
+                    <Flex
+                      direction="row"
+                      align="center"
+                      gap="2"
+                      wrap="wrap"
+                      ml={{ initial: "0", xs: "1" }}
+                    >
                       {width && height ? (
                         <Badge color="gray" size="2" variant="surface">
                           {width} x {height} px
@@ -215,20 +222,31 @@ const FileItem = ({
               </Flex>
             </Flex>
 
-            <Flex gap="3" mt="5" justify="between">
+            <Flex
+              direction={{ initial: "column", xs: "row" }}
+              justify="between"
+              gap="3"
+              mt="5"
+            >
               <Dialog.Close>
                 <Button
                   variant="soft"
                   color="red"
                   onClick={() => onRemoveFile(id, uppyFileId)}
+                  className="w-full xs:w-auto"
                 >
                   {t("remove")}
                 </Button>
               </Dialog.Close>
 
-              <Flex gap="3">
+              <Flex gap="3" className="w-full xs:w-auto">
                 {s3Key && (
-                  <Button asChild variant="soft" color="gray">
+                  <Button
+                    asChild
+                    variant="soft"
+                    color="gray"
+                    className="flex-1"
+                  >
                     <a
                       href={`/api/s3/download?key=${encodeURIComponent(s3Key)}`}
                       target="_blank"
@@ -239,7 +257,7 @@ const FileItem = ({
                   </Button>
                 )}
                 <Dialog.Close>
-                  <Button>{t("close")}</Button>
+                  <Button className="flex-1">{t("close")}</Button>
                 </Dialog.Close>
               </Flex>
             </Flex>
