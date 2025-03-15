@@ -1,17 +1,18 @@
 "use client";
 
 import * as Collapsible from "@radix-ui/react-collapsible";
-import { ChevronDownIcon, ChevronUpIcon } from "@heroicons/react/24/solid";
+import {
+  ChevronDownIcon,
+  ChevronUpIcon,
+  UserCircleIcon,
+} from "@heroicons/react/24/solid";
 import { Button, Flex, Separator, Text } from "@radix-ui/themes";
 import { useState } from "react";
 import { useTranslations } from "next-intl";
 import { logoutAction } from "@/app/[locale]/auth/actions";
 
 import { Link } from "@/i18n/routing";
-import {
-  ArrowLeftEndOnRectangleIcon,
-  UserCircleIcon,
-} from "@heroicons/react/24/outline";
+import { ArrowLeftEndOnRectangleIcon } from "@heroicons/react/24/outline";
 import useAccountItems from "@/hooks/useAccountItems";
 import { Session } from "next-auth";
 
@@ -29,16 +30,16 @@ const MobileAccountMenu = ({
 
   const iconSize = 4;
 
-  const name = session?.user.name;
+  const name = session?.user?.name;
   const role = session?.user.role;
 
   return (
     <Collapsible.Root open={open} onOpenChange={setOpen}>
       <Collapsible.Trigger asChild>
         <Button
-          variant="soft"
+          variant="solid"
           size="4"
-          color={role === "admin" ? "yellow" : "gray"}
+          color={role === "admin" ? "yellow" : "pink"}
           className="gap-1.5 w-full"
         >
           <UserCircleIcon className="size-6" />
@@ -53,9 +54,9 @@ const MobileAccountMenu = ({
         </Button>
       </Collapsible.Trigger>
 
-      <Collapsible.Content>
-        <Flex direction="column" className="mt-5" asChild>
-          <ul className="gap-5 ml-5">
+      <Collapsible.Content className="ring-1 ring-gray-6 rounded-3">
+        <Flex direction="column" className="mt-2 py-4 p-2" asChild>
+          <ul className="gap-4 mx-2">
             {items.map((subItem) => (
               <li key={subItem.name}>
                 <Button

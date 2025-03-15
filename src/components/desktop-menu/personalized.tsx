@@ -3,11 +3,13 @@ import { Link } from "@/i18n/routing";
 import NextLink from "next/link";
 import {
   ArrowLeftEndOnRectangleIcon,
-  UserCircleIcon,
   ShoppingBagIcon as EmptyShoppingBagIcon,
 } from "@heroicons/react/24/outline";
-import { ShoppingBagIcon as FullShoppingBagIcon } from "@heroicons/react/24/solid";
-import { Button, DropdownMenu, Tooltip, Badge } from "@radix-ui/themes";
+import {
+  UserCircleIcon,
+  ShoppingBagIcon as FullShoppingBagIcon,
+} from "@heroicons/react/24/solid";
+import { Button, DropdownMenu, Tooltip, Badge, Flex } from "@radix-ui/themes";
 import { Session } from "next-auth";
 import { useTranslations } from "next-intl";
 import { logoutAction } from "@/app/[locale]/auth/actions";
@@ -25,11 +27,20 @@ const Personalized = ({
   const items = useAccountItems(session);
   const authUrl = useAuthUrl();
 
+  const name = session?.user?.name;
+  const firstLetter = name ? Array.from(name)[0].toUpperCase() : undefined;
   const role = session?.user.role;
 
   const accountButton = (
     <Tooltip content={t("login")}>
-      <Button variant="ghost" color="gray" size="3" className="py-2.5" asChild>
+      <Button
+        variant="ghost"
+        color="gray"
+        size="3"
+        radius="full"
+        className="p-2.5"
+        asChild
+      >
         <Link href={authUrl}>
           <UserCircleIcon className="size-5" />
         </Link>
@@ -42,14 +53,14 @@ const Personalized = ({
   const accountDropdown = (
     <DropdownMenu.Root>
       <Tooltip content={t("manageAccount")}>
-        <DropdownMenu.Trigger>
+        <DropdownMenu.Trigger className="w-10">
           <Button
-            variant="ghost"
-            color={role === "admin" ? "yellow" : "gray"}
+            variant="solid"
+            color={role === "admin" ? "yellow" : "pink"}
             size="3"
-            className="py-2.5"
+            radius="full"
           >
-            <UserCircleIcon className="size-5" />
+            {firstLetter ? firstLetter : <UserCircleIcon className="size-5" />}
           </Button>
         </DropdownMenu.Trigger>
       </Tooltip>
@@ -85,7 +96,7 @@ const Personalized = ({
   );
 
   return (
-    <>
+    <Flex direction="row" align="center" gap={name ? "3" : "5"}>
       {session ? accountDropdown : accountButton}
 
       <Button
@@ -116,7 +127,7 @@ const Personalized = ({
           )}
         </Link>
       </Button>
-    </>
+    </Flex>
   );
 };
 

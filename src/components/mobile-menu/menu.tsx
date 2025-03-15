@@ -169,7 +169,11 @@ const MobileMenu = ({
                     size="4"
                     asChild
                   >
-                    <Link href={authUrl} onClick={onInteraction}>
+                    <Link
+                      href={authUrl}
+                      onClick={onInteraction}
+                      className="flex items-center gap-1.5"
+                    >
                       {t("login")}
                     </Link>
                   </Button>

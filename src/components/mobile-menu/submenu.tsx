@@ -41,7 +41,7 @@ const MobileSubMenu = ({
 
       <Collapsible.Content>
         <Flex direction="column" className="mt-5" asChild>
-          <ul className="gap-5 ml-5">
+          <ul className="gap-5 mx-2">
             {item.items.map((subItem) => (
               <li key={subItem.name}>
                 <Button
