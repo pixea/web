@@ -142,6 +142,7 @@ const Account = ({ session }: { session: Session }) => {
                 variant="surface"
                 color="orange"
                 role="alert"
+                mb="3"
               >
                 <Callout.Icon>
                   <ExclamationTriangleIcon className="size-4" />
@@ -155,6 +156,14 @@ const Account = ({ session }: { session: Session }) => {
                 </Callout.Text>
               </Callout.Root>
             ) : undefined}
+
+            <Flex
+              justify="center"
+              align="center"
+              className="flex-1 border border-dashed border-gray-8 p-6 rounded-3 text-gray-10"
+            >
+              <Text size="4">{t("orders.empty")}</Text>
+            </Flex>
           </Tabs.Content>
 
           {/* ACCOUNT */}

@@ -179,7 +179,8 @@
         "bold": "Tento tab neslúži na správu všetkých prijatých objednávok!",
         "desc": "Ide o tab, ktorý vidí aj bežný zákazník. Tým pádom používateľ s rolou \"admin\" cez neho dokáže napríklad testovať objednávkový proces.",
         "link": "Otvoriť správu všetkých prijatých objednávok"
-      }
+      },
+      "empty": "Vytvorte svoju prvú objednávku, aby ste ju tu videli."
     },
     "logout": "Odhlásiť sa",
     "save": "Uložiť",

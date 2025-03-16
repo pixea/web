@@ -179,7 +179,8 @@
         "bold": "This tab is not for managing all received orders!",
         "desc": "This is the tab a casual customer sees. Therefore, a user with the \"admin\" role can use it for e.g. testing out the order process.",
         "link": "Open management of all received orders"
-      }
+      },
+      "empty": "Create your first order to see it here."
     },
     "logout": "Log out",
     "save": "Save",
