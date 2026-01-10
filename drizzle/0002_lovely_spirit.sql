@@ -17,3 +17,8 @@ CREATE TABLE "order" (
 );
 --> statement-breakpoint
 ALTER TABLE "order" ADD CONSTRAINT "order_userId_user_id_fk" FOREIGN KEY ("userId") REFERENCES "public"."user"("id") ON DELETE set null ON UPDATE no action;
+--> statement-breakpoint
+ALTER TABLE "user" ADD COLUMN "company" varchar;--> statement-breakpoint
+ALTER TABLE "user" ADD COLUMN "companyId" varchar;--> statement-breakpoint
+ALTER TABLE "user" ADD COLUMN "taxId" varchar;--> statement-breakpoint
+ALTER TABLE "user" ADD COLUMN "vatId" varchar;
