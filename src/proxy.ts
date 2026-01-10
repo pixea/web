@@ -63,7 +63,7 @@ const middlewares: Array<(req: NextRequest) => Promise<unknown> | unknown> = [
   i18nMiddleware,
 ];
 
-export default async function middleware(request: NextRequest) {
+export default async function proxy(request: NextRequest) {
   // if a response is returned, return it otherwise call `next()`
   for (const fn of middlewares) {
     const response = await fn(request);
