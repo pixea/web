@@ -1,13 +1,14 @@
 "use client";
 
 import { useActionState } from "react";
-import { JsonSchema7Type } from "zod-to-json-schema";
 import { Button, TextField } from "@radix-ui/themes";
 import { useTranslations } from "next-intl";
+import { ZodStandardJSONSchemaPayload } from "zod/v4/core";
 
 import BottomBar from "@/components/bottomBar";
 import { ActionToasts } from "@/components/actionToasts";
 import MonacoInput from "@/components/monaco";
+import { orderSchema } from "@/db/validation";
 
 import { saveOrderAction } from "../actions";
 
@@ -17,7 +18,7 @@ const OrderForm = ({
   value,
 }: {
   id?: string;
-  schema: JsonSchema7Type;
+  schema: ZodStandardJSONSchemaPayload<typeof orderSchema>;
   value: string;
 }) => {
   const t = useTranslations("Orders");

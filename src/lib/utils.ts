@@ -9,7 +9,7 @@ export type ActionResult = "success" | "error" | "info";
 
 export type ActionState = {
   result?: ActionResult;
-  message?: string;
+  message: string;
   details?: unknown;
 };
 

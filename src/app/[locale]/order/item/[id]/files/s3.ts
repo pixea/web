@@ -80,7 +80,7 @@ export const s3PluginOptions = {
     const response = await fetch(
       `/api/s3/multipart?${new URLSearchParams({
         key,
-        uploadId,
+        uploadId: uploadId || "",
       })}`,
       {
         method: "DELETE",
@@ -124,7 +124,7 @@ export const s3PluginOptions = {
     const response = await fetch(
       `/api/s3/multipart-list?${new URLSearchParams({
         key,
-        uploadId,
+        uploadId: uploadId || "",
       })}`,
       { signal }
     );

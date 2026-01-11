@@ -16,7 +16,7 @@ const AuthVerifyPage = async () => {
           <Heading size="7">{t("title")}</Heading>
 
           <Text>
-            {t("description", { email: cookieStore.get("email")?.value })}
+            {t("description", { email: cookieStore.get("email")?.value || "" })}
           </Text>
 
           <VerifyForm

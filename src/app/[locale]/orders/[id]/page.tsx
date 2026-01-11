@@ -3,7 +3,6 @@ import { Button, Container, Flex, Heading } from "@radix-ui/themes";
 import { getLocale, getTranslations } from "next-intl/server";
 import { eq } from "drizzle-orm";
 import { redirect } from "next/navigation";
-import { zodToJsonSchema } from "zod-to-json-schema";
 
 import { auth } from "@/auth";
 import { Link } from "@/i18n/routing";
@@ -64,11 +63,7 @@ const OrderEditPage = async ({
           </Button>
         </Flex>
 
-        <OrderForm
-          id={id}
-          value={value}
-          schema={zodToJsonSchema(orderSchema)}
-        />
+        <OrderForm id={id} value={value} schema={orderSchema.toJSONSchema()} />
       </Flex>
     </Container>
   );

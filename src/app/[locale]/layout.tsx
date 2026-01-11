@@ -12,7 +12,8 @@ import { notFound } from "next/navigation";
 import { getMessages } from "next-intl/server";
 import Header from "./header";
 import Footer from "./footer";
-import themeConfig from "@/app/_themes/config";
+import themeConfig from "../_themes/config";
+import { Locales } from "@/i18n/locales";
 
 const raleway = Raleway({
   variable: "--font-releway",
@@ -27,11 +28,11 @@ export const metadata: Metadata = {
 export default async function RootLayout({
   children,
   params,
-}: Readonly<{
+}: {
   children: React.ReactNode;
-  params: { locale: "sk" | "en" };
-}>) {
-  const { locale } = await params;
+  params: Promise<{ locale: string }>;
+}) {
+  const { locale } = (await params) as { locale: Locales };
 
   // Ensure that the incoming `locale` is valid
   if (!routing.locales.includes(locale)) {

@@ -29,7 +29,7 @@ import {
 } from "@/components/sheet";
 import { Link } from "@/i18n/routing";
 import { MenuItem } from "@/app/[locale]/header";
-import themeConfig from "@/app/_themes/config";
+import themeConfig from "../../app/_themes/config";
 
 import MobileSubMenu from "./submenu";
 import MobileAccountMenu from "./account";
