@@ -88,6 +88,7 @@ const Checkout = ({ cart, products, session, isPending, resetCart }: Props) => {
   }, [actionState.result, resetCart]);
 
   const user = session?.user;
+  const userAddress = user?.address;
   const hasAnyCompanyDetails = Boolean(
     user?.company || user?.companyId || user?.taxId || user?.vatId,
   );
@@ -200,7 +201,7 @@ const Checkout = ({ cart, products, session, isPending, resetCart }: Props) => {
                         variant="surface"
                         radius="large"
                         placeholder={tAuth("enterPhone")}
-                        defaultValue={user.phone || undefined}
+                        defaultValue={user?.phone || undefined}
                       />
                     </Flex>
                   </Grid>
@@ -219,7 +220,7 @@ const Checkout = ({ cart, products, session, isPending, resetCart }: Props) => {
                         variant="surface"
                         radius="large"
                         placeholder={tAuth("address.street")}
-                        defaultValue={user.address?.street || undefined}
+                        defaultValue={userAddress?.street || undefined}
                       />
                     </Flex>
                     <Flex direction="column" gap="2">
@@ -234,7 +235,7 @@ const Checkout = ({ cart, products, session, isPending, resetCart }: Props) => {
                         variant="surface"
                         radius="large"
                         placeholder={tAuth("address.enterAdditional")}
-                        defaultValue={user.address?.additional || undefined}
+                        defaultValue={userAddress?.additional || undefined}
                       />
                     </Flex>
                   </Grid>
@@ -253,7 +254,7 @@ const Checkout = ({ cart, products, session, isPending, resetCart }: Props) => {
                         variant="surface"
                         radius="large"
                         placeholder={tAuth("address.zip")}
-                        defaultValue={user.address?.zip || undefined}
+                        defaultValue={userAddress?.zip || undefined}
                       />
                     </Flex>
                     <Flex direction="column" gap="2">
@@ -269,7 +270,7 @@ const Checkout = ({ cart, products, session, isPending, resetCart }: Props) => {
                         variant="surface"
                         radius="large"
                         placeholder={tAuth("address.city")}
-                        defaultValue={user.address?.city || undefined}
+                        defaultValue={userAddress?.city || undefined}
                       />
                     </Flex>
                   </Grid>
@@ -287,7 +288,7 @@ const Checkout = ({ cart, products, session, isPending, resetCart }: Props) => {
                       </Text>
                       <Select.Root
                         name="country"
-                        defaultValue={user.address?.country || "sk"}
+                        defaultValue={userAddress?.country || "sk"}
                       >
                         <Select.Trigger
                           id="country-trigger"
@@ -349,7 +350,7 @@ const Checkout = ({ cart, products, session, isPending, resetCart }: Props) => {
                           variant="surface"
                           radius="large"
                           placeholder={tAuth("company.name")}
-                          defaultValue={user.company || undefined}
+                          defaultValue={user?.company || undefined}
                         />
                       </Flex>
                       <Flex direction="column" gap="2" className="w-full">
@@ -364,7 +365,7 @@ const Checkout = ({ cart, products, session, isPending, resetCart }: Props) => {
                           variant="surface"
                           radius="large"
                           placeholder={tAuth("company.id")}
-                          defaultValue={user.companyId || undefined}
+                          defaultValue={user?.companyId || undefined}
                         />
                       </Flex>
                       <Flex direction="column" gap="2" className="w-full">
@@ -379,7 +380,7 @@ const Checkout = ({ cart, products, session, isPending, resetCart }: Props) => {
                           variant="surface"
                           radius="large"
                           placeholder={tAuth("company.taxId")}
-                          defaultValue={user.taxId || undefined}
+                          defaultValue={user?.taxId || undefined}
                         />
                       </Flex>
                       <Flex direction="column" gap="2" className="w-full">
@@ -394,7 +395,7 @@ const Checkout = ({ cart, products, session, isPending, resetCart }: Props) => {
                           variant="surface"
                           radius="large"
                           placeholder={tAuth("company.vatId")}
-                          defaultValue={user.vatId || undefined}
+                          defaultValue={user?.vatId || undefined}
                         />
                       </Flex>
                     </Grid>
@@ -422,7 +423,7 @@ const Checkout = ({ cart, products, session, isPending, resetCart }: Props) => {
                             variant="surface"
                             radius="large"
                             placeholder={tAuth("address.street")}
-                            defaultValue={user.address?.street || undefined}
+                            defaultValue={userAddress?.street || undefined}
                           />
                         </Flex>
                         <Flex direction="column" gap="2">
@@ -443,7 +444,7 @@ const Checkout = ({ cart, products, session, isPending, resetCart }: Props) => {
                             variant="surface"
                             radius="large"
                             placeholder={tAuth("address.enterAdditional")}
-                            defaultValue={user.address?.additional || undefined}
+                            defaultValue={userAddress?.additional || undefined}
                           />
                         </Flex>
                       </Grid>
@@ -467,7 +468,7 @@ const Checkout = ({ cart, products, session, isPending, resetCart }: Props) => {
                             variant="surface"
                             radius="large"
                             placeholder={tAuth("address.zip")}
-                            defaultValue={user.address?.zip || undefined}
+                            defaultValue={userAddress?.zip || undefined}
                           />
                         </Flex>
                         <Flex direction="column" gap="2">
@@ -489,7 +490,7 @@ const Checkout = ({ cart, products, session, isPending, resetCart }: Props) => {
                             variant="surface"
                             radius="large"
                             placeholder={tAuth("address.city")}
-                            defaultValue={user.address?.city || undefined}
+                            defaultValue={userAddress?.city || undefined}
                           />
                         </Flex>
                       </Grid>
@@ -506,7 +507,7 @@ const Checkout = ({ cart, products, session, isPending, resetCart }: Props) => {
                           </Text>
                           <Select.Root
                             name="invoiceCountry"
-                            defaultValue={user.address?.country || "sk"}
+                            defaultValue={userAddress?.country || "sk"}
                           >
                             <Select.Trigger
                               id="invoiceCountry-trigger"

@@ -144,8 +144,12 @@ export const submitOrderAction = async (
       pricedItems.reduce((sum, item) => sum + (item.price || 0), 0),
     );
 
-    const deliveryTypeRaw = toRequiredString(formData.get("deliveryType"), "deliveryType");
-    const deliveryType = deliveryTypeRaw === "pickup" ? "pickup" : "courier";
+    const deliveryTypeRaw = toRequiredString(
+      formData.get("deliveryType"),
+      "deliveryType",
+    );
+    const deliveryType: "courier" | "pickup" =
+      deliveryTypeRaw === "pickup" ? "pickup" : "courier";
     const deliveryCost = deliveryType === "pickup" ? 0 : 3.9;
     const vat = roundMoney((subtotal + deliveryCost) * 0.2);
 
@@ -195,7 +199,7 @@ export const submitOrderAction = async (
           })(),
         };
 
-    const order = {
+    const order: typeof orders.$inferInsert = {
       status: "new" as const,
       paid: false,
       items: pricedItems,
