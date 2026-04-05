@@ -17,7 +17,7 @@ Pixea is a Next.js 16 e-commerce application for photo printing services (pixea.
 ### Key commands
 
 - **Lint:** `npm run lint` (ESLint on `src/`)
-- **Build:** `npm run build` — has a pre-existing TypeScript error in `src/app/[locale]/products/actions.ts:135` (`response` implicit `any`). Dev mode (`npm run dev`) works fine without this blocking.
+- **Build:** `npm run build`
 - **DB migrations:** `npm run db:migrate` (Drizzle Kit)
 - **DB schema generation:** `npm run db:generate`
 
@@ -29,6 +29,5 @@ All secrets are injected as environment variables. Create `.env.local` from them
 ### Gotchas
 
 - The DATABASE_URL points to an external PostgreSQL service (Nile/thenile.dev), not a local database. No local PostgreSQL setup is needed.
-- `npm run build` fails due to a pre-existing TypeScript type error. The dev server (`npm run dev`) works without issues.
 - The app uses `next-intl` with locale-prefixed routes (`/en/...`, `/sk/...`). The root `/` redirects (307) to the default locale.
 - PostgreSQL client tools (`psql`, `pg_isready`) need to be installed via `sudo apt-get install -y postgresql-client` if direct DB access is needed.

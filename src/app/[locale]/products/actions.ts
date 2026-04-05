@@ -5,7 +5,14 @@ import db from "@/db";
 import { products } from "@/db/schema";
 import { productSchema, ProductPayload } from "@/db/validation";
 import { error, noChanges, success } from "@/lib/utils";
-import { generateText, jsonSchema, JSONSchema7, Output } from "ai";
+import {
+  generateText,
+  GenerateTextResult,
+  jsonSchema,
+  JSONSchema7,
+  Output,
+  ToolSet,
+} from "ai";
 import { google } from "@ai-sdk/google";
 import { eq } from "drizzle-orm";
 import { getLocale } from "next-intl/server";
@@ -132,29 +139,35 @@ Use safe defaults when needed:
     let previousFailedJson: string | undefined = undefined;
 
     for (let attempt = 1; attempt <= MAX_GENERATION_ATTEMPTS; attempt++) {
-      const response = await generateText({
-        model: google(process.env.GOOGLE_GENERATIVE_AI_MODEL || DEFAULT_MODEL),
-        output: Output.object({ schema: productModelSchema }),
-        providerOptions: {
-          google: { structuredOutputs: true },
-        },
-        system: systemPrompt,
-        prompt:
-          attempt === 1 && !previousFailedJson
-            ? JSON.stringify(basePromptPayload, null, 2)
-            : JSON.stringify(
-                {
-                  ...basePromptPayload,
-                  correctionRequest:
-                    "The previous attempt produced invalid JSON. Fix it so it validates against the schema. Return a full corrected object.",
-                  previousFailedJson,
-                  validationIssues: lastIssues,
-                },
-                null,
-                2,
-              ),
-        temperature: 0,
-      });
+      const response: GenerateTextResult<
+        ToolSet,
+        Output.Output<unknown, unknown, never>
+      > =
+        await generateText({
+          model: google(
+            process.env.GOOGLE_GENERATIVE_AI_MODEL || DEFAULT_MODEL,
+          ),
+          output: Output.object({ schema: productModelSchema }),
+          providerOptions: {
+            google: { structuredOutputs: true },
+          },
+          system: systemPrompt,
+          prompt:
+            attempt === 1 && !previousFailedJson
+              ? JSON.stringify(basePromptPayload, null, 2)
+              : JSON.stringify(
+                  {
+                    ...basePromptPayload,
+                    correctionRequest:
+                      "The previous attempt produced invalid JSON. Fix it so it validates against the schema. Return a full corrected object.",
+                    previousFailedJson,
+                    validationIssues: lastIssues,
+                  },
+                  null,
+                  2,
+                ),
+          temperature: 0,
+        });
 
       const parsed = productSchema.safeParse(response.output);
 
