@@ -10,8 +10,15 @@ import {
 import { useTranslations } from "next-intl";
 import Image from "next/image";
 
+const START_YEAR = 2025;
+
 const Footer = () => {
   const t = useTranslations("Footer");
+  const currentYear = new Date().getFullYear();
+  const copyrightYears =
+    currentYear > START_YEAR
+      ? `${START_YEAR}–${currentYear}`
+      : String(START_YEAR);
 
   return (
     <Flex
@@ -258,7 +265,7 @@ const Footer = () => {
                 className="w-full mt-8 md:mt-24 lg:mt-36"
               >
                 <Text color="gray" size="1">
-                  &copy; 2025{" "}
+                  &copy; {copyrightYears}{" "}
                   <RadixLink
                     href="https://dmedia.sk/"
                     target="_blank"
