@@ -54,7 +54,25 @@
     "remove": "Remove",
     "fileTooLarge": "This file is too large to be displayed.",
     "download": "Download",
-    "close": "Close"
+    "close": "Close",
+    "checkout": "Checkout",
+    "loginRequired": "Please log in to continue with your order submission.",
+    "loginToContinue": "Log in to continue",
+    "checkoutEmpty": "Add at least one configured item before submitting the order.",
+    "deliveryMethod": "Delivery method",
+    "delivery": {
+      "courier": "Courier delivery",
+      "pickup": "Personal pickup"
+    },
+    "deliveryDetails": "Delivery details",
+    "invoiceDetails": "Invoicing details",
+    "invoiceSameAsDelivery": "Use delivery address for invoice",
+    "summary": "Order summary",
+    "summaryItems": "{count, plural, =0 {Items} =1 {1 item} other {# items}}",
+    "summaryDelivery": "Delivery",
+    "summaryVat": "VAT (20%)",
+    "summaryTotal": "Total",
+    "submitOrder": "Submit order"
   },
   "OrderItemSelection": {
     "title": "Product selection",
@@ -115,6 +133,80 @@
     "delete": "Delete",
     "back": "Back",
     "save": "Save"
+  },
+  "Orders": {
+    "title": "Order administration",
+    "myOrdersTitle": "My orders",
+    "id": "Order",
+    "email": "E-mail",
+    "status": "Status",
+    "total": "Total",
+    "created": "Created",
+    "updated": "Updated",
+    "actions": "Actions",
+    "updateStatus": "Update status",
+    "edit": "Edit",
+    "delete": "Delete",
+    "back": "Back",
+    "statusValues": {
+      "new": "New",
+      "confirmed": "Confirmed",
+      "printed": "Printed",
+      "packed": "Packed",
+      "shipped": "Shipped",
+      "received": "Received",
+      "archived": "Archived"
+    },
+    "notifications": {
+      "title": "New order notifications",
+      "description": "Set administrator e-mails that should receive notifications when a new order is submitted.",
+      "placeholder": "owner@pixea.sk\nops@pixea.sk",
+      "save": "Save recipients"
+    },
+    "empty": "No orders found yet."
+  },
+  "OrderNotification": {
+    "statuses": {
+      "new": "New",
+      "confirmed": "Confirmed",
+      "printed": "Printed",
+      "packed": "Packed",
+      "shipped": "Shipped",
+      "received": "Received",
+      "archived": "Archived"
+    },
+    "adminNewOrder": {
+      "subject": "New order #{orderId} submitted",
+      "preview": "A new order #{orderId} was submitted. Total: {total} EUR.",
+      "title": "New order submitted",
+      "description": "A customer submitted order #{orderId}.",
+      "customerEmail": "Customer e-mail",
+      "itemCount": "Items",
+      "totals": "Total",
+      "openOrder": "Open order detail"
+    },
+    "customerStatus": {
+      "subject": "Order #{orderId} status update",
+      "preview": "Your order #{orderId} status changed to {status}.",
+      "title": "Your order status changed",
+      "description": "Order #{orderId} is now in status: {status}.",
+      "openOrders": "Open my orders"
+    }
+  },
+  "OrderNewAdminEmail": {
+    "preview": "New order #{orderId} submitted.",
+    "title": "New order submitted",
+    "description": "A customer submitted order #{orderId}.",
+    "customerEmail": "Customer e-mail",
+    "createdAt": "Created",
+    "openOrder": "Open order detail"
+  },
+  "OrderStatusCustomerEmail": {
+    "preview": "Order #{orderId} status changed to {status}.",
+    "title": "Order status update",
+    "description": "Your order #{orderId} is now {status}.",
+    "statusLabel": "Current status",
+    "openOrders": "Open my orders"
   },
   "Auth": {
     "title": "Login",
@@ -186,7 +278,8 @@
         "desc": "This is the tab a casual customer sees. Therefore, a user with the \"admin\" role can use it for e.g. testing out the order process.",
         "link": "Open management of all received orders"
       },
-      "empty": "Create your first order to see it here."
+      "empty": "Create your first order to see it here.",
+      "openAll": "Open all orders"
     },
     "logout": "Log out",
     "save": "Save",
