@@ -2,14 +2,25 @@
 
 import { auth } from "@/auth";
 import db from "@/db";
-import { orders } from "@/db/schema";
-// import { OrderPayload } from "@/db/validation";
+import { orderSettings, orders } from "@/db/schema";
+import { OrderStatusValue, orderStatusValues } from "@/lib/order-status";
 import { error, noChanges, success } from "@/lib/utils";
 import { eq } from "drizzle-orm";
 import { getLocale } from "next-intl/server";
 import { revalidatePath } from "next/cache";
-import { isRedirectError } from "next/dist/client/components/redirect-error";
 import { redirect } from "next/navigation";
+import { notifyOrderStatusChanged } from "@/emails/orders";
+import { ZodError, z } from "zod";
+import { Locales } from "@/i18n/locales";
+
+const statusValueSet = new Set(orderStatusValues);
+const parseAdminEmails = (value: string) =>
+  value
+    .split(/[\n,;]+/g)
+    .map((item) => item.trim().toLowerCase())
+    .filter(Boolean)
+    .filter((value, index, array) => array.indexOf(value) === index);
+const emailSchema = z.string().email();
 
 export const saveOrderAction = async (
   _prevState: unknown,
@@ -22,36 +33,86 @@ export const saveOrderAction = async (
     redirect(`/auth?redirect=${encodeURIComponent(`/${locale}/orders`)}`);
   }
 
-  // const id = formData.get("id") as string;
-  const valuesString = formData.get("values") as string;
+  const id = formData.get("id") as string;
+  const status = formData.get("status") as string;
 
-  if (!valuesString) {
+  if (!id || !status) {
     return noChanges();
   }
 
-  // const values = {
-  //   ...(JSON.parse(valuesString) as OrderPayload),
-  //   // Would wreak havoc
-  //   emailVerified: undefined,
-  // };
+  if (!statusValueSet.has(status as OrderStatusValue)) {
+    return error("error", new Error("Invalid status value"));
+  }
+  const nextStatus = status as OrderStatusValue;
 
   try {
-    // if (id) {
-    //   await db.update(orders).set(values).where(eq(orders.id, id));
-    // } else {
-    //   const order = await db
-    //     .insert(orders)
-    //     .values(values)
-    //     .returning({ id: orders.id });
-    //   redirect(`/${locale}/orders/${order[0].id}`);
-    // }
-  } catch (e) {
-    if (isRedirectError(e)) {
-      throw e;
+    const existingOrder = await db.query.orders.findFirst({
+      where: eq(orders.id, id),
+    });
+    if (!existingOrder) {
+      return error("error", new Error("Order not found"));
     }
 
+    if (existingOrder.status === nextStatus) {
+      return noChanges();
+    }
+
+    await db.update(orders).set({ status: nextStatus }).where(eq(orders.id, id));
+
+    await notifyOrderStatusChanged({
+      orderId: existingOrder.id,
+      locale: locale as Locales,
+      nextStatus,
+    });
+  } catch (e) {
     return error("error", e);
   }
+
+  revalidatePath(`/${locale}/orders`);
+  revalidatePath(`/${locale}/orders/${id}`);
+  revalidatePath(`/${locale}/auth`);
+
+  return success();
+};
+
+export const saveOrderSettingsAction = async (
+  _prevState: unknown,
+  formData: FormData,
+) => {
+  const locale = await getLocale();
+  const session = await auth();
+  if (session?.user.role !== "admin") {
+    redirect(`/auth?redirect=${encodeURIComponent(`/${locale}/orders`)}`);
+  }
+
+  const emails = parseAdminEmails((formData.get("adminNotificationEmails") as string) || "");
+
+  try {
+    emails.forEach((email) => {
+      emailSchema.parse(email);
+    });
+  } catch (e) {
+    return error("error", e instanceof ZodError ? e.issues : e);
+  }
+
+  try {
+    const [current] = await db.select().from(orderSettings).limit(1);
+
+    if (!current) {
+      await db.insert(orderSettings).values({
+        adminNotificationEmails: emails,
+      });
+    } else {
+      await db
+        .update(orderSettings)
+        .set({ adminNotificationEmails: emails })
+        .where(eq(orderSettings.id, current.id));
+    }
+  } catch (e) {
+    return error("error", e);
+  }
+
+  revalidatePath(`/${locale}/orders`);
 
   return success();
 };
@@ -75,6 +136,9 @@ export const deleteOrderAction = async (
   }
 
   revalidatePath(`/${locale}/orders/${id}`);
+  revalidatePath(`/${locale}/orders`);
+  revalidatePath(`/${locale}/order`);
+  revalidatePath(`/${locale}/auth`);
 
   return success();
 };

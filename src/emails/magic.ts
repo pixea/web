@@ -7,14 +7,11 @@ import { render } from "@react-email/render";
 import { Locales } from "@/i18n/locales";
 
 import VerificationEmail from "../../emails/verification";
-import { resend } from ".";
+import { emailFrom, emailReplyTo, resend } from ".";
 import messages from "../../messages";
 
-const from = "Pixea <no-reply@pixea.sk>";
-const replyTo = "Pixea <info@pixea.sk>";
-
 export const resendConfig: EmailUserConfig = {
-  from,
+  from: emailFrom,
   generateVerificationToken: () => CrockfordBase32.encode(randomBytes(5)),
   maxAge: 60 * 60 * 1,
   sendVerificationRequest: async (params) => {
@@ -27,9 +24,9 @@ export const resendConfig: EmailUserConfig = {
     const emailJSX = VerificationEmail({ code: token, locale });
 
     const res = await resend.emails.send({
-      from,
+      from: emailFrom,
       to,
-      replyTo,
+      replyTo: emailReplyTo,
       subject,
       html: await render(emailJSX, { pretty: true }),
       text: await render(emailJSX, { plainText: true }),

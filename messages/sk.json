@@ -118,6 +118,38 @@
     "generateDraft": "Vygenerovať návrh",
     "applyAiUpdate": "Použiť AI úpravu"
   },
+  "Orders": {
+    "title": "Správa objednávok",
+    "myOrdersTitle": "Moje objednávky",
+    "id": "Objednávka",
+    "email": "E-mail",
+    "status": "Stav",
+    "total": "Celkom",
+    "created": "Vytvorená",
+    "updated": "Upravená",
+    "actions": "Akcie",
+    "edit": "Detail",
+    "delete": "Vymazať",
+    "save": "Uložiť",
+    "back": "Späť",
+    "updateStatus": "Aktualizovať",
+    "statusValues": {
+      "new": "Nová",
+      "confirmed": "Potvrdená",
+      "printed": "Vytlačená",
+      "packed": "Zabalená",
+      "shipped": "Odoslaná",
+      "received": "Doručená",
+      "archived": "Archivovaná"
+    },
+    "notifications": {
+      "title": "Notifikácie pre administrátorov",
+      "description": "E-mailové adresy, ktoré dostanú upozornenie na novú objednávku. Oddeľte ich novým riadkom, čiarkou alebo bodkočiarkou.",
+      "placeholder": "admin@pixea.sk\norders@pixea.sk",
+      "save": "Uložiť notifikácie"
+    },
+    "empty": "Zatiaľ nebola nájdená žiadna objednávka."
+  },
   "Users": {
     "title": "Administrácia používateľov",
     "name": "Meno",
@@ -204,7 +236,8 @@
         "desc": "Ide o tab, ktorý vidí aj bežný zákazník. Tým pádom používateľ s rolou \"admin\" cez neho dokáže napríklad testovať objednávkový proces.",
         "link": "Otvoriť správu všetkých prijatých objednávok"
       },
-      "empty": "Vytvorte svoju prvú objednávku, aby ste ju tu videli."
+      "empty": "Vytvorte svoju prvú objednávku, aby ste ju tu videli.",
+      "openAll": "Otvoriť všetky objednávky"
     },
     "logout": "Odhlásiť sa",
     "save": "Uložiť",
@@ -226,6 +259,45 @@
     "enterCode": "Zadajte kód",
     "continue": "Pokračovať",
     "back": "Späť"
+  },
+  "OrderNotification": {
+    "adminNewOrder": {
+      "subject": "Pixea: Nová objednávka #{orderId}",
+      "preview": "Prišla nová objednávka #{orderId} v hodnote {total} EUR."
+    },
+    "customerStatus": {
+      "subject": "Pixea: Aktualizácia objednávky #{orderId}",
+      "preview": "Objednávka #{orderId} má nový stav: {status}."
+    },
+    "statuses": {
+      "new": "Nová",
+      "confirmed": "Potvrdená",
+      "printed": "Vytlačená",
+      "packed": "Zabalená",
+      "shipped": "Odoslaná",
+      "received": "Doručená",
+      "archived": "Archivovaná"
+    }
+  },
+  "OrderNewAdminEmail": {
+    "title": "Nová objednávka",
+    "description": "Práve prišla nová objednávka #{orderId}.",
+    "orderId": "Objednávka",
+    "customerEmail": "Zákazník",
+    "itemCount": "Počet položiek",
+    "subtotal": "Medzisúčet",
+    "delivery": "Doručenie",
+    "vat": "DPH",
+    "total": "Celkom",
+    "openOrder": "Otvoriť objednávku",
+    "preview": "Nová objednávka #{orderId} v hodnote {total} EUR."
+  },
+  "OrderStatusCustomerEmail": {
+    "title": "Stav objednávky bol aktualizovaný",
+    "description": "Objednávka #{orderId} má nový stav.",
+    "statusLabel": "Nový stav",
+    "openOrders": "Zobraziť moje objednávky",
+    "preview": "Objednávka #{orderId} má nový stav: {status}."
   },
   "VerificationEmail": {
     "subject": "Prihlásenie do systému Pixea",

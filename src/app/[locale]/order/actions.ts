@@ -14,6 +14,7 @@ import { redirect } from "next/navigation";
 import { randomUUID } from "node:crypto";
 
 import { error, noChanges, success } from "@/lib/utils";
+import { notifyNewOrderToAdmins } from "@/emails/orders";
 
 const toOptionalString = (value: FormDataEntryValue | null) => {
   if (typeof value !== "string") return undefined;
@@ -222,8 +223,11 @@ export const submitOrderAction = async (
       },
     };
 
-    const nextCart = await db.transaction(async (tx) => {
-      await tx.insert(orders).values(order);
+    const created = await db.transaction(async (tx) => {
+      const [createdOrder] = await tx
+        .insert(orders)
+        .values(order)
+        .returning({ id: orders.id, email: orders.email, sum: orders.sum });
 
       const nextCart = {
         id: randomUUID(),
@@ -234,13 +238,18 @@ export const submitOrderAction = async (
         .update(users)
         .set({ cart: nextCart })
         .where(eq(users.id, user.id));
-      return nextCart;
+      return { nextCart, order: createdOrder };
+    });
+
+    await notifyNewOrderToAdmins({
+      orderId: created.order.id,
+      locale: locale as "en" | "sk",
     });
 
     const cookieStore = await cookies();
     cookieStore.set({
       name: "cartId",
-      value: nextCart.id,
+      value: created.nextCart.id,
       maxAge: 60 * 60 * 24 * 31,
       httpOnly: true,
       path: "/",
