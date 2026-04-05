@@ -37,7 +37,68 @@
     "title": "Touch your memories",
     "button1": "Order now",
     "button2": "Learn more",
-    "video": "Your browser does not support the video tag."
+    "video": "Your browser does not support the video tag.",
+    "highlights": {
+      "title": "Pixea is simple and fast",
+      "description": "We designed the whole ordering flow to be easy for everyone, from the first click to delivery of your finished order.",
+      "items": {
+        "fast": {
+          "title": "Quick order completion",
+          "description": "You can complete your order in just a few straightforward steps."
+        },
+        "intuitive": {
+          "title": "Intuitive user interface",
+          "description": "Our system is clear even for non-technical users, so placing an order feels natural."
+        },
+        "delivery": {
+          "title": "Convenient delivery and pickup",
+          "description": "Choose home delivery, pickup points, or personal collection based on what suits you best."
+        },
+        "quality": {
+          "title": "Our standard and 10+ years of experience",
+          "description": "We keep high quality standards, have 10+ years of experience, and many happy returning customers."
+        }
+      }
+    },
+    "delivery": {
+      "title": "We support popular delivery companies",
+      "description": "We work with Packeta, DPD (including DPD Pickup), and SPS (including Balikovo), so you can choose the delivery option that works best for you.",
+      "branchPrefix": "DPD Pickup and Balikovo are also supported at our company branch office at",
+      "logos": {
+        "packeta": "Packeta logo",
+        "dpd": "DPD logo",
+        "dpdPickup": "DPD Pickup logo",
+        "sps": "SPS logo",
+        "balikovo": "Balikovo logo"
+      }
+    },
+    "privacy": {
+      "title": "GDPR, safety, and legal data handling",
+      "description": "We process personal data and photos responsibly, transparently, and in compliance with legal requirements.",
+      "items": {
+        "uploads": {
+          "title": "Uploaded photos deleted after 30 days",
+          "description": "Original photo files uploaded for orders are deleted after 30 days."
+        },
+        "previews": {
+          "title": "Previews deleted after 6 months",
+          "description": "Preview files of personal photos uploaded for orders are stored for a maximum of 6 months."
+        },
+        "gdpr": {
+          "title": "GDPR-compliant processing",
+          "description": "We follow data minimization principles and limit processing to what is needed to fulfill your order."
+        },
+        "protection": {
+          "title": "Security and trust",
+          "description": "We apply technical and organizational safeguards to protect your data throughout the process."
+        }
+      }
+    },
+    "cta": {
+      "title": "Ready to place your order?",
+      "description": "Complete it in a few minutes and we will take care of quality printing and delivery.",
+      "button": "Order now"
+    }
   },
   "Order": {
     "title": "Order",

@@ -37,7 +37,68 @@
     "title": "Dotknite sa spomienok",
     "button1": "Objednať teraz",
     "button2": "Chcem vedieť viac",
-    "video": "Váš prehliadač nepodporuje video tag."
+    "video": "Váš prehliadač nepodporuje video tag.",
+    "highlights": {
+      "title": "Pixea je jednoduchá a rýchla",
+      "description": "Objednávkový proces sme navrhli tak, aby bol pohodlný pre každého - od prvého kliknutia až po doručenie hotovej objednávky.",
+      "items": {
+        "fast": {
+          "title": "Rýchle vyplnenie objednávky",
+          "description": "Objednávku vyplníte v niekoľkých krokoch bez zbytočného hľadania."
+        },
+        "intuitive": {
+          "title": "Intuitívne rozhranie",
+          "description": "Systém je prehľadný aj pre netechnických používateľov, takže sa v ňom nestratíte."
+        },
+        "delivery": {
+          "title": "Pohodlné doručenie alebo osobný odber",
+          "description": "Vyberte si doručenie domov, výdajné miesto alebo vyzdvihnutie podľa toho, čo vám vyhovuje."
+        },
+        "quality": {
+          "title": "Náš štandard a 10+ rokov skúseností",
+          "description": "Držíme si vysoký štandard kvality, máme 10+ rokov skúseností a veľa spokojných vracajúcich sa zákazníkov."
+        }
+      }
+    },
+    "delivery": {
+      "title": "Podporujeme obľúbené doručovacie služby",
+      "description": "Spolupracujeme so spoločnosťami Packeta, DPD (vrátane DPD Pickup) a SPS (vrátane Balíkovo), aby ste si mohli vybrať spôsob doručenia, ktorý vám najviac vyhovuje.",
+      "branchPrefix": "DPD Pickup aj Balíkovo podporujeme aj v našej pobočke na adrese",
+      "logos": {
+        "packeta": "Logo Packeta",
+        "dpd": "Logo DPD",
+        "dpdPickup": "Logo DPD Pickup",
+        "sps": "Logo SPS",
+        "balikovo": "Logo Balíkovo"
+      }
+    },
+    "privacy": {
+      "title": "GDPR, bezpečnosť a zákonnosť vašich údajov",
+      "description": "Osobné údaje a fotografie spracúvame zodpovedne, transparentne a v súlade s právnymi požiadavkami.",
+      "items": {
+        "uploads": {
+          "title": "Mazanie nahraných fotografií po 30 dňoch",
+          "description": "Originálne súbory fotografií nahraté k objednávkam mažeme po 30 dňoch."
+        },
+        "previews": {
+          "title": "Mazanie náhľadov po 6 mesiacoch",
+          "description": "Náhľady osobných fotografií nahratých k objednávkam uchovávame najviac 6 mesiacov."
+        },
+        "gdpr": {
+          "title": "Spracovanie v súlade s GDPR",
+          "description": "Pracujeme so zásadami minimalizácie údajov a ich spracovanie obmedzujeme na účel vybavenia objednávky."
+        },
+        "protection": {
+          "title": "Bezpečnosť a dôvera",
+          "description": "Dbáme na technické aj organizačné opatrenia, aby boli vaše dáta chránené počas celého procesu."
+        }
+      }
+    },
+    "cta": {
+      "title": "Pripravení vytvoriť svoju objednávku?",
+      "description": "Vyplňte ju za pár minút a my sa postaráme o kvalitnú tlač aj doručenie.",
+      "button": "Objednať teraz"
+    }
   },
   "Order": {
     "title": "Objednávka",
