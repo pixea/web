@@ -15,7 +15,7 @@ const ProductPreview = ({ product }: { product: Product }) => {
     <Button
       variant="outline"
       color="gray"
-      className="relative h-auto flex-col text-left items-start p-0 gap-0 overflow-hidden"
+      className="relative h-auto flex-col text-left items-start justify-start p-0 gap-0 overflow-hidden"
       onClick={() =>
         router.push({
           pathname: `/order/item/[id]`,
