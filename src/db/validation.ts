@@ -1,21 +1,31 @@
 import z from "zod";
 
 export const translatedPropertySchema = z.object({
-  sk: z.string(),
-  en: z.string(),
+  sk: z.string().describe("Localized value in Slovak."),
+  en: z.string().describe("Localized value in English."),
 });
 
 export const pricePropertySchema = z.object({
-  type: z.enum(["fixed", "per-meter-squared", "per-file", "per-piece"]),
-  cost: z.number(),
-  margin: z.number(),
+  type: z
+    .enum(["fixed", "per-meter-squared", "per-file", "per-piece"])
+    .describe("How this price is applied."),
+  cost: z.number().describe("Base production cost in EUR."),
+  margin: z.number().describe("Additional margin in EUR."),
 });
 
 export const baseConfigurationSchema = z.object({
-  id: z.string(),
-  name: translatedPropertySchema.required(),
-  default: z.string().optional(),
-  required: z.boolean().optional(),
+  id: z.string().describe("Stable configuration identifier used in payloads."),
+  name: translatedPropertySchema
+    .required()
+    .describe("Display name shown to users."),
+  default: z
+    .string()
+    .optional()
+    .describe("Default option identifier or default text."),
+  required: z
+    .boolean()
+    .optional()
+    .describe("Whether user input is required for this configuration."),
 });
 
 export const radioCardConfigurationSchema = baseConfigurationSchema.merge(
@@ -24,60 +34,105 @@ export const radioCardConfigurationSchema = baseConfigurationSchema.merge(
     options: z
       .array(
         z.object({
-          id: z.string(),
-          name: translatedPropertySchema.required(),
-          description: translatedPropertySchema.optional(),
-          price: pricePropertySchema,
-        })
+          id: z.string().describe("Stable option identifier."),
+          name: translatedPropertySchema
+            .required()
+            .describe("Option label shown in UI."),
+          description: translatedPropertySchema
+            .optional()
+            .describe("Optional option help text."),
+          price: pricePropertySchema.describe(
+            "Pricing impact when this option is selected.",
+          ),
+        }),
       )
-      .min(1),
-  })
+      .min(1)
+      .describe("Selectable options for this radio-card configuration."),
+  }),
 );
 
 export const textareaConfigurationSchema = baseConfigurationSchema.merge(
   z.object({
     type: z.literal("textarea"),
-  })
+  }),
 );
 
 export const productSchema = z.object({
   slug: translatedPropertySchema
     .required()
     .describe(
-      "Unique URL identifier. Please do NOT change this after the product is published. Do NOT use spaces and diacritics."
+      "Unique URL identifier. Please do NOT change this after the product is published. Do NOT use spaces and diacritics.",
     ),
-  name: translatedPropertySchema.required(),
-  description: translatedPropertySchema.required(),
+  name: translatedPropertySchema
+    .required()
+    .describe("Customer-facing product name."),
+  description: translatedPropertySchema
+    .required()
+    .describe("Customer-facing product description."),
 
-  status: z.enum(["active", "draft"]).default("draft"),
+  status: z
+    .enum(["active", "draft"])
+    .default("draft")
+    .describe("Publication state of this product."),
 
-  image: z.string().optional(),
+  image: z.string().optional().describe("Optional hero image URL."),
 
   files: z.object({
     piecePerFile: z
       .boolean()
       .default(true)
       .describe(
-        "Whether each file represents a single print (like in photos) or they all represent a single print (like in calendars)."
+        "Whether each file represents a single print (like in photos) or they all represent a single print (like in calendars).",
       ),
-    min: z.number().min(1).optional(),
-    max: z.number().optional(),
+    min: z
+      .number()
+      .min(1)
+      .optional()
+      .describe("Minimum number of files allowed per item."),
+    max: z
+      .number()
+      .optional()
+      .describe("Maximum number of files allowed per item."),
   }),
 
   size: z.object({
     options: z
       .array(
         z.object({
-          dimensions: z.tuple([z.number(), z.number()]),
-          common: z.boolean().optional(),
-        })
+          dimensions: z
+            .array(z.number())
+            .length(2)
+            .describe(
+              "[width, height] in millimeters. Must contain exactly two numbers.",
+            ),
+          common: z
+            .boolean()
+            .optional()
+            .describe("Marks frequently selected dimensions in UI."),
+        }),
       )
-      .min(1),
+      .min(1)
+      .describe("Available print size options."),
   }),
 
-  configuration: z.array(
-    radioCardConfigurationSchema.or(textareaConfigurationSchema)
-  ),
+  configuration: z
+    .array(radioCardConfigurationSchema.or(textareaConfigurationSchema))
+    .describe("Additional configurable product options shown in order flow."),
+
+  pricing: z
+    .object({
+      formula: z
+        .string()
+        .optional()
+        .describe(
+          "Pricing formula. Supports numbers, variables, +, -, *, /, ^ and parentheses. Example: size.area * 0.02 + files.totalPieces * 0.1 + configTotals.cost",
+        ),
+    })
+    .optional()
+    .default({})
+    .describe(
+      "Optional custom pricing configuration. Empty object means default pricing behavior.",
+    ),
 });
 
 export const userSchema = z.object({
@@ -115,6 +170,12 @@ export const orderItemFileSchema = z.object({
 export const orderItemSchema = z.object({
   id: z.string(),
   productId: z.string(),
+  price: z.number().optional(),
+  pricing: z
+    .object({
+      formula: z.string().optional(),
+    })
+    .optional(),
   files: z.object({
     pieces: z.number().optional(),
     items: z.array(orderItemFileSchema),
@@ -126,7 +187,7 @@ export const orderItemSchema = z.object({
     z.object({
       id: z.string(),
       value: z.string().nullable(),
-    })
+    }),
   ),
 });
 

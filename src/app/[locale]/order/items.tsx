@@ -16,6 +16,7 @@ import {
   Tooltip,
 } from "@radix-ui/themes";
 import { useFormatter, useLocale, useTranslations } from "next-intl";
+import { calculateItemPrice } from "@/utils/pricing";
 
 type Props = {
   cart: ShoppingCart;
@@ -44,6 +45,8 @@ const OrderItems = ({ cart: initialCart, products }: Props) => {
         const product = products.find(
           (product) => product.id === item.productId
         );
+        const itemPrice =
+          item.price ?? (product ? calculateItemPrice(product, item) : 0);
 
         return (
           <Flex
@@ -106,7 +109,7 @@ const OrderItems = ({ cart: initialCart, products }: Props) => {
                         {t("price")}
                       </Text>
                       <Text as="div" size="4" weight="bold">
-                        {format.number(0, {
+                        {format.number(itemPrice, {
                           style: "currency",
                           currency: "EUR",
                         })}

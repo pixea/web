@@ -1,7 +1,7 @@
 import { TextArea } from "@radix-ui/themes";
 import { debounce } from "radash";
 import { TextareaConfiguration } from "@/db/validation";
-import { useCallback } from "react";
+import { useMemo } from "react";
 
 interface Props {
   config: TextareaConfiguration;
@@ -10,9 +10,9 @@ interface Props {
 }
 
 const TextAreaRenderer = ({ config, value, onChange }: Props) => {
-  const debouncedOnChange = useCallback(
-    debounce({ delay: 1000 }, (newValue) => onChange(newValue)),
-    []
+  const debouncedOnChange = useMemo(
+    () => debounce({ delay: 1000 }, (newValue: string) => onChange(newValue)),
+    [onChange]
   );
 
   const defaultValue = value || config.default || undefined;

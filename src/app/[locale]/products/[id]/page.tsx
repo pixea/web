@@ -9,6 +9,7 @@ import db from "@/db";
 import { products } from "@/db/schema";
 import { productSchema } from "@/db/validation";
 import ProductForm from "./form";
+import { Locales } from "@/i18n/locales";
 
 const ProductEditPage = async ({
   params,
@@ -39,8 +40,10 @@ const ProductEditPage = async ({
         }
       : {},
     null,
-    2
+    2,
   );
+
+  console.log(product);
 
   return (
     <Container className="w-full" mt="4">
@@ -52,7 +55,9 @@ const ProductEditPage = async ({
           gap="4"
           wrap="wrap"
         >
-          <Heading size="7">{t("title")}</Heading>
+          <Heading size="7">
+            {t("title")} {product?.name?.[locale as Locales]}
+          </Heading>
 
           <Button asChild color="gray" variant="ghost" size="2">
             <Link href="/products" className="flex items-center gap-1.5">
@@ -65,7 +70,7 @@ const ProductEditPage = async ({
         <ProductForm
           id={id}
           value={value}
-          schema={productSchema.toJSONSchema()}
+          schema={JSON.parse(JSON.stringify(productSchema.toJSONSchema()))}
         />
       </Flex>
     </Container>

@@ -162,6 +162,8 @@ export const products = pgTable("product", {
     .default([])
     .$type<ProductPayload["configuration"]>(),
 
+  pricing: jsonb().notNull().default({}).$type<ProductPayload["pricing"]>(),
+
   ...timestamps(),
 });
 

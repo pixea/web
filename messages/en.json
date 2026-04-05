@@ -92,7 +92,13 @@
     "edit": "Edit",
     "delete": "Delete",
     "back": "Back",
-    "save": "Save"
+    "save": "Save",
+    "aiPromptCreate": "Describe the product you want to create",
+    "aiPromptUpdate": "Describe what should be changed on this product",
+    "aiPromptPlaceholder": "Example: Canvas, 30x40 and 40x60 sizes, configuration including ...",
+    "aiHelp": "AI creates a draft JSON. Review it in the editor before saving.",
+    "generateDraft": "Generate draft",
+    "applyAiUpdate": "Apply AI update"
   },
   "Users": {
     "title": "User administration",

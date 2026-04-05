@@ -2,13 +2,14 @@
 
 import { auth } from "@/auth";
 import db from "@/db";
-import { guestCarts, users } from "@/db/schema";
+import { guestCarts, products, users } from "@/db/schema";
 import {
   OrderItemFilePayload,
   OrderItemPayload,
   ShoppingCart,
 } from "@/db/validation";
 import { createThumbnail } from "@/utils/thumbnail";
+import { calculateItemPrice } from "@/utils/pricing";
 import { eq } from "drizzle-orm";
 import { DateTime } from "luxon";
 import { cookies } from "next/headers";
@@ -103,6 +104,7 @@ export const addFileToCartItemAction = async (
       }
 
       item.files.items.push({ ...file, metadata, hasThumbnail: !!metadata });
+      await hydrateItemPricing(tx, item);
 
       if (existingItem) {
         cart.items = cart.items!.map((i) => (i.id === cartItemId ? item : i));
@@ -179,19 +181,18 @@ export const removeFileFromCartItemAction = async (
         return cart;
       }
 
-      cart.items = cart.items!.map((item) => {
-        if (item !== existingItem) return item;
+      const updatedItem = {
+        ...existingItem,
+        files: {
+          ...existingItem.files,
+          items: existingItem.files!.items.filter((file) => file.id !== fileId),
+        },
+      };
+      await hydrateItemPricing(tx, updatedItem);
 
-        return {
-          ...existingItem,
-          files: {
-            ...existingItem.files,
-            items: existingItem.files!.items.filter(
-              (file) => file.id !== fileId
-            ),
-          },
-        };
-      });
+      cart.items = cart.items!.map((item) =>
+        item !== existingItem ? item : updatedItem
+      );
 
       cart.saved = DateTime.utc().toISO();
 
@@ -275,6 +276,7 @@ export const saveCartItemConfigurationAction = async (
       } else {
         item.configuration.push(configuration);
       }
+      await hydrateItemPricing(tx, item);
 
       if (existingItem) {
         cart.items = cart.items!.map((i) => (i.id === cartItemId ? item : i));
@@ -354,6 +356,7 @@ export const saveCartItemSizeAction = async (
       };
 
       item.size = size;
+      await hydrateItemPricing(tx, item);
 
       if (existingItem) {
         cart.items = cart.items!.map((i) => (i.id === cartItemId ? item : i));
@@ -436,6 +439,7 @@ export const savePiecesAction = async (
         item.files = { pieces: 1, items: [] };
       }
       item.files.pieces = pieces;
+      await hydrateItemPricing(tx, item);
 
       if (existingItem) {
         cart.items = cart.items!.map((i) => (i.id === cartItemId ? item : i));
@@ -596,4 +600,21 @@ const startNewCartAction = async (forceGenerateId = false) => {
 
     return { content: cart, source: "guest" as const };
   }
+};
+
+const hydrateItemPricing = async (
+  tx: Parameters<Parameters<typeof db.transaction>[0]>[0],
+  item: Partial<OrderItemPayload>
+) => {
+  if (!item.productId) return;
+
+  const [product] = await tx
+    .select()
+    .from(products)
+    .where(eq(products.id, item.productId))
+    .limit(1);
+  if (!product) return;
+
+  item.pricing = { formula: product.pricing?.formula };
+  item.price = calculateItemPrice(product, item);
 };

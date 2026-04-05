@@ -24,8 +24,9 @@ import {
 import Configuration from "./configuration";
 import { Product } from "@/db/schema";
 import { MinusIcon, PlusIcon } from "@heroicons/react/24/solid";
-import { useCallback, useState } from "react";
+import { useMemo, useState } from "react";
 import { debounce } from "radash";
+import { calculateItemPrice } from "@/utils/pricing";
 
 const Files = dynamic(() => import("./files/files"), {
   ssr: false,
@@ -55,12 +56,15 @@ const Form = ({ session, initialCart, itemId, product }: Props) => {
 
   const item = cart?.items?.find((item) => item.id === itemId);
 
-  const price = 0;
-
   const [quantity, setQuantity] = useState(item?.files?.pieces || 1);
-  const debouncedSavePieces = useCallback(
-    debounce({ delay: 1000 }, savePieces),
-    []
+  const [selectedSize, setSelectedSize] = useState(item?.size);
+  const [selectedConfiguration, setSelectedConfiguration] = useState(
+    item?.configuration || [],
+  );
+
+  const debouncedSavePieces = useMemo(
+    () => debounce({ delay: 1000 }, savePieces),
+    [savePieces],
   );
   const changeQuantity = (value: number) => {
     if (value === item?.files?.pieces) return;
@@ -69,6 +73,17 @@ const Form = ({ session, initialCart, itemId, product }: Props) => {
   };
 
   const uploadedFilesCount = item?.files?.items.length || 0;
+
+  const previewItem = {
+    ...(item || {}),
+    size: selectedSize,
+    configuration: selectedConfiguration,
+    files: {
+      ...(item?.files || { items: [], pieces: 1 }),
+      pieces: quantity,
+    },
+  };
+  const computedPrice = calculateItemPrice(product, previewItem);
 
   return (
     <>
@@ -167,10 +182,25 @@ const Form = ({ session, initialCart, itemId, product }: Props) => {
 
             <Configuration
               product={product}
-              values={item?.configuration}
-              onChange={(change) => saveCartItemConfiguration(itemId, change)}
-              size={item?.size}
-              onSizeChange={(size) => saveCartItemSize(itemId, size)}
+              values={selectedConfiguration}
+              onChange={(change) => {
+                const nextConfiguration = [...selectedConfiguration];
+                const index = nextConfiguration.findIndex(
+                  (c) => c.id === change.id,
+                );
+                if (index >= 0) {
+                  nextConfiguration[index] = change;
+                } else {
+                  nextConfiguration.push(change);
+                }
+                setSelectedConfiguration(nextConfiguration);
+                saveCartItemConfiguration(itemId, change);
+              }}
+              size={selectedSize}
+              onSizeChange={(size) => {
+                setSelectedSize(size);
+                saveCartItemSize(itemId, size);
+              }}
             />
           </Flex>
         </Flex>
@@ -180,7 +210,10 @@ const Form = ({ session, initialCart, itemId, product }: Props) => {
         <Text weight="medium">
           {t("total")}:{" "}
           <Text as="span" size="4" className="flex flex-col font-bold">
-            {format.number(price, { style: "currency", currency: "EUR" })}
+            {format.number(computedPrice, {
+              style: "currency",
+              currency: "EUR",
+            })}
           </Text>
         </Text>
 

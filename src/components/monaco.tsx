@@ -2,7 +2,7 @@
 
 import { useTheme } from "next-themes";
 import dynamic from "next/dynamic";
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
 
 const Monaco = dynamic(() => import("@monaco-editor/react"), {
   ssr: false,
@@ -11,25 +11,47 @@ const Monaco = dynamic(() => import("@monaco-editor/react"), {
 const MonacoInput = ({
   name,
   defaultValue,
+  value,
   schema,
+  onChangeValue,
 }: {
   name: string;
   defaultValue: string;
+  value?: string;
   schema?: unknown;
+  onChangeValue?: (value: string) => void;
 }) => {
   const { resolvedTheme } = useTheme();
 
   const inputRef = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    if (!inputRef.current) return;
+
+    inputRef.current.value = value ?? defaultValue;
+  }, [defaultValue, value]);
+
   const onChange = (content?: string) => {
+    const nextValue = content || "";
+
     if (inputRef.current) {
-      inputRef.current.value = content || "";
+      inputRef.current.value = nextValue;
     }
+
+    onChangeValue?.(nextValue);
   };
 
   return (
     <>
-      <input type="hidden" name={name} ref={inputRef} className="hidden" />
+      <input
+        type="hidden"
+        name={name}
+        ref={inputRef}
+        defaultValue={value ?? defaultValue}
+        className="hidden"
+      />
       <Monaco
+        value={value}
         defaultValue={defaultValue}
         onChange={onChange}
         beforeMount={(monaco) => {

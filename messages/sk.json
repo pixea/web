@@ -92,7 +92,13 @@
     "edit": "Upraviť",
     "delete": "Vymazať",
     "back": "Späť",
-    "save": "Uložiť"
+    "save": "Uložiť",
+    "aiPromptCreate": "Popíšte produkt, ktorý chcete vytvoriť",
+    "aiPromptUpdate": "Popíšte, čo sa má na tomto produkte zmeniť",
+    "aiPromptPlaceholder": "Príklad: Plátno, veľkosti 30x40 a 40x60, konfigurácia vrátane ...",
+    "aiHelp": "AI vytvorí návrh JSON. Pred uložením ho skontrolujte v editore.",
+    "generateDraft": "Vygenerovať návrh",
+    "applyAiUpdate": "Použiť AI úpravu"
   },
   "Users": {
     "title": "Administrácia používateľov",

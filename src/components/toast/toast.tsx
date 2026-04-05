@@ -14,6 +14,7 @@ interface ToastProps {
   type?: "error" | "success" | "warning" | "info";
   title: string;
   children: React.ReactNode;
+  onOpenChange?: (open: boolean) => void;
 }
 
 export const ToastProvider = ({ children }: { children: React.ReactNode }) => {
@@ -25,7 +26,7 @@ export const ToastProvider = ({ children }: { children: React.ReactNode }) => {
   );
 };
 
-export const Toast = ({ type, title, children }: ToastProps) => {
+export const Toast = ({ type, title, children, onOpenChange }: ToastProps) => {
   const containerClasses = cn(
     "grid grid-cols-[auto_max-content] items-center gap-x-4 rounded-md p-4 ring-1 ring-transparent shadow-lg [grid-template-areas:_'title_action'_'description_action'] data-[swipe=cancel]:translate-x-0 data-[swipe=move]:translate-x-[var(--radix-toast-swipe-move-x)] data-[state=closed]:animate-hide data-[state=open]:animate-slideIn data-[swipe=end]:animate-swipeOut data-[swipe=cancel]:transition-[transform_200ms_ease-out] bg-gray-2",
     {
@@ -58,7 +59,7 @@ export const Toast = ({ type, title, children }: ToastProps) => {
             : undefined;
 
   return (
-    <RadixToast.Root className={containerClasses}>
+    <RadixToast.Root className={containerClasses} onOpenChange={onOpenChange}>
       <RadixToast.Title className={titleClasses}>
         {icon && React.createElement(icon, { className: "size-5" })} {title}
       </RadixToast.Title>
