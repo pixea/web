@@ -54,7 +54,25 @@
     "remove": "Remove",
     "fileTooLarge": "This file is too large to be displayed.",
     "download": "Download",
-    "close": "Close"
+    "close": "Close",
+    "checkout": "Checkout",
+    "loginRequired": "Please log in to continue with your order submission.",
+    "loginToContinue": "Log in to continue",
+    "checkoutEmpty": "Add at least one configured item before submitting the order.",
+    "deliveryMethod": "Delivery method",
+    "delivery": {
+      "courier": "Courier delivery",
+      "pickup": "Personal pickup"
+    },
+    "deliveryDetails": "Delivery details",
+    "invoiceDetails": "Invoicing details",
+    "invoiceSameAsDelivery": "Use delivery address for invoice",
+    "summary": "Order summary",
+    "summaryItems": "{count, plural, =0 {Items} =1 {1 item} other {# items}}",
+    "summaryDelivery": "Delivery",
+    "summaryVat": "VAT (20%)",
+    "summaryTotal": "Total",
+    "submitOrder": "Submit order"
   },
   "OrderItemSelection": {
     "title": "Product selection",

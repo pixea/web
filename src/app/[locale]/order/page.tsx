@@ -1,17 +1,18 @@
 import { Link } from "@/i18n/routing";
 import { Button, Flex, Heading, Text, Container } from "@radix-ui/themes";
-import OrderItems from "./items";
 import { PlusIcon } from "@heroicons/react/24/solid";
 import { getTranslations } from "next-intl/server";
 import { getCurrentCartContentAction } from "@/hooks/useCart/actions";
-import Checkout from "./checkout";
 import { inArray } from "drizzle-orm";
 import db from "@/db";
 import { products as productsSchema } from "@/db/schema";
+import { auth } from "@/auth";
+import OrderContent from "./content";
 
 export default async function OrderPage() {
   const t = await getTranslations("Order");
   const cart = await getCurrentCartContentAction();
+  const session = await auth();
 
   const relevantProductIds = cart.content?.items
     ?.map((item) => item.productId)
@@ -44,9 +45,11 @@ export default async function OrderPage() {
       </Flex>
 
       <Flex direction="column" gap="6" align="center" width="full" mt="6">
-        <OrderItems cart={cart.content} products={products} />
-
-        <Checkout />
+        <OrderContent
+          initialCart={cart.content}
+          products={products}
+          session={session}
+        />
       </Flex>
     </Container>
   );
