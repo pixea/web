@@ -9,7 +9,7 @@ import {
   ShoppingCart,
 } from "@/db/validation";
 import { createThumbnail } from "@/utils/thumbnail";
-import { calculateItemPrice } from "@/utils/pricing";
+import { calculateItemPricing } from "@/utils/pricing";
 import { eq } from "drizzle-orm";
 import { DateTime } from "luxon";
 import { cookies } from "next/headers";
@@ -615,6 +615,14 @@ const hydrateItemPricing = async (
     .limit(1);
   if (!product) return;
 
-  item.pricing = { formula: product.pricing?.formula };
-  item.price = calculateItemPrice(product, item);
+  const pricing = calculateItemPricing(product, item);
+
+  item.pricing = {
+    baseCostFormula: product.pricing?.baseCostFormula,
+    marginFormula: product.pricing?.marginFormula,
+    formula: product.pricing?.formula,
+  };
+  item.baseCost = pricing.baseCost;
+  item.margin = pricing.margin;
+  item.price = pricing.price;
 };

@@ -16,7 +16,7 @@ import {
   Tooltip,
 } from "@radix-ui/themes";
 import { useFormatter, useLocale, useTranslations } from "next-intl";
-import { calculateItemPrice } from "@/utils/pricing";
+import { calculateItemPricing } from "@/utils/pricing";
 
 type Props = {
   cart: ShoppingCart;
@@ -46,7 +46,7 @@ const OrderItems = ({ cart: initialCart, products }: Props) => {
           (product) => product.id === item.productId
         );
         const itemPrice =
-          item.price ?? (product ? calculateItemPrice(product, item) : 0);
+          item.price ?? (product ? calculateItemPricing(product, item).price : 0);
 
         return (
           <Flex
