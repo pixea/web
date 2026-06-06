@@ -164,6 +164,14 @@ const useCart = (initialCartState: ShoppingCart, options?: CartOptions) => {
     }
   }, []);
 
+  const resetCart = useCallback(() => {
+    setCart((currentCart) => ({
+      id: currentCart.id,
+      saved: new Date().toISOString(),
+      items: [],
+    }));
+  }, []);
+
   return {
     cart,
     addFileToCartItem,
@@ -172,6 +180,7 @@ const useCart = (initialCartState: ShoppingCart, options?: CartOptions) => {
     saveCartItemSize,
     savePieces,
     removeCartItem,
+    resetCart,
     isPending: pendingActions > 0,
   };
 };

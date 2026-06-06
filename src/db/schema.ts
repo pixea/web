@@ -20,6 +20,7 @@ import {
   ProductPayload,
   ShoppingCart,
 } from "./validation";
+import { orderStatusValues } from "@/lib/order-status";
 
 const timestamps = () => ({
   created: timestamp({ mode: "string" })
@@ -41,13 +42,7 @@ export const roleEnum = pgEnum("role", ["customer", "admin"]);
 
 export const productStatus = pgEnum("product_status", ["active", "draft"]);
 
-export const orderStatus = pgEnum("order_status", [
-  "new",
-  "processed",
-  "prepared",
-  "delivery",
-  "delivered",
-]);
+export const orderStatus = pgEnum("order_status", [...orderStatusValues]);
 
 export const users = pgTable("user", {
   id: uuid().primaryKey().defaultRandom(),
@@ -192,6 +187,13 @@ export const orders = pgTable("order", {
   ...timestamps(),
 });
 
+export const orderSettings = pgTable("order-settings", {
+  id: uuid().primaryKey().defaultRandom(),
+  adminNotificationEmails: text().array().notNull().default(sql`'{}'::text[]`),
+  ...timestamps(),
+});
+
 export type User = InferSelectModel<typeof users>;
 export type Product = InferSelectModel<typeof products>;
 export type Order = InferSelectModel<typeof orders>;
+export type OrderSettings = InferSelectModel<typeof orderSettings>;

@@ -6,12 +6,15 @@ import { resendConfig } from "./emails/magic";
 import {
   accounts,
   authenticators,
+  orders,
   sessions,
   users,
   verificationTokens,
 } from "./db/schema";
 import { Address } from "./db/address";
 import { ShoppingCart } from "./db/validation";
+import { OrderStatusValue } from "./lib/order-status";
+import { eq } from "drizzle-orm";
 
 declare module "next-auth" {
   interface Session {
@@ -24,6 +27,12 @@ declare module "next-auth" {
       phone?: string;
       address?: Partial<Address>;
       cart?: ShoppingCart;
+      orders?: Array<{
+        id: string;
+        status: OrderStatusValue;
+        created: string;
+        updated: string;
+      }>;
     } & DefaultSession["user"];
   }
 
@@ -55,7 +64,7 @@ export const { handlers, signIn, signOut, auth, unstable_update } = NextAuth({
     verifyRequest: "/auth/verify",
   },
   callbacks: {
-    session({ session, user }) {
+    async session({ session, user }) {
       session.user.role = user.role;
       session.user.company = user.company;
       session.user.companyId = user.companyId;
@@ -64,6 +73,26 @@ export const { handlers, signIn, signOut, auth, unstable_update } = NextAuth({
       session.user.phone = user.phone;
       session.user.address = user.address;
       session.user.cart = user.cart;
+
+      if (!user.id) {
+        return session;
+      }
+
+      const recentOrders = await db
+        .select({
+          id: orders.id,
+          status: orders.status,
+          created: orders.created,
+          updated: orders.updated,
+        })
+        .from(orders)
+        .where(eq(orders.userId, user.id));
+
+      session.user.orders = recentOrders.map((order) => ({
+        ...order,
+        status: order.status as OrderStatusValue,
+      }));
+
       return session;
     },
   },

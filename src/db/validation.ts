@@ -1,4 +1,5 @@
 import z from "zod";
+import { orderStatusValues } from "@/lib/order-status";
 
 export const translatedPropertySchema = z.object({
   sk: z.string().describe("Localized value in Slovak."),
@@ -192,9 +193,7 @@ export const orderItemSchema = z.object({
 });
 
 export const orderSchema = z.object({
-  status: z
-    .enum(["new", "processed", "prepared", "delivery", "delivered"])
-    .default("new"),
+  status: z.enum(orderStatusValues).default("new"),
   paid: z.boolean().default(false),
 
   items: z.array(orderItemSchema),

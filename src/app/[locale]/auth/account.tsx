@@ -30,6 +30,7 @@ import { logoutAction } from "./actions";
 import { useRouter, useSearchParams } from "next/navigation";
 import { ActionState } from "@/lib/utils";
 import { ActionToasts } from "@/components/actionToasts";
+import OrderStatusBadge from "@/components/order-status-badge";
 
 const countries = [
   "at",
@@ -100,6 +101,7 @@ const Account = ({ session }: { session: Session }) => {
   const address = session.user?.address;
 
   const role = session.user?.role;
+  const userOrders = session.user?.orders || [];
 
   // "Fill in company info" switch handling
   const hasAnyCompanyDetails = Boolean(company || companyId || taxId || vatId);
@@ -157,13 +159,41 @@ const Account = ({ session }: { session: Session }) => {
               </Callout.Root>
             ) : undefined}
 
-            <Flex
-              justify="center"
-              align="center"
-              className="flex-1 border border-dashed border-gray-8 p-6 rounded-3 text-gray-10"
-            >
-              <Text size="4">{t("orders.empty")}</Text>
-            </Flex>
+            {userOrders.length ? (
+              <Flex direction="column" gap="2">
+                {userOrders.map((order) => (
+                  <Flex
+                    key={order.id}
+                    align="center"
+                    justify="between"
+                    className="border border-gray-6 rounded-3 p-3"
+                  >
+                    <Flex direction="column">
+                      <Text size="2" color="gray">
+                        #{order.id.slice(0, 8)}
+                      </Text>
+                      <Text size="1" color="gray">
+                        {new Date(order.created).toLocaleString()}
+                      </Text>
+                    </Flex>
+                    <OrderStatusBadge status={order.status} />
+                  </Flex>
+                ))}
+                <Flex justify="end" mt="2">
+                  <Button asChild variant="soft" size="2">
+                    <Link href="/orders">{t("orders.openAll")}</Link>
+                  </Button>
+                </Flex>
+              </Flex>
+            ) : (
+              <Flex
+                justify="center"
+                align="center"
+                className="flex-1 border border-dashed border-gray-8 p-6 rounded-3 text-gray-10"
+              >
+                <Text size="4">{t("orders.empty")}</Text>
+              </Flex>
+            )}
           </Tabs.Content>
 
           {/* ACCOUNT */}

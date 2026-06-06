@@ -2,7 +2,6 @@
 
 import { Product } from "@/db/schema";
 import { ShoppingCart } from "@/db/validation";
-import useCart from "@/hooks/useCart/useCart";
 import { Locales } from "@/i18n/locales";
 import { Link } from "@/i18n/routing";
 import { XMarkIcon } from "@heroicons/react/24/solid";
@@ -21,13 +20,13 @@ import { calculateItemPrice } from "@/utils/pricing";
 type Props = {
   cart: ShoppingCart;
   products: Product[];
+  removeCartItem: (cartItemId: string) => Promise<void>;
 };
 
-const OrderItems = ({ cart: initialCart, products }: Props) => {
+const OrderItems = ({ cart, products, removeCartItem }: Props) => {
   const t = useTranslations("Order");
   const locale = useLocale() as Locales;
   const format = useFormatter();
-  const { cart, removeCartItem } = useCart(initialCart);
 
   return (
     <Flex direction="column" gap="5" mb="2" className="w-full">

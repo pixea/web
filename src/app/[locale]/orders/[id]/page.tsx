@@ -8,7 +8,6 @@ import { auth } from "@/auth";
 import { Link } from "@/i18n/routing";
 import db from "@/db";
 import { orders } from "@/db/schema";
-import { orderSchema } from "@/db/validation";
 import OrderForm from "./form";
 
 const OrderEditPage = async ({
@@ -29,19 +28,9 @@ const OrderEditPage = async ({
     id === "new"
       ? null
       : await db.query.orders.findFirst({ where: eq(orders.id, id) });
-
-  const value = JSON.stringify(
-    order
-      ? {
-          ...order,
-          id: undefined,
-          created: undefined,
-          updated: undefined,
-        }
-      : {},
-    null,
-    2
-  );
+  if (!order) {
+    redirect(`/${locale}/orders`);
+  }
 
   return (
     <Container className="w-full" mt="4">
@@ -63,7 +52,7 @@ const OrderEditPage = async ({
           </Button>
         </Flex>
 
-        <OrderForm id={id} value={value} schema={orderSchema.toJSONSchema()} />
+        <OrderForm order={order} locale={locale} />
       </Flex>
     </Container>
   );
