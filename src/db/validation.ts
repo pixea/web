@@ -121,11 +121,17 @@ export const productSchema = z.object({
 
   pricing: z
     .object({
-      formula: z
+      baseCostFormula: z
         .string()
         .optional()
         .describe(
-          "Pricing formula. Supports numbers, variables, +, -, *, /, ^ and parentheses. Example: size.area * 0.02 + files.totalPieces * 0.1 + configTotals.cost",
+          "Base cost formula. Supports numbers, variables, +, -, *, /, ^ and parentheses. Example: size.area * 0.02 + files.totalPieces * 0.1 + configTotals.cost",
+        ),
+      marginFormula: z
+        .string()
+        .optional()
+        .describe(
+          "Margin formula. Supports numbers, variables, +, -, *, /, ^ and parentheses. Example: size.area * 0.01 + files.totalPieces * 0.05 + configTotals.margin",
         ),
     })
     .optional()
@@ -171,9 +177,12 @@ export const orderItemSchema = z.object({
   id: z.string(),
   productId: z.string(),
   price: z.number().optional(),
+  baseCost: z.number().optional(),
+  margin: z.number().optional(),
   pricing: z
     .object({
-      formula: z.string().optional(),
+      baseCostFormula: z.string().optional(),
+      marginFormula: z.string().optional(),
     })
     .optional(),
   files: z.object({

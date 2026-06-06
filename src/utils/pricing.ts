@@ -183,14 +183,14 @@ export const evaluatePriceFormula = (formula: string, context: unknown) => {
   return semantics(match).eval(context);
 };
 
-export const calculateItemPrice = (
-  product: Product,
-  item: Partial<OrderItemPayload>
-) => {
-  const formula = product.pricing?.formula;
-  if (!formula) return 0;
+export type ItemPricingBreakdown = {
+  baseCost: number;
+  margin: number;
+  price: number;
+};
 
-  const context = buildPriceContext(product, item);
+const evaluateFormulaSafely = (formula: string | undefined, context: unknown) => {
+  if (!formula) return 0;
 
   try {
     const result = evaluatePriceFormula(formula, context);
@@ -199,4 +199,41 @@ export const calculateItemPrice = (
   } catch {
     return 0;
   }
+};
+
+export const calculateItemPricing = (
+  product: Product,
+  item: Partial<OrderItemPayload>
+): ItemPricingBreakdown => {
+  const baseCostFormula = product.pricing?.baseCostFormula;
+  const marginFormula = product.pricing?.marginFormula;
+
+  const context = buildPriceContext(product, item);
+
+  if (baseCostFormula || marginFormula) {
+    const baseCost = evaluateFormulaSafely(baseCostFormula, context);
+    const margin = evaluateFormulaSafely(marginFormula, {
+      ...context,
+      pricing: { baseCost },
+    });
+
+    return {
+      baseCost,
+      margin,
+      price: baseCost + margin,
+    };
+  }
+
+  return {
+    baseCost: 0,
+    margin: 0,
+    price: 0,
+  };
+};
+
+export const calculateItemPrice = (
+  product: Product,
+  item: Partial<OrderItemPayload>
+) => {
+  return calculateItemPricing(product, item).price;
 };

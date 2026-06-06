@@ -26,7 +26,7 @@ import { Product } from "@/db/schema";
 import { MinusIcon, PlusIcon } from "@heroicons/react/24/solid";
 import { useMemo, useState } from "react";
 import { debounce } from "radash";
-import { calculateItemPrice } from "@/utils/pricing";
+import { calculateItemPricing } from "@/utils/pricing";
 
 const Files = dynamic(() => import("./files/files"), {
   ssr: false,
@@ -83,7 +83,7 @@ const Form = ({ session, initialCart, itemId, product }: Props) => {
       pieces: quantity,
     },
   };
-  const computedPrice = calculateItemPrice(product, previewItem);
+  const computedPrice = calculateItemPricing(product, previewItem).price;
 
   return (
     <>
