@@ -620,7 +620,6 @@ const hydrateItemPricing = async (
   item.pricing = {
     baseCostFormula: product.pricing?.baseCostFormula,
     marginFormula: product.pricing?.marginFormula,
-    formula: product.pricing?.formula,
   };
   item.baseCost = pricing.baseCost;
   item.margin = pricing.margin;

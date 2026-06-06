@@ -207,7 +207,6 @@ export const calculateItemPricing = (
 ): ItemPricingBreakdown => {
   const baseCostFormula = product.pricing?.baseCostFormula;
   const marginFormula = product.pricing?.marginFormula;
-  const legacyFormula = product.pricing?.formula;
 
   const context = buildPriceContext(product, item);
 
@@ -222,17 +221,6 @@ export const calculateItemPricing = (
       baseCost,
       margin,
       price: baseCost + margin,
-    };
-  }
-
-  if (legacyFormula) {
-    const legacyPrice = evaluateFormulaSafely(legacyFormula, context);
-    return {
-      // Legacy formulas only define total price; we keep margin at 0 to avoid
-      // inventing profit data and treat the total as production cost.
-      baseCost: legacyPrice,
-      margin: 0,
-      price: legacyPrice,
     };
   }
 

@@ -133,12 +133,6 @@ export const productSchema = z.object({
         .describe(
           "Margin formula. Supports numbers, variables, +, -, *, /, ^ and parentheses. Example: size.area * 0.01 + files.totalPieces * 0.05 + configTotals.margin",
         ),
-      formula: z
-        .string()
-        .optional()
-        .describe(
-          "Legacy total price formula kept for backward compatibility. Prefer baseCostFormula and marginFormula.",
-        ),
     })
     .optional()
     .default({})
@@ -189,7 +183,6 @@ export const orderItemSchema = z.object({
     .object({
       baseCostFormula: z.string().optional(),
       marginFormula: z.string().optional(),
-      formula: z.string().optional(),
     })
     .optional(),
   files: z.object({
