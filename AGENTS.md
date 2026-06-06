@@ -1,5 +1,7 @@
 # Pixea — Photo Printing E-Commerce App
 
+> Cloud agents: start with `CLOUD_AGENT_STARTER_SKILL.md` for practical setup/run/test workflows.
+
 ## Cursor Cloud specific instructions
 
 ### Overview
